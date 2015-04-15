@@ -1,0 +1,891 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<!-- ========================================================= -->
+	<!-- ======================== Defaults ======================= -->
+	<!-- ========================================================= -->
+	<title>Entity of an Open For Business Project Component</title>
+	<description>None</description>
+	<version>1.0</version>
+	<!-- ========================================================= -->
+	<!-- ======================== Data Model ===================== -->
+	<!-- org.ofbiz.order.preorder.PreOrderHeader -->
+	<!-- org.ofbiz.order.preorder.PreOrderDtl -->
+	<!-- org.ofbiz.order.preorder.PreCollectionOrderHeader -->
+	<!-- org.ofbiz.order.preorder.PreCollectionOrderDtl -->
+	<!-- org.ofbiz.order.preorder.SyncDoc -->
+	<!-- org.ofbiz.order.backorder.BackOrderHeader -->
+	<!-- org.ofbiz.order.backorder.BackOrderDtl -->
+	<!-- org.ofbiz.querydatacommon.DocNo -->
+	<!-- org.ofbiz.order.saleorder.saleorderHeader -->
+	<!-- org.ofbiz.order.saleorder.saleorderdtl -->
+	<!-- org.ofbiz.order.saleorder.SaleOrderDtlPrmtn -->
+	<!-- org.ofbiz.order.saleorder.SaleOrderPrmtn -->
+	<!-- org.ofbiz.order.collectionorder.CollectionOrderHeader -->
+	<!-- org.ofbiz.order.collectionorder.CollectionOrderDtl -->
+	<!-- org.ofbiz.order.returnorder.ReturnOrderHeader -->
+	<!-- org.ofbiz.order.returnorder.ReturnOrderDtl -->
+	<!-- org.ofbiz.order.precollectionorder.PreCollectionOrderHeader -->
+	<!-- org.ofbiz.order.precollectionorder.PreCollectionOrderDtl -->
+	<!-- org.ofbiz.order.prerefundorder.PreRefundOrderHeader -->
+	<!-- org.ofbiz.order.prerefundorder.PreRefundOrderDtl -->
+	<!-- org.ofbiz.order.refundorder.RefundOrderHeader -->
+	<!-- org.ofbiz.order.refundorder.RefundOrderDtl  -->
+	<!-- ========================================================= -->
+
+	<!-- 预订单HEADER -->
+	<entity entity-name="PreOrderHeader" 
+		package-name="org.ofbiz.order.preorder" 
+		title="PreOrderHeader Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="docNo" type="numeric"></field>
+		<field name="partyId" type="id"></field>
+		<field name="storeId" type="id"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="extSystemNo" type="id-vlong"></field>
+		<field name="extDocNo" type="id-vlong"></field>
+		<field name="postingDate" type="date-time"></field>
+		<field name="docStatus" type="indicator"></field>
+		<field name="memo" type="description"></field>
+		<field name="createUserId" type="id"></field>
+		<field name="createDocDate" type="date-time"></field>
+		<field name="lastUpdateUserId" type="id"></field>
+		<field name="lastUpdateDocDate" type="date-time"></field>
+		<field name="memberId" type="id"></field>
+		<field name="primeAmount" type="currency-amount"></field>
+		<field name="rebateAmount" type="currency-amount"></field>
+		<field name="preCollectionAmount" type="currency-amount"></field>
+		<field name="fundStatus" type="indicator"></field>
+		<field name="backStatus" type="indicator"></field>
+		<field name="salesStatus" type="indicator"></field>
+		<field name="memberPointAmount" type="numeric"></field>
+		<field name="salesId" type="id"></field>
+		<field name="collectionStoreId" type="id"></field>
+		<field name="approvalUserId" type="id"></field>
+		<field name="approvalDate" type="date-time"></field>
+		<field name="isSync" type="indicator"></field>
+		<field name="printNum" type="numeric"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId"/>
+		<index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+	</entity>
+	<!-- 预订单明细 -->
+	<entity entity-name="PreOrderDtl" 
+		package-name="org.ofbiz.order.preorder" 
+		title="PreOrderDtl Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="lineNoBaseEntry" type="numeric"></field>
+		<field name="productId" type="id"></field>
+		<field name="productName" type="name"></field>
+		<field name="barCodes" type="id"></field>
+		<field name="extNo" type="id-vlong"></field>
+		<field name="isSequence" type="indicator"></field>
+		<field name="serialNo" type="id-vlong"></field>
+		<field name="unitPrice" type="currency-amount"></field>
+		<field name="rebatePrice" type="currency-amount"></field>
+		<field name="quantity" type="numeric"></field>
+		<field name="saleQuantity" type="numeric"></field>
+		<field name="backQuantity" type="numeric"></field>
+		<field name="rebateAmount" type="currency-amount"></field>
+		<field name="bomAmount" type="currency-amount"></field>
+		<field name="memo" type="description"></field>
+		<field name="isMainProduct" type="indicator"></field>
+		<field name="productSalesPolicyId" type="id"></field>
+		<field name="productSalesPolicyNo" type="numeric"></field>
+		<field name="bomId" type="id"></field>
+		<field name="salesId" type="id"></field>
+		<field name="memberPoint" type="numeric"></field>
+		<field name="isGift" type="indicator"></field>
+		<field name="approvalUserId" type="id"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId"/>
+		<prim-key field="lineNo"/>
+	</entity>
+	
+		<!-- 其他门店单据同步表 -->
+	<entity entity-name="SyncDoc"
+		package-name="org.ofbiz.order.preorder" 
+		title="SyncDoc Enity">
+		<field name="docId" type="d-id"></field>
+		<field name="docType" type="id"></field>
+		<field name="storeId" type="id"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId"/>
+	</entity>
+	<!-- BackOrder -->
+	<!-- 退订单HEADER -->
+	<entity entity-name="BackOrderHeader" 
+		package-name="org.ofbiz.order.backorder" 
+		title="BackOrderHeader Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="docNo" type="numeric"></field>
+		<field name="partyId" type="id"></field>
+		<field name="storeId" type="id"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="extSystemNo" type="id-vlong"></field>
+		<field name="extDocNo" type="id-vlong"></field>
+		<field name="postingDate" type="date-time"></field>
+		<field name="docStatus" type="indicator"></field>
+		<field name="memo" type="description"></field>
+		<field name="createUserId" type="id"></field>
+		<field name="createDocDate" type="date-time"></field>
+		<field name="lastUpdateUserId" type="id"></field>
+		<field name="lastUpdateDocDate" type="date-time"></field>
+		<field name="memberId" type="id"></field>
+		<field name="primeAmount" type="currency-amount"></field>
+		<field name="rebateAmount" type="currency-amount"></field>
+		<field name="preRefundAmount" type="currency-amount"></field>
+		<field name="refundStatus" type="indicator"></field>
+		<field name="memberPointAmount" type="numeric"></field>
+		<field name="preRefundStoreId" type="id"></field>
+		<field name="approvalUserId" type="id"></field>
+		<field name="approvalDate" type="date-time"></field>
+		<field name="isSync" type="indicator"></field>
+		<field name="printNum" type="numeric"></field>
+		<field name="salesId" type="id"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId"/>
+		<index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+	</entity>
+	<!-- 退订单明细 -->
+	<entity entity-name="BackOrderDtl" 
+		package-name="org.ofbiz.order.backorder" 
+		title="BackOrderDtl Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="lineNoBaseEntry" type="numeric"></field>
+		<field name="productId" type="id"></field>
+		<field name="productName" type="name"></field>
+		<field name="barCodes" type="id"></field>
+		<field name="extNo" type="id-vlong"></field>
+		<field name="isSequence" type="indicator"></field>
+		<field name="serialNo" type="id-vlong"></field>
+		<field name="unitPrice" type="currency-amount"></field>
+		<field name="rebatePrice" type="currency-amount"></field>
+		<field name="quantity" type="numeric"></field>
+		<field name="rebateAmount" type="currency-amount"></field>
+		<field name="bomAmount" type="currency-amount"></field>
+		<field name="memo" type="description"></field>
+		<field name="isMainProduct" type="indicator"></field>
+		<field name="productSalesPolicyId" type="id"></field>
+		<field name="productSalesPolicyNo" type="numeric"></field>
+		<field name="bomId" type="id"></field>
+		<field name="salesId" type="id"></field>
+		<field name="memberPoint" type="numeric"></field>
+		<field name="isGift" type="indicator"></field>
+		<field name="approvalUserId" type="id"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId"/>
+		<prim-key field="lineNo"/>
+	</entity>	
+	
+   	<!-- QueryDataCommon -->
+   	<!-- 单据自增流水号 -->
+	<entity entity-name="DocNo"
+	    package-name="org.ofbiz.querydatacommon"
+	    title="DocNo Enity">
+	    <field name="id" type="date"></field>
+		<field name="preOrderNo" type="numeric"></field>
+		<field name="preCollectionOrderNo" type="numeric"></field>
+		<field name="backOrderNo" type="numeric"></field>
+		<field name="preRefundOrderNo" type="numeric"></field>
+		<field name="salesOrderNo" type="numeric"></field>
+		<field name="collectionOrderNo" type="numeric"></field>
+		<field name="salesOutWhsOrderNo" type="numeric"></field>
+		<field name="returnOrderNo" type="numeric"></field>
+		<field name="refundOrderNo" type="numeric"></field>
+		<field name="returnInWhsOrderNo" type="numeric"></field>
+		<field name="deliveryNo" type="numeric"></field>
+		<field name="receiveNo" type="numeric"></field>
+		<field name="inventoryNo" type="numeric"></field>
+		<field name="partyNo" type="numeric"></field>
+		<field name="warehouseOutNo" type="numeric"></field>
+		<field name="warehouseInNo" type="numeric"></field>
+		<field name="warehouseTransferNo" type="numeric"></field>
+		<field name="warehouseReplenishmentNo" type="numeric"></field>
+		<field name="inventorynItemNo" type="numeric"></field>
+		<field name="paymentInOrderNo" type="numeric"></field>
+		<field name="inventorynTransferNo" type="numeric"></field>
+		<field name="lastUpdateDocDate" type="date-time"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="id"/>
+	</entity>
+	
+	<!-- ReturnOrder -->
+	<!-- 退货单HEADER -->
+	<entity entity-name="ReturnOrderHeader" 
+		package-name="org.ofbiz.order.returnorder" 
+		title="ReturnOrderHeader Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="docNo" type="numeric"></field>
+		<field name="partyId" type="id"></field>
+		<field name="storeId" type="id"></field>
+		<field name="movementTypeId" type="id"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="extSystemNo" type="id-vlong"></field>
+		<field name="extDocNo" type="id-vlong"></field>
+		<field name="postingDate" type="date-time"></field>
+		<field name="docStatus" type="indicator"></field>
+		<field name="memo" type="description"></field>
+		<field name="createUserId" type="id"></field>
+		<field name="createDocDate" type="date-time"></field>
+		<field name="lastUpdateUserId" type="id"></field>
+		<field name="lastUpdateDocDate" type="date-time"></field>
+		<field name="memberId" type="id"></field>
+		<field name="primeAmount" type="currency-amount"></field>
+		<field name="rebateAmount" type="currency-amount"></field>
+		<field name="refundAmount" type="currency-amount"></field>
+		<field name="refundStatus" type="indicator"></field>
+		<field name="warehouseStatus" type="indicator"></field>
+		<field name="memberPointAmount" type="numeric"></field>
+		<field name="refundStoreId" type="id"></field>
+		<field name="receiveStoreId" type="id"></field>
+		<field name="approvalUserId" type="id"></field>
+		<field name="approvalDate" type="date-time"></field>
+		<field name="isSync" type="indicator"></field>
+		<field name="printNum" type="numeric"></field>
+		<field name="salesId" type="id"></field>
+		<field name="exchangeStatus" type="indicator"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId"/>
+		<index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+	</entity>
+	<!-- 退货单明细 -->
+	<entity entity-name="ReturnOrderDtl" 
+		package-name="org.ofbiz.order.returnorder" 
+		title="ReturnOrderDtl Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="lineNoBaseEntry" type="numeric"></field>
+		<field name="productId" type="id"></field>
+		<field name="productName" type="name"></field>
+		<field name="barCodes" type="id"></field>
+		<field name="extNo" type="id-vlong"></field>
+		<field name="isSequence" type="indicator"></field>
+		<field name="serialNo" type="id-vlong"></field>
+		<field name="unitPrice" type="currency-amount"></field>
+		<field name="rebatePrice" type="currency-amount"></field>
+		<field name="quantity" type="numeric"></field>
+		<field name="warehouseQuantity" type="numeric"></field>
+		<field name="unLockedQuantity" type="numeric"></field>
+		<field name="rebateAmount" type="currency-amount"></field>
+		<field name="bomAmount" type="currency-amount"></field>
+		<field name="memo" type="description"></field>
+		<field name="isMainProduct" type="indicator"></field>
+		<field name="productSalesPolicyId" type="id"></field>
+		<field name="productSalesPolicyNo" type="numeric"></field>
+		<field name="bomId" type="id"></field>
+		<field name="salesId" type="id"></field>
+		<field name="memberPoint" type="numeric"></field>
+		<field name="isGift" type="indicator"></field>
+		<field name="approvalUserId" type="id"></field>
+		<field name="facilityId" type="id"></field>
+		<field name="faultTypeId" type="id"></field>
+		<field name="faultDescription" type="description"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId"/>
+		<prim-key field="lineNo"/>
+	</entity>	
+ 	
+		<!-- PreCollectionOrder -->
+		<!-- 订金预收单表头 -->
+	<entity entity-name="PreCollectionOrderHeader"
+		package-name="org.ofbiz.order.precollectionorder" 
+		title="PreCollectionOrderHeader Enity">
+		<field name="docId" type="d-id"></field>
+		<field name="docNo" type="numeric"></field>
+		<field name="partyId" type="id"></field>
+		<field name="storeId" type="id"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="extSystemNo" type="long-varchar"></field>
+		<field name="extDocNo" type="long-varchar"></field>
+		<field name="postingDate" type="date-time"></field>
+		<field name="docStatus" type="indicator"></field>
+		<field name="memo" type="long-varchar"></field>
+		<field name="createUserId" type="id-ne"></field>
+		<field name="createDocDate" type="date-time"></field>
+		<field name="lastUpdateUserId" type="id-ne"></field>
+		<field name="lastUpdateDocDate" type="date-time"></field>
+		<field name="amount" type="currency-amount"></field>
+		<field name="approvalUserId" type="id-ne"></field>
+		<field name="approvalDate" type="date-time"></field>
+		<field name="isSync" type="indicator"></field>
+		<field name="printNum" type="numeric"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId" />
+		<index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+	</entity>
+		<!-- 订金预收单明细 -->
+	<entity entity-name="PreCollectionOrderDtl"
+		package-name="org.ofbiz.order.precollectionorder"
+		title="PreCollectionOrderDtl Enity">
+		<field name="docId" type="d-id"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="lineNoBaseEntry" type="numeric"></field>
+		<field name="type" type="very-short"></field>
+		<field name="extNo" type="long-varchar"></field>
+		<field name="amount" type="currency-amount"></field>
+		<field name="preRefundAmount" type="currency-amount"></field>
+		<field name="cardCode" type="short-varchar"></field>
+		<field name="cardName" type="short-varchar"></field>
+		<field name="code" type="short-varchar"></field>
+		<field name="serialNo" type="short-varchar"></field>
+		<field name="memo" type="long-varchar"></field>
+		<field name="approvalUserId" type="short-varchar"></field>
+		<field name="style" type="short-varchar"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId" />
+		<prim-key field="lineNo" />
+	</entity>
+	
+	
+		<!-- PreRefundOrder -->
+		<!-- 订金返还单表头 -->
+	<entity entity-name="PreRefundOrderHeader"
+		package-name="org.ofbiz.order.prerefundorder" 
+		title="PreRefundOrderHeader Enity">
+		<field name="docId" type="d-id"></field>
+		<field name="docNo" type="numeric"></field>
+		<field name="partyId" type="id"></field>
+		<field name="storeId" type="id"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="extSystemNo" type="long-varchar"></field>
+		<field name="extDocNo" type="long-varchar"></field>
+		<field name="postingDate" type="date-time"></field>
+		<field name="docStatus" type="indicator"></field>
+		<field name="memo" type="long-varchar"></field>
+		<field name="createUserId" type="id-ne"></field>
+		<field name="createDocDate" type="date-time"></field>
+		<field name="lastUpdateUserId" type="id-ne"></field>
+		<field name="lastUpdateDocDate" type="date-time"></field>
+		<field name="amount" type="currency-amount"></field>
+		<field name="approvalUserId" type="id-ne"></field>
+		<field name="approvalDate" type="date-time"></field>
+		<field name="isSync" type="indicator"></field>
+		<field name="printNum" type="numeric"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId" />
+		<index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+	</entity>
+		<!-- 订金返还单明细 -->
+	<entity entity-name="PreRefundOrderDtl"
+		package-name="org.ofbiz.order.prerefundorder"
+		title="PreRefundOrderDtl Enity">
+		<field name="docId" type="d-id"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="lineNoBaseEntry" type="numeric"></field>
+		<field name="type" type="very-short"></field>
+		<field name="extNo" type="long-varchar"></field>
+		<field name="amount" type="currency-amount"></field>
+		<field name="cardCode" type="short-varchar"></field>
+		<field name="cardName" type="short-varchar"></field>
+		<field name="code" type="short-varchar"></field>
+		<field name="serialNo" type="short-varchar"></field>
+		<field name="memo" type="long-varchar"></field>
+		<field name="approvalUserId" type="short-varchar"></field>
+		<field name="style" type="short-varchar"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId" />
+		<prim-key field="lineNo" />
+	</entity>
+ 
+ 
+ 
+ <!-- 销售订单HEADER -->
+	<entity entity-name="SaleOrderHeader" 
+		package-name="org.ofbiz.saleorder.SaleOrderHeader" 
+		title="SaleOrderHeader Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="docNo" type="numeric"></field>
+		<field name="partyId" type="id"></field>
+		<field name="storeId" type="id"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="extSystemNo" type="long-varchar"></field>
+		<field name="extDocNo" type="long-varchar"></field>
+		<field name="postingDate" type="date-time"></field>
+		<field name="docStatus" type="long-varchar"></field>
+		<field name="memo" type="long-varchar"></field>
+		<field name="createUserId" type="id"></field>
+		<field name="createDocDate" type="date-time"></field>
+		<field name="lastUpdateUserId" type="id"></field>
+		<field name="lastUpdateDocDate" type="date-time"></field>
+		<field name="memberId" type="id"></field>
+		<field name="primeAmount" type="currency-amount"></field>
+		<field name="rebateAmount" type="currency-amount"></field>
+		<field name="preCollectionAmount" type="currency-amount"></field>
+		<field name="collectionAmount" type="currency-amount"></field>
+		<field name="fundStatus" type="indicator"></field>
+		<field name="warehouseStatus" type="indicator"></field>
+		<field name="returnStatus" type="indicator"></field>
+		<field name="memberPointAmount" type="numeric"></field>
+		<field name="salesId" type="id"></field>
+		<field name="logisticsAddress" type="long-varchar"></field>
+		<field name="collectionStoreId" type="id"></field>
+		<field name="deliveryStoreId" type="id"></field>
+		<field name="movementTypeId" type="id"></field>
+		<field name="approvalUserId" type="id"></field>
+		<field name="approvalDate" type="date-time"></field>
+		<field name="isSync" type="indicator"></field>
+		<field name="printNum" type="numeric"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId" />
+		<index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+	</entity>
+	<!-- 销售订单明细 -->
+	<entity entity-name="SaleOrderDtl" 
+		package-name="org.ofbiz.saleorder.SaleOrderDtl" 
+		title="SaleOrderDtl Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="lineNoBaseEntry" type="numeric"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="productId" type="id"></field>
+		<field name="productName" type="name"></field>
+		<field name="barCodes" type="id-ne"></field>
+		<field name="extNo" type="name"></field>
+		<field name="facilityId" type="id"></field>
+		<field name="serialNo" type="name"></field>
+		<field name="unitPrice" type="currency-amount"></field>
+		<field name="rebatePrice" type="currency-amount"></field>
+		<field name="quantity" type="numeric"></field>
+		<field name="warehouseQuantity" type="numeric"></field>
+		<field name="lockedQuantity" type="numeric"></field>
+		<field name="returnQuantity" type="numeric"></field>
+		<field name="rebateAmount" type="currency-amount"></field>
+		<field name="bomAmount" type="currency-amount"></field>
+		<field name="memo" type="long-varchar"></field>
+		<field name="productSalesPolicyId" type="id"></field>
+		<field name="productSalesPolicyNo" type="numeric"></field>
+		<field name="salesId" type="id"></field>
+		<field name="memberPoint" type="numeric"></field>
+		<field name="isMainProduct" type="indicator"></field>
+		<field name="bomId" type="id-ne"></field>
+		<field name="isGift" type="indicator"></field>
+		<field name="invoiceNo" type="long-varchar"></field>
+		<field name="isSequence" type="id"></field>
+		<field name="approvalUserId" type="id"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId"/>
+		<prim-key field="lineNo"/>
+	
+	</entity>
+	<!-- 商品和促销对应关系 -->
+	<entity entity-name="SaleOrderDtlPrmtn"
+		package-name="org.ofbiz.saleorder.SaleOrderDtlPrmtn" 
+		title="SaleOrderDtlPrmtn Enity">
+		<field name="docId" type="d-id"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="promotionId" type="id"></field>
+		<field name="orderPrmtnId" type="id"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId"/>
+		<prim-key field="lineNo"/>
+		<prim-key field="promotionId"/>
+		</entity>
+		
+		<!-- 促销信息 -->
+		<entity entity-name="SaleOrderPrmtn" 
+		package-name="org.ofbiz.saleorder.SaleOrderPrmtn" 
+		title="SaleOrderPrmtn Enity">
+		<field name="orderPrmtnId" type="id-ne"></field>
+		<field name="promotionId" type="id"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="orderPrmtnId"/>
+		</entity>
+ 	
+ 	<!-- //销售订单商品销售价格明细 -->
+		<entity entity-name="SalesOrderPriceDtl"
+		package-name="org.ofbiz.saleorder.SalesOrderPriceDtl" 
+		title="SalesOrderPriceDtl Enity">
+		<field name="docId" type="d-id"></field>
+		<field name="lineNo" type="numeric"></field>
+ 		<field name="productPriceTypeId" type="id"></field>	
+ 		<field name="productPriceRuleId" type="id"></field>
+ 		<field name="price" type="id"></field>
+ 		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+ 		<prim-key field="docId"/>
+ 		<prim-key field="lineNo"/>
+ 		<prim-key field="productPriceTypeId"/>
+ 		<prim-key field="productPriceRuleId"/>
+ 		</entity>
+ 		
+ <!-- 收款单表头 -->
+		<entity entity-name="CollectionOrderHeader"
+		package-name="org.ofbiz.collectionorder.CollectionOrderHeader" 
+		title="CollectionOrderHeader Enity">
+		<field name="docId" type="d-id"></field>
+		<field name="docNo" type="numeric"></field>
+		<field name="partyId" type="id"></field>
+		<field name="storeId" type="id"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="extSystemNo" type="long-varchar"></field>
+		<field name="extDocNo" type="long-varchar"></field>
+		<field name="postingDate" type="date-time"></field>
+		<field name="docStatus" type="indicator"></field>
+		<field name="memo" type="long-varchar"></field>
+		<field name="createUserId" type="name"></field>
+		<field name="createDocDate" type="date-time"></field>
+		<field name="lastUpdateUserId" type="name"></field>
+		<field name="lastUpdateDocDate" type="date-time"></field>
+		<field name="amount" type="currency-amount"></field>
+		<field name="preCollectionAmount" type="currency-amount"></field>
+		<field name="collectionAmount" type="currency-amount"></field>
+		<field name="approvalUserId" type="name"></field>
+		<field name="approvalDate" type="date-time"></field>
+		<field name="isSync" type="indicator"></field>
+		<field name="printNum" type="numeric"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId" />
+		<index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+
+	
+		</entity>
+		<!-- 收款单明细 -->
+		<entity entity-name="CollectionOrderDtl"
+		package-name="org.ofbiz.collectionorder.CollectionOrderDtl"
+		title="CollectionOrderDtl Enity">
+		<field name="docId" type="d-id"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="lineNoBaseEntry" type="numeric"></field>
+		<field name="type" type="very-short"></field>
+		<field name="style" type="very-short"></field>
+		<field name="code" type="short-varchar"></field>
+		<field name="serialNo" type="long-varchar"></field>
+		<field name="extNo" type="long-varchar"></field>
+		<field name="amount" type="currency-amount"></field>
+		<field name="cardCode" type="short-varchar"></field>
+		<field name="cardName" type="short-varchar"></field>
+		<field name="memo" type="long-varchar"></field>
+		<field name="approvalUserId" type="short-varchar"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId" />
+		<prim-key field="lineNo" />
+		</entity>
+		
+		<!-- 退款单header -->
+		<entity entity-name="RefundOrderHeader"
+		package-name="org.ofbiz.refundorder.RefundOrderHeader" 
+		title="RefundOrderHeader Enity">
+		<field name="docId" type="d-id"></field>
+		<field name="docNo" type="numeric"></field>
+		<field name="partyId" type="id"></field>
+		<field name="storeId" type="id"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="extSystemNo" type="long-varchar"></field>
+		<field name="extDocNo" type="long-varchar"></field>
+		<field name="postingDate" type="date-time"></field>
+		<field name="docStatus" type="indicator"></field>
+		<field name="memo" type="long-varchar"></field>
+		<field name="createUserId" type="name"></field>
+		<field name="createDocDate" type="date-time"></field>
+		<field name="lastUpdateUserId" type="name"></field>
+		<field name="lastUpdateDocDate" type="date-time"></field>
+		<field name="amount" type="currency-amount"></field>
+		<field name="approvalUserId" type="name"></field>
+		<field name="approvalDate" type="date-time"></field>
+		<field name="isSync" type="indicator"></field>
+		<field name="printNum" type="numeric"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId" />
+		<index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+	</entity>
+		<!-- 退款单明细 -->
+		<entity entity-name="RefundOrderDtl"
+		package-name="org.ofbiz.refundorder.RefundOrderDtl"
+		title="RefundOrderDtl Enity">
+		<field name="docId" type="d-id"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="lineNoBaseEntry" type="numeric"></field>
+		<field name="type" type="very-short"></field>
+		<field name="style" type="very-short"></field>
+		<field name="extNo" type="long-varchar"></field>
+		<field name="amount" type="currency-amount"></field>
+		<field name="serialNo" type="long-varchar"></field>
+		<field name="cardCode" type="short-varchar"></field>
+		<field name="code" type="short-varchar"></field>
+		<field name="cardName" type="short-varchar"></field>
+		<field name="memo" type="long-varchar"></field>
+		<field name="approvalUserId" type="short-varchar"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId" />
+		<prim-key field="lineNo" />
+		</entity>
+		<entity entity-name="PostingDate" package-name="org.ofbiz.refundorder.RefundOrderDtl">
+			<field name="productStoreId" type="id-ne"></field>
+			<field name="isSync" type="name"></field>
+			<field name="postingDate" type="date-time"></field>
+			<prim-key field="productStoreId" />
+		</entity>
+		
+		
+		<!--  payment -->
+	
+		<entity entity-name="PaymentInOrderHeader"
+		package-name="org.ofbiz.paymentorder.PaymentInOrderHeader"
+		title="PaymentOrderHeader Enity">
+		<field name="docId" type="d-id"></field>
+		<field name="docNo" type="numeric"></field>
+		<field name="partyId" type="id"></field>
+		<field name="storeId" type="id"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="extSystemNo" type="long-varchar"></field>
+		<field name="extDocNo" type="long-varchar"></field>
+		<field name="postingDate" type="date-time"></field>
+		<field name="docStatus" type="indicator"></field>
+		<field name="amount" type="currency-amount"></field>
+		<field name="memo" type="long-varchar"></field>
+		<field name="createUserId" type="name"></field>
+		<field name="createDocDate" type="date-time"></field>
+		<field name="lastUpdateUserId" type="name"></field>
+		<field name="lastUpdateDocDate" type="date-time"></field>
+		<field name="approvalUserId" type="name"></field>
+		<field name="approvalDate" type="date-time"></field>
+		<field name="isSync" type="indicator"></field>
+		<field name="printNum" type="numeric"></field>
+		<field name="docType" type="indicator"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId" />
+		<index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+		</entity>
+		
+		
+		
+			<!-- 缴款单明细 -->
+		<entity entity-name="PaymentInOrderDtl"
+		package-name="org.ofbiz.paymentorder.PaymentInOrderDtl"
+		title="PaymentOrderDtl Enity">
+		<field name="docId" type="d-id"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="lineNoBaseEntry" type="numeric"></field>
+		<field name="type" type="very-short"></field>
+		<field name="extNo" type="long-varchar"></field>
+		<field name="amount" type="currency-amount"></field>
+		<field name="preAmount" type="currency-amount"></field>
+		<field name="targetAmount" type="currency-amount"></field>
+		<field name="erpCheckAmount" type="currency-amount"></field>
+		<field name="diffAmount" type="currency-amount"></field>
+		<field name="memo" type="long-varchar"></field>
+		<field name="style" type="very-short"></field>
+		<field name="erpMemo" type="long-varchar"></field>
+		<field name="approvalUserId" type="short-varchar"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="docId" />
+		<prim-key field="lineNo" />
+		</entity>
+			
+</entitymodel>

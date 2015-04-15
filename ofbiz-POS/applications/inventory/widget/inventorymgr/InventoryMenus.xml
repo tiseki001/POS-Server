@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<menus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-menu.xsd">
+    <menu name="InventoryAppBar" title="${uiLabelMap.InventoryManager}" extends="CommonAppBarMenu" extends-resource="component://common/widget/CommonMenus.xml">
+        <menu-item name="find" title="${uiLabelMap.InventoryParties}"><link target="findInventory"/></menu-item>
+        <menu-item name="save" title="${uiLabelMap.InventoryFileld}"><link target="SaveInventoryxml"/></menu-item>
+    </menu>
+    <menu name="ProfileTabBar" extends="CommonTabBarMenu" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="find">
+         <menu-item name="find" title="${uiLabelMap.InventoryParties}">
+            <link target="findInventory">
+            </link>
+        </menu-item>
+    </menu>
+    <menu name="ProfileTabBar" extends="CommonTabBarMenu" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="find">
+         <menu-item name="save" title="${uiLabelMap.InventoryFileld}">
+            <link target="SaveInventoryxml">
+            </link>
+        </menu-item>
+    </menu>
+</menus>

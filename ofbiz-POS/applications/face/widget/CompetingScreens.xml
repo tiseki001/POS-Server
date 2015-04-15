@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+	<!--搜索竞品 -->
+	<screen name="findCompeting">
+		<section>
+			<actions>
+				<set field="headerItem" value="main" />
+				<set field="viewIndex" from-field="requestParameters.VIEW_INDEX"
+					type="Integer" />
+				<set field="tabButtonItem" value="findCompeting" />
+
+				<set field="viewSize" from-field="requestParameters.VIEW_SIZE"
+					type="Integer" default-value="20" />
+			</actions>
+			<widgets>
+				<decorator-screen name="CompetingCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+								<decorator-screen name="FindScreenDecorator"
+									location="component://common/widget/CommonScreens.xml">
+									<decorator-section name="menu-bar">
+										<container style="button-bar">
+											<include-menu name="competinginfo"
+												location="component://Face/widget/FaceMenus.xml" />
+										</container>
+									</decorator-section>
+									<decorator-section name="search-options">
+										<include-form name="findCompeting"
+											location="component://Face/widget/CompetingForms.xml" />
+									</decorator-section>
+									<decorator-section name="search-results">
+										<include-form name="ListCompeting"
+											location="component://Face/widget/CompetingForms.xml" />
+									</decorator-section>
+								</decorator-screen>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+	<!-- 查看竞品信息 -->
+	<screen name="FindCompeingInfo">
+		<section>
+			<actions>
+				<set field="titleProperty" value="PageTitleFindProductPriceType" />
+				<set field="headerItem" value="findCompeting" />
+				<set field="tabButtonItem" value="findCompeting" />
+				<set field="productStoreId" from-field="parameters.productStoreId" />
+				<set field="docId" from-field="parameters.docId" />
+				<entity-one entity-name="Competing" value-field="Competing"
+					auto-field-map="true" />
+				<set field="viewIndex" from-field="parameters.VIEW_INDEX_1"
+					type="Integer" default-value="0" />
+				<set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer"
+					default-value="10" />
+			</actions>
+			<widgets>
+				<decorator-screen name="CommonPromotionActivityDecorators">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+								<screenlet title="基础信息">
+									<include-form name="findCompetingheader"
+										location="component://Face/widget/CompetingForms.xml" />
+								</screenlet>
+								<screenlet title="详细">
+									<include-form name="AddCompeting"
+										location="component://Face/widget/CompetingForms.xml" />
+									<include-form name="ListCompetingConditions"
+										location="component://Face/widget/CompetingForms.xml" />
+								</screenlet>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+
+
+	<!--竞品管理 -->
+	<screen name="getCompeting">
+		<section>
+			<actions>
+				<set field="headerItem" value="main" />
+				<set field="viewIndex" from-field="requestParameters.VIEW_INDEX"
+					type="Integer" />
+				<set field="tabButtonItem" value="getCompeting" />
+				<entity-one entity-name="Competing" value-field="entity" />
+				<set field="viewSize" from-field="requestParameters.VIEW_SIZE"
+					type="Integer" default-value="20" />
+			</actions>
+			<widgets>
+				<decorator-screen name="CompetingCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+								<decorator-screen name="FindScreenDecorator"
+									location="component://common/widget/CommonScreens.xml">
+									<decorator-section name="menu-bar">
+										<container style="button-bar">
+											<include-menu name="competinginfo"
+												location="component://Face/widget/FaceMenus.xml" />
+										</container>
+									</decorator-section>
+									<decorator-section name="search-options">
+										<include-form name="getCompeting"
+											location="component://Face/widget/CompetingForms.xml" />
+									</decorator-section>
+									<decorator-section name="search-results">
+										<include-form name="competinginfoList"
+											location="component://Face/widget/CompetingForms.xml" />
+									</decorator-section>
+								</decorator-screen>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<!-- 基本信息 -->
+
+	<screen name="createCompeting">
+		<section>
+			<actions>
+				<set field="titleProperty" value="PageTitleEditPromotionActivity" />
+				<set field="headerItem" value="main" />
+				<set field="tabButtonItem" value="findCompeting" />
+			</actions>
+			<widgets>
+				<decorator-screen name="CommonPromotionActivityDecorators">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+
+								<screenlet title="基础信息">
+									<include-form name="createCompetingInformation"
+										location="component://Face/widget/CompetingForms.xml" />
+								</screenlet>
+								<screenlet title="详细">
+									<include-form name="AddCompeting"
+										location="component://Face/widget/CompetingForms.xml" />
+									<include-form name="ListCompetingConditions"
+										location="component://Face/widget/CompetingForms.xml" />
+								</screenlet>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+
+
+	<!-- 更新明细信息 -->
+	<screen name="updateCompetings">
+		<section>
+		<actions>
+				<set field="tabButtonItem" value="findCompeting" />
+				<entity-one entity-name="CompetingDtl" value-field="entity" />
+			</actions>
+			<widgets>
+				<decorator-screen name="CommonPromotionActivityDecorators">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+								<screenlet title="更新明细">
+									<include-form name="updateCompetings"
+										location="component://Face/widget/CompetingForms.xml" />
+								</screenlet>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+
+
+	<screen name="CommonPromotionActivityDecorators">
+		<section>
+			<actions>
+				<set field="headerItem" value="findCompeting" />
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+								<container style="button-bar">
+									<include-menu name="competinginfo"
+										location="component://Face/widget/FaceMenus.xml" />
+								</container>
+							</widgets>
+						</section>
+						<section>
+							<!-- do check for CATALOG, _VIEW permission -->
+							<condition>
+								<or>
+									<if-has-permission permission="Face" action="_ADMIN" />
+									<if-has-permission permission="Face" action="_CREATE" />
+									<if-has-permission permission="Face" action="_UPDATE" />
+									<if-has-permission permission="Face" action="_VIEW" />
+								</or>
+							</condition>
+							<actions>
+								<set field="productStoreId" from-field="parameters.productStoreId" />
+								<set field="docId" from-field="parameters.docId" />
+								<entity-one entity-name="Competing" value-field="competing"
+									auto-field-map="true" />
+							</actions>
+							<widgets>
+								<label style="h1">竞品信息${Competing.docId}
+									【${productStoreId}】
+								</label>
+								<decorator-section-include name="body" />
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+
+</screens>

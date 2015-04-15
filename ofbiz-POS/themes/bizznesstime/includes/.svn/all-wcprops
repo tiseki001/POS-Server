@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/themes/bizznesstime/includes
+END
+footer.ftl
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/themes/bizznesstime/includes/footer.ftl
+END
+appbar.ftl
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/themes/bizznesstime/includes/appbar.ftl
+END
+messages.ftl
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/themes/bizznesstime/includes/messages.ftl
+END
+header.ftl
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/themes/bizznesstime/includes/header.ftl
+END
+secondary-appbar.ftl
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/themes/bizznesstime/includes/secondary-appbar.ftl
+END

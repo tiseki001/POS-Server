@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<title>Entity of an Open For Business Project Component</title>
+	<description>None</description>
+	<version>1.0</version>
+	<!-- 移动数据类型 id 名称 描述 储存表id 起始地址id 重点地址id -->
+	<entity entity-name="MovementType" package-name="org.ofbiz.inventory.movementType"
+		title="MovementType Entity">
+		<field name="movementTypeId" type="id-ne"></field>
+		<field name="movementTypeIdTo" type="id"></field>
+		<field name="movementTypeName" type="name"></field>
+		<field name="description" type="value"></field>
+		<field name="inventoryTransferTypeId" type="id"></field>
+		<field name="fromfacilityTypeId" type="id"></field>
+		<field name="tofacilityTypeId" type="id"></field>
+		<prim-key field="movementTypeId" />
+		<!-- 储存数据表 -->
+		<relation type="one" rel-entity-name="InventorynTransferType">
+			<key-map field-name="inventoryTransferTypeId" />
+		</relation>
+		<!-- 类型 -->
+		<relation type="one" rel-entity-name="FacilityType">
+			<key-map field-name="fromfacilityTypeId" rel-field-name="facilityTypeId" />
+			<key-map field-name="tofacilityTypeId" rel-field-name="facilityTypeId" />
+		</relation>
+	</entity>
+	<view-entity entity-name="MovementTypeView" package-name="org.ofbiz.inventory.movementType">
+		<member-entity entity-alias="MT" entity-name="MovementType" />
+		<member-entity entity-alias="MTC" entity-name="MovementTypeCatalog" />
+		
+		<alias entity-alias="MTC" name="orderType" />
+		
+		<alias entity-alias="MT" name="movementTypeId" />
+		<alias entity-alias="MT" name="movementTypeName" />
+		
+		<view-link  entity-alias="MT" rel-entity-alias="MTC" rel-optional="true">
+			<key-map field-name="movementTypeId" />
+		</view-link>
+	</view-entity>
+	<view-entity entity-name="MoveTypeTransferTypeView" package-name="org.ofbiz.inventory.movementType">
+		<member-entity entity-alias="MT" entity-name="MovementType" />
+		<member-entity entity-alias="ITT" entity-name="InventorynTransferType" />
+		<alias entity-alias="MT" name="movementTypeId" />
+		<alias entity-alias="MT" name="movementTypeIdTo" />
+		<alias entity-alias="ITT" name="baseEntity" />
+		<view-link rel-entity-alias="ITT" entity-alias="MT" rel-optional="true">
+			<key-map field-name="inventoryTransferTypeId" />
+		</view-link>
+	</view-entity>
+	<!-- 储存记录表 -->
+	<entity entity-name="InventorynTransferType" package-name="org.ofbiz.inventory"
+		title="InventorynTransferType Entity">
+		<field name="inventoryTransferTypeId" type="id-ne"></field>
+		<field name="description" type="name"></field>
+		<field name="baseEntity" type="name"></field>
+		<prim-key field="inventoryTransferTypeId" />
+	</entity>
+	<!-- 移动类型分类 -->
+	<entity entity-name="MovementTypeCatalog" package-name="org.ofbiz.inventory.movementType"
+		title="MovementTypeCatalog Entity">
+		<field name="movementTypeId" type="id"></field>
+		<field name="orderType" type="name"></field>
+		<field name="memo" type="name"></field>
+		<prim-key field="movementTypeId" />
+		<prim-key field="orderType" />
+	</entity>
+	
+	<entity entity-name="InventoryCommand" package-name="org.ofbiz.inventory"
+		title="InventoryCommand Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="description" type="name"></field>
+		<field name="baseEntity" type="name"></field>
+		<field name="extSystemNo" type="name"></field>
+		<field name="extDocNo" type="name"></field>
+		<field name="docDate" type="date-time"></field>
+		<field name="updateDate" type="date-time"></field>
+		<field name="docStatus" type="name"></field>
+		<field name="status" type="name"></field>
+		<field name="memo" type="name"></field>
+		<field name="isSync" type="indicator"></field>
+		<field name="partyId" type="id"></field>
+		<field name="userId" type="id"></field>
+		<field name="updateUserId" type="id"></field>
+		<field name="preDate" type="date-time"></field>
+		<field name="isAllProduct" type="indicator"></field>
+		<field name="isAllFacility" type="indicator"></field>
+		<field name="commandType" type="indicator"></field>
+		<prim-key field="docId" />
+		<index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+	</entity>
+	<entity entity-name="InventoryCommandStore" package-name="org.ofbiz.inventory"
+		title="InventoryCommandStore Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="productStoreId" type="id"></field>
+		<field name="isRun" type="indicator"></field>
+		<prim-key field="docId" />
+		<prim-key field="productStoreId" />
+	</entity>
+	<entity entity-name="InventoryCommandFacility" package-name="org.ofbiz.inventory"
+		title="InventoryCommandFacility Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="facilityId" type="id"></field>
+		<field name="isRun" type="indicator"></field>
+		<prim-key field="docId" />
+		<prim-key field="facilityId" />
+	</entity>
+<entity entity-name="InventoryCommandProduct" package-name="org.ofbiz.inventory"
+		title="InventoryCommandProduct Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="lineNo" type="id"></field>
+		<field name="productId" type="name"></field>
+		<field name="sequenceId" type="name"></field>
+		<field name="isFicility" type="indicator"></field>
+		<prim-key field="docId" />
+		<prim-key field="lineNo"></prim-key>
+	</entity>
+	<view-entity entity-name="InventoryCommandAndProductView" package-name="org.ofbiz.inventory">
+		<member-entity entity-alias="IC" entity-name="InventoryCommand"/>
+		<member-entity entity-alias="ICP" entity-name="InventoryCommandProduct"/>
+		<alias entity-alias="IC" name="commandType"/>
+		<alias entity-alias="ICP" name="productId"/>
+		<alias entity-alias="ICP" name="sequenceId"/>
+		<view-link entity-alias="IC" rel-entity-alias="ICP">
+			<key-map field-name="docId"/>
+		</view-link>
+	</view-entity>
+	<!-- <entity entity-name="InventoryCommandProduct" package-name="org.ofbiz.inventory"
+		title="InventoryCommandProduct Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="seqnum" type="id"></field>
+		<field name="left1" type="name"></field>
+		<field name="tableName" type="name"></field>
+		<field name="fieldName" type="name"></field>
+		<field name="operate" type="name"></field>
+		<field name="value1" type="name"></field>
+		<field name="right1" type="name"></field>
+		<field name="relation" type="name"></field>
+		<field name="formula" type="long-varchar"></field>
+		<prim-key field="docId" />
+		<prim-key field="seqnum"></prim-key>
+	</entity> -->
+	<view-entity entity-name="CommandStoreAndCommand" package-name="org.ofbiz.inventory">
+		<member-entity entity-alias="ICS" entity-name="InventoryCommandStore"/>
+		<member-entity entity-alias="IC" entity-name="InventoryCommand"/>
+		<member-entity entity-alias="PS" entity-name="ProductStore"/>
+		<alias-all entity-alias="IC"/>
+		<alias entity-alias="PS" name="productStoreId"/>
+		<alias entity-alias="PS" name="storeName"/>
+		<view-link entity-alias="ICS" rel-entity-alias="IC" rel-optional="true" >
+			<key-map field-name="docId"/>
+		</view-link>
+		<view-link entity-alias="ICS" rel-entity-alias="PS" rel-optional="true" >
+			<key-map field-name="productStoreId"/>
+		</view-link>
+	</view-entity>
+	
+	<view-entity entity-name="CommandFacilityAndCommand" package-name="org.ofbiz.inventory">
+		<member-entity entity-alias="ICF" entity-name="InventoryCommandFacility"/>
+		<member-entity entity-alias="IC" entity-name="InventoryCommand"/>
+		<member-entity entity-alias="FA" entity-name="Facility"/>
+		<alias-all entity-alias="IC"/>
+		<alias entity-alias="FA" name="facilityId"/>
+		<alias entity-alias="FA" name="facilityName"/>
+		<view-link entity-alias="ICF" rel-entity-alias="FA" rel-optional="true">
+			<key-map field-name="facilityId"/>
+		</view-link>
+		<view-link entity-alias="ICF" rel-entity-alias="IC" rel-optional="true">
+			<key-map field-name="docId"/>
+		</view-link>
+	</view-entity>
+	
+	
+	<entity entity-name="ProductStoreRange" package-name="org.ofbiz.inventory"
+		title="ProductStoreRole Entity">
+		<field name="productStoreId" type="id"></field>
+		<field name="productStoreIdTo" type="id"></field>
+		<field name="isEnable" type="indicator"></field>
+		<prim-key field="productStoreId" />
+		<prim-key field="productStoreIdTo" />
+	</entity>
+	<view-entity entity-name="ProductStoreRangeView" package-name="org.ofbiz.inventory">
+		<member-entity entity-alias="PSR" entity-name="ProductStoreRange"/>
+		<member-entity entity-alias="PSI" entity-name="PosStoreInfo"/>
+		<member-entity entity-alias="PS" entity-name="ProductStore"/>
+		<alias-all entity-alias="PS"/>
+		
+		<view-link entity-alias="PSR" rel-entity-alias="PSI">
+			<key-map field-name="productStoreId" rel-field-name="storeId"/>
+		</view-link>
+		<view-link entity-alias="PSR" rel-entity-alias="PS" rel-optional="true">
+			<key-map field-name="productStoreIdTo" rel-field-name="productStoreId"/>
+		</view-link>
+		<entity-condition>
+			<condition-expr entity-alias="PSR" field-name="isEnable"
+					operator="greater" value="Y" />
+		</entity-condition>
+	</view-entity>
+	<!--<view-entity entity-name="FacilityAndProductAndCommandDetail" package-name="org.ofbiz.inventory">
+		<member-entity entity-alias="ICF" entity-name="InventoryCommandFacility"/>
+		<member-entity entity-alias="CFAC" entity-name="CommandFacilityAndCommand"/>
+		<member-entity entity-alias="PR" entity-name="Product"/>
+		<member-entity entity-alias="II" entity-name="InventorynItem" />
+		<alias entity-alias="ICF" name="docId"/>
+		<alias entity-alias="CFAC" name="facilityId"/>
+		<alias entity-alias="CFAC" name="facilityName"/>
+		<alias entity-alias="PR" name="productName"/>
+		<alias entity-alias="PR" name="productId"/>
+		<alias entity-alias="II" name="onhand"/>
+		<view-link rel-entity-alias="ICF" entity-alias="CFAC">
+			<key-map field-name="docId"/>
+			<entity-condition>
+				<condition-list combine="and">
+					<condition-expr entity-alias="ICF" field-name="facilityId" operator="in" rel-entity-alias="CFAC" rel-field-name="facilityId"/>
+				</condition-list>
+			</entity-condition>
+		</view-link>
+	</view-entity>
+-->
+	<entity entity-name="StoreAreaInventory" package-name="org.ofbiz.inventory"
+		title="StoreAreaInventory Entity">
+		<field name="productStoreId" type="id"></field>
+		<field name="area" type="name"></field>
+		<field name="enable" type="indicator"></field>
+		<field name="isDelete" type="indicator"></field>
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="long-varchar"></field>
+		<field name="attrName5" type="long-varchar"></field>
+		<field name="attrName6" type="long-varchar"></field>
+		<prim-key field="productStoreId" />
+		<prim-key field="area" />
+	</entity>
+
+
+</entitymodel>

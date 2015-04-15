@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/soap
+END
+SOAPGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/soap/SOAPGroup.java
+END
+SOAPPrincipal.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/soap/SOAPPrincipal.java
+END
+SOAPRole.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/soap/SOAPRole.java
+END
+SOAPAttribute.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/soap/SOAPAttribute.java
+END
+SOAPCookieInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/soap/SOAPCookieInfo.java
+END
+SearchRestriction.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/soap/SearchRestriction.java
+END
+SOAPNestableGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/soap/SOAPNestableGroup.java
+END

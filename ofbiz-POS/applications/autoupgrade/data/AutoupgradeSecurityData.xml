@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityPermission description="View operations in the Autoupgrade Component." permissionId="AUTOUPGRADE_VIEW"/>
+    <SecurityPermission description="Create operations in the Autoupgrade Component." permissionId="AUTOUPGRADE_CREATE"/>
+    <SecurityPermission description="Update operations in the Autoupgrade Component." permissionId="AUTOUPGRADE_UPDATE"/>
+    <SecurityPermission description="Delete operations in the Autoupgrade Component." permissionId="AUTOUPGRADE_DELETE"/>
+    <SecurityPermission description="ALL operations in the Autoupgrade Component." permissionId="AUTOUPGRADE_ADMIN"/>
+    
+    <SecurityGroupPermission groupId="FULLADMIN" permissionId="AUTOUPGRADE_ADMIN"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="AUTOUPGRADE_CREATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="AUTOUPGRADE_DELETE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="AUTOUPGRADE_UPDATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="AUTOUPGRADE_VIEW"/>
+    <SecurityGroupPermission groupId="VIEWADMIN" permissionId="AUTOUPGRADE_VIEW"/>
+    <!-- <SecurityGroupPermission groupId="BIZADMIN" permissionId="AUTOUPGRADE_ADMIN"/> -->
+</entity-engine-xml>

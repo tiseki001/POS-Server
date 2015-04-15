@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+	<!-- 相当于简单的dao层 -->
+	<!-- 查询的方法 -->
+	<simple-method method-name="findInventory" short-description="Find all MovementType">
+		<field-to-list field="MovementType" list="movementTypeList"/>
+        <set value="movementTypeList" field="movementTypeListName"/>
+        <field-to-result field="movementTypeList"/>
+	</simple-method>
+	<!-- 添加方法 -->
+	<simple-method method-name="createInventory" short-description="Save a MovementType">
+        <make-value value-field="newEntity" entity-name="MovementType"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+       	<if-empty field="parameters.movementTypeId">
+            <sequenced-id sequence-name="MovementType" field="newEntity.movementTypeId"/>
+            <!-- <sequenced-id sequence-name="MovementType" field="parameters.movementTypeId"/> -->
+            <else>
+            	<entity-one entity-name="MovementType" value-field="movementType"/>
+            	<if-not-empty field="movementType">
+            		<add-error><fail-property resource="InventoryUiLabels" property="MovementTypeIdError"/></add-error>
+            		<check-errors/>
+            	</if-not-empty>
+            	<set-pk-fields value-field="newEntity" map="parameters"/>
+            </else>
+        </if-empty>
+        
+        <!-- 储存数据 
+		<set field="inventory.inventoryTransferTypeId" value="1"/>
+	 	<set field="inventory.description" from-field="parameters.description"/>
+		<call-service service-name="createInventoryTransferType" in-map-name="inventory">
+			<result-to-field result-name="inventoryTransferTypeId" field="inventoryTransferTypeId"/>
+		</call-service>
+        <set from-field="inventoryTransferTypeId" field="newEntity.inventoryTransferTypeId"/>-->
+        <create-value value-field="newEntity"/>
+	</simple-method>
+	<!-- 创建储存数据
+	<simple-method method-name="createInventoryTransferType" short-description="Save a InventoryTransferType">
+        <make-value value-field="newEntity" entity-name="InventorynTransferType"/>
+        <set-nonpk-fields map="parameters" value-field="newEntity"/>
+        <sequenced-id sequence-name="InventoryTransferType" field="newEntity.inventoryTransferTypeId"/>
+        <create-value value-field="newEntity"/>
+        <set field="inventoryTransferTypeId" from-field="newEntity.inventoryTransferTypeId"/>
+        <field-to-result field="inventoryTransferTypeId"/>
+	</simple-method> -->
+	<!-- 删除的方法 -->
+	<simple-method method-name="deleteInventory" short-description="Delete a MovementType">
+        <make-value entity-name="MovementType" value-field="lookupPKMap"/>
+        <set-pk-fields map="parameters" value-field="lookupPKMap"/>
+        <find-by-primary-key entity-name="MovementType" map="lookupPKMap" value-field="lookedUpValue"/>
+       <remove-value value-field="lookedUpValue"/>
+	</simple-method>
+	<!-- 修改的方法 -->
+	<simple-method method-name="updateInventory" short-description="Update a MovementType">
+        <make-value entity-name="MovementType" value-field="lookupPKMap"/>
+        <set-pk-fields map="parameters" value-field="lookupPKMap"/>
+        <find-by-primary-key entity-name="MovementType" map="lookupPKMap" value-field="lookedUpValue"/>
+        <set-nonpk-fields map="parameters" value-field="lookedUpValue"/>
+        <store-value value-field="lookedUpValue"/>
+	</simple-method>
+	<!-- get的方法 
+	<simple-method method-name="getInventory" short-description="Get a MovementType">
+        <make-value entity-name="MovementType" value-field="lookupPKMap"/>
+        <set-pk-fields map="parameters" value-field="lookupPKMap"/>
+        <find-by-primary-key entity-name="MovementType" map="lookupPKMap" value-field="lookedUpValue"/>
+        <set-nonpk-fields map="parameters" value-field="lookedUpValue"/>
+        <field-to-result field="lookedUpValue" result-name="movementType"/>
+	</simple-method>-->
+</simple-methods>

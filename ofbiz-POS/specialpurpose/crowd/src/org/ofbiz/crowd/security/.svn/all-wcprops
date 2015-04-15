@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/org/ofbiz/crowd/security
+END
+SecurityServerLocator.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/org/ofbiz/crowd/security/SecurityServerLocator.java
+END
+SecurityServerPortType.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/org/ofbiz/crowd/security/SecurityServerPortType.java
+END
+SecurityServerHttpBindingStub.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/org/ofbiz/crowd/security/SecurityServerHttpBindingStub.java
+END
+SecurityServer.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/org/ofbiz/crowd/security/SecurityServer.java
+END

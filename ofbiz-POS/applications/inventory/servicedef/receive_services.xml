@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Inventory Component Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+    <!-- 查询指令头 -->
+    <service name="findReceiveCommandWeb" engine="java" export="true"
+            location="org.ofbiz.receive.webService.ReceiveWebService" invoke="findReceiveCommand">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询收货单 -->
+    <service name="findReceiveDocWeb" engine="java" export="true"
+            location="org.ofbiz.receive.webService.ReceiveWebService" invoke="findReceiveDoc">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询收货单明细 -->
+    <service name="findReceiveItemWeb" engine="java" export="true"
+            location="org.ofbiz.receive.webService.ReceiveWebService" invoke="findReceiveItem">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询指令明细 -->
+    <service name="findReceiveItemcommandWeb" engine="java" export="true"
+            location="org.ofbiz.receive.webService.ReceiveWebService" invoke="findReceiveItemcommand">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询状态 -->
+    <service name="findDllConstantWeb" engine="java" export="true"
+            location="org.ofbiz.receive.webService.ReceiveWebService" invoke="findDllConstant">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询移动类型 -->
+    <service name="findMovementWeb" engine="java" export="true"
+            location="org.ofbiz.receive.webService.ReceiveWebService" invoke="findMovementWeb">
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 删除指令头 -->
+    <service name="deleteReceiveCommandWeb" engine="java" export="true"
+            location="org.ofbiz.receive.webService.ReceiveWebService" invoke="deleteReceiveCommand">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>  
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 调拨收货 -->
+    <service name="createReceiveWeb" engine="java" export="true" transaction-timeout="12000"
+            location="org.ofbiz.receive.webService.ReceiveWebService" invoke="allocateReceive">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>  
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 修改收货单 -->
+    <service name="updateReceiveWeb" engine="java" export="true"
+            location="org.ofbiz.receive.webService.ReceiveWebService" invoke="updateReceive">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>  
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 修改打印次数 -->
+    <service name="updateReceivePrintWeb" engine="java" export="true"
+            location="org.ofbiz.receive.webService.ReceiveWebService" invoke="updateReceivePrint">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>  
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+</services>

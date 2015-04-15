@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/debian/source
+END
+format
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/debian/source/format
+END
+include-binaries
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/debian/source/include-binaries
+END

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>autoupgrade Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+	<service name="findReport" engine="simple" default-entity-name="Report" auth="false"
+            location="component://report/script/org/ofbiz/report/ReportServices.xml" invoke="findReport" >
+   		 <attribute name="reportList" mode="OUT" type="List" optional="false"/>
+    </service>
+</services>

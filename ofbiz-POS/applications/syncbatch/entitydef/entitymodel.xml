@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+  <!-- ========================================================= -->
+  <!-- ======================== Defaults ======================= -->
+  <!-- ========================================================= -->
+    <title>Entity of an Open For Business Project Component</title>
+    <description>None</description>
+    <version>1.0</version>
+
+  <!-- ========================================================= -->
+  <!-- ======================== Data Model ===================== -->
+  <!-- The modules in this file are as follows:                  -->
+  <!-- ========================================================= -->
+  <!-- org.ofbiz.syncbatch -->
+  <!-- ========================================================= -->
+
+	 <entity entity-name="SyncStoreInfo"
+            package-name="org.ofbiz.syncbatch"
+            title="同步记录">
+        <field name="sequence" type="name"></field>
+        <field name="storeId" type="name"></field>
+		<field name="syncTime" type="date-time"></field>
+		<field name="tableName" type="name"></field>
+		<field name="KeyVal1" type="long-varchar"></field>
+		<field name="KeyVal2" type="long-varchar"></field>
+		<field name="KeyVal3" type="long-varchar"></field>
+		<field name="KeyVal4" type="long-varchar"></field>
+		<field name="KeyVal5" type="long-varchar"></field>
+
+		<prim-key field="sequence"/>
+    </entity>
+    <entity entity-name="SyncError"
+            package-name="org.ofbiz.syncbatch"
+            title="同步失败记录">
+
+		<field name="tableName" type="name"></field>
+		<field name="pKeyVal" type="long-varchar"></field>
+		<field name="errMsg" type="long-description"></field>
+
+		<prim-key field="tableName"/>
+		<prim-key field="pKeyVal"/>
+    </entity>
+    <entity entity-name="SyncSchedule"
+            package-name="org.ofbiz.syncbatch"
+            title="同步开始时间">
+
+		<field name="entityName" type="long-varchar"></field>
+		<field name="startTime" type="date-time"></field>
+
+		<prim-key field="entityName"/>
+
+    </entity>
+    
+    <!-- add by ft start -->
+    <entity entity-name="SyncScheduleHome"
+            package-name="org.ofbiz.syncbatch"
+            title="同步开始时间（总部用）">
+		<field name="productStoreId" type="id"></field>
+		<field name="syncEntityName" type="long-varchar"></field>
+		<field name="startTime" type="date-time"></field>
+
+		<prim-key field="productStoreId"/>
+		<prim-key field="syncEntityName"/>
+
+    </entity>
+    <!-- add by ft end -->
+	<view-entity entity-name="SyncScheduleS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="SyncSchedule Sync">
+		<member-entity entity-alias="VA" entity-name="SyncSchedule" />
+		<member-entity entity-alias="PSI" entity-name="PosStoreInfo" />		
+		<alias-all entity-alias="VA" />	
+		<alias entity-alias="PSI" name="productStoreId" field="storeId" />	
+		<alias entity-alias="VA" name="syncEntityName" field="entityName" />	
+		<alias entity-alias="VA" name="startTime" />	
+		<alias entity-alias="VA" name="lastUpdatedStamp" />		
+	</view-entity>
+    <entity entity-name="PartyType1" never-cache="true"
+            package-name="org.ofbiz.party.party"
+            default-resource-name="PartyEntityLabels"
+            title="Party Type Entity">
+      <field name="partyTypeId" type="id-ne"></field>
+      <field name="parentTypeId" type="id"></field>
+      <field name="hasTable" type="indicator"></field>
+      <field name="description" type="description"></field>
+      <field name="uploadF" type="indicator"></field>
+      <prim-key field="partyTypeId"/>
+
+    </entity>
+    
+    
+    <view-entity entity-name="DeliveryItemcommandS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="DeliveryItemcommand Sync">
+		<member-entity entity-alias="DI" entity-name="DeliveryItemcommand" />
+		<member-entity entity-alias="DC" entity-name="DeliveryCommand" />		
+		<alias-all entity-alias="DI" />
+		<alias entity-alias="DI" name="lastUpdatedStamp" />	
+		<view-link entity-alias="DI" rel-entity-alias="DC">
+			<key-map field-name="docId" />
+		</view-link>		
+	</view-entity>
+	<view-entity entity-name="DeliveryItemS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="DeliveryItem Sync">
+		<member-entity entity-alias="DI" entity-name="DeliveryItem" />
+		<member-entity entity-alias="DD" entity-name="DeliveryDoc" />		
+		<alias-all entity-alias="DI" />
+		<alias entity-alias="DI" name="lastUpdatedStamp" />			
+		<view-link entity-alias="DI" rel-entity-alias="DD">
+			<key-map field-name="docId" />
+		</view-link>		
+	</view-entity>
+	<view-entity entity-name="ReceiveItemcommandS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="ReceiveItemcommand Sync">
+		<member-entity entity-alias="RI" entity-name="ReceiveItemcommand" />
+		<member-entity entity-alias="RC" entity-name="ReceiveCommand" />		
+		<alias-all entity-alias="RI" />	
+		<alias entity-alias="RI" name="lastUpdatedStamp" />		
+		<view-link entity-alias="RI" rel-entity-alias="RC">
+			<key-map field-name="docId" />
+		</view-link>		
+	</view-entity>
+	
+	
+	<view-entity entity-name="ProductSequenceS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="ProductSequence Sync">
+		<member-entity entity-alias="RI" entity-name="ReceiveItemcommand" />
+		<member-entity entity-alias="RC" entity-name="ReceiveCommand" />
+		<member-entity entity-alias="PS" entity-name="ProductSequence" />		
+		<alias-all entity-alias="PS" />	
+		<alias entity-alias="PS" name="lastUpdatedStamp" />		
+		<view-link entity-alias="RI" rel-entity-alias="RC">
+			<key-map field-name="docId" />
+		</view-link>
+		<view-link entity-alias="RI" rel-entity-alias="PS">
+			<key-map field-name="productId" />
+			<key-map field-name="sequenceId" />
+		</view-link>		
+	</view-entity>
+	<view-entity entity-name="ProductSequenceC" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="ProductSequence Sync">
+		<member-entity entity-alias="RI" entity-name="ReceiveItemcommand" />
+		<member-entity entity-alias="RC" entity-name="ReceiveCommand" />
+		<member-entity entity-alias="PS" entity-name="ProductSequence" />		
+		<alias-all entity-alias="PS" />	
+		<alias entity-alias="RI" name="lastUpdatedStamp" />		
+		<view-link entity-alias="RI" rel-entity-alias="RC">
+			<key-map field-name="docId" />
+		</view-link>
+		<view-link entity-alias="RI" rel-entity-alias="PS">
+			<key-map field-name="productId" />
+			<key-map field-name="sequenceId" />
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="ReceiveItemS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="ReceiveItem Sync">
+		<member-entity entity-alias="RI" entity-name="ReceiveItem" />
+		<member-entity entity-alias="RD" entity-name="ReceiveDoc" />		
+		<alias-all entity-alias="RI" />	
+		<alias entity-alias="RI" name="lastUpdatedStamp" />		
+		<view-link entity-alias="RI" rel-entity-alias="RD">
+			<key-map field-name="docId" />
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="SaleOrderHeaderS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="SaleOrderHeader Sync">
+		<member-entity entity-alias="SOH" entity-name="SaleOrderHeader" />
+		<member-entity entity-alias="SD" entity-name="SyncDoc" />		
+		<alias-all entity-alias="SOH" />
+		<alias entity-alias="SOH" name="lastUpdatedStamp" />		
+		<view-link entity-alias="SOH" rel-entity-alias="SD" rel-optional="true">
+			<key-map field-name="docId" />
+			<entity-condition>
+			  <condition-expr entity-alias="SD" field-name="docType"
+				operator="equals" value="S" />
+		   </entity-condition>
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="SaleOrderDtlS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="SaleOrderDtl Sync">
+		<member-entity entity-alias="SOD" entity-name="SaleOrderDtl" />
+		<member-entity entity-alias="SOH" entity-name="SaleOrderHeader" />
+		<member-entity entity-alias="SD" entity-name="SyncDoc" />		
+		<alias-all entity-alias="SOD" />
+		<alias entity-alias="SOD" name="lastUpdatedStamp" />	
+		<view-link entity-alias="SOD" rel-entity-alias="SOH">
+			<key-map field-name="docId" />			
+		</view-link>				
+		<view-link entity-alias="SOH" rel-entity-alias="SD" rel-optional="true">
+			<key-map field-name="docId" />
+			<entity-condition>
+			  <condition-expr entity-alias="SD" field-name="docType"
+				operator="equals" value="S" />
+		   </entity-condition>
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="SalesOrderPriceDtlS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="SalesOrderPriceDtl Sync">
+		<member-entity entity-alias="SOD" entity-name="SalesOrderPriceDtl" />
+		<member-entity entity-alias="SOH" entity-name="SaleOrderHeader" />
+		<member-entity entity-alias="SD" entity-name="SyncDoc" />		
+		<alias-all entity-alias="SOD" />
+		<alias entity-alias="SOD" name="lastUpdatedStamp" />	
+		<view-link entity-alias="SOD" rel-entity-alias="SOH">
+			<key-map field-name="docId" />			
+		</view-link>				
+		<view-link entity-alias="SOH" rel-entity-alias="SD" rel-optional="true">
+			<key-map field-name="docId" />
+			<entity-condition>
+			  <condition-expr entity-alias="SD" field-name="docType"
+				operator="equals" value="S" />
+		   </entity-condition>
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="ReturnOrderDtlS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="ReturnOrderDtl Sync">
+		<member-entity entity-alias="ROD" entity-name="ReturnOrderDtl" />
+		<member-entity entity-alias="ROH" entity-name="ReturnOrderHeader" />
+			
+		<alias-all entity-alias="ROD" />
+		<alias entity-alias="ROD" name="lastUpdatedStamp" />	
+		<view-link entity-alias="ROD" rel-entity-alias="ROH">
+			<key-map field-name="docId" />			
+		</view-link>				
+		
+	</view-entity>
+	
+	<view-entity entity-name="RefundOrderDtlS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="RefundOrderDtl Sync">
+		<member-entity entity-alias="ROD" entity-name="RefundOrderDtl" />
+		<member-entity entity-alias="ROH" entity-name="RefundOrderHeader" />
+			
+		<alias-all entity-alias="ROD" />
+		<alias entity-alias="ROD" name="lastUpdatedStamp" />	
+		<view-link entity-alias="ROD" rel-entity-alias="ROH">
+			<key-map field-name="docId" />			
+		</view-link>				
+		
+	</view-entity>
+	
+	<view-entity entity-name="CollectionOrderHeaderS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="CollectionOrderHeader Sync">
+		<member-entity entity-alias="COH" entity-name="CollectionOrderHeader" />
+		<member-entity entity-alias="SD" entity-name="SyncDoc" />		
+		<alias-all entity-alias="COH" />
+		<alias entity-alias="COH" name="lastUpdatedStamp" />		
+		<view-link entity-alias="COH" rel-entity-alias="SD" rel-optional="true">
+			<key-map field-name="docId" />
+			<entity-condition>
+			  <condition-expr entity-alias="SD" field-name="docType"
+				operator="equals" value="C" />
+		   </entity-condition>
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="CollectionOrderDtlS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="CollectionOrderDtl Sync">
+		<member-entity entity-alias="COD" entity-name="CollectionOrderDtl" />
+		<member-entity entity-alias="COH" entity-name="CollectionOrderHeader" />
+		<member-entity entity-alias="SD" entity-name="SyncDoc" />		
+		<alias-all entity-alias="COD" />
+		<alias entity-alias="COD" name="lastUpdatedStamp" />
+		<view-link entity-alias="COD" rel-entity-alias="COH">
+			<key-map field-name="docId" />			
+		</view-link>				
+		<view-link entity-alias="COH" rel-entity-alias="SD" rel-optional="true">
+			<key-map field-name="docId" />
+			<entity-condition>
+			  <condition-expr entity-alias="SD" field-name="docType"
+				operator="equals" value="C" />
+		   </entity-condition>
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="ReplenishmentItemS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="ReplenishmentItem Sync">
+		<member-entity entity-alias="RI" entity-name="ReplenishmentItem" />
+		<member-entity entity-alias="R" entity-name="Replenishment" />		
+		<alias-all entity-alias="RI" />	
+		<alias entity-alias="RI" name="lastUpdatedStamp" />
+		<view-link entity-alias="RI" rel-entity-alias="R">
+			<key-map field-name="docId" />
+		</view-link>		
+	</view-entity>
+	
+	
+	<view-entity entity-name="ProductPriceListS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="ProductPriceList View">
+		<member-entity entity-alias="PPL" entity-name="ProductPriceList" />
+		<member-entity entity-alias="PPRS" entity-name="ProductPriceRuleStoreList" />		
+		<alias-all entity-alias="PPL" />
+		<alias entity-alias="PPL" name="lastUpdatedStamp"/>
+		<alias entity-alias="PPL" name="lastUpdatedTxStamp"/>
+		<alias entity-alias="PPL" name="createdStamp"/>
+		<alias entity-alias="PPL" name="createdTxStamp"/>
+		<view-link entity-alias="PPL" rel-entity-alias="PPRS">
+			<key-map field-name="productPriceRuleId" />
+			<entity-condition>
+			  <condition-expr entity-alias="PPRS" field-name="enable"
+				operator="equals" value="Y" />
+		   </entity-condition>
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="PaymentInOrderDtlS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="PaymentInOrderDtl Sync">
+		<member-entity entity-alias="RI" entity-name="PaymentInOrderDtl" />
+		<member-entity entity-alias="R" entity-name="PaymentInOrderHeader" />		
+		<alias-all entity-alias="RI" />	
+		<alias entity-alias="RI" name="lastUpdatedStamp" />
+		<view-link entity-alias="RI" rel-entity-alias="R">
+			<key-map field-name="docId" />
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="VersionAttachmentS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="VersionAttachment Sync">
+		<member-entity entity-alias="VA" entity-name="VersionAttachment" />
+		<member-entity entity-alias="PSI" entity-name="PosStoreInfo" />		
+		<alias-all entity-alias="VA" />	
+		<alias entity-alias="PSI" name="storeId" />		
+		<alias entity-alias="VA" name="lastUpdatedStamp" />		
+	</view-entity>
+	
+	
+	<view-entity entity-name="PreOrderDtlS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="PreOrderDtl Sync">
+		<member-entity entity-alias="RI" entity-name="PreOrderDtl" />
+		<member-entity entity-alias="R" entity-name="PreOrderHeader" />		
+		<alias-all entity-alias="RI" />	
+		<alias entity-alias="RI" name="lastUpdatedStamp" />
+		<view-link entity-alias="RI" rel-entity-alias="R">
+			<key-map field-name="docId" />
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="BackOrderDtlS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="BackOrderDtl Sync">
+		<member-entity entity-alias="RI" entity-name="BackOrderDtl" />
+		<member-entity entity-alias="R" entity-name="BackOrderHeader" />		
+		<alias-all entity-alias="RI" />	
+		<alias entity-alias="RI" name="lastUpdatedStamp" />
+		<view-link entity-alias="RI" rel-entity-alias="R">
+			<key-map field-name="docId" />
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="PreRefundOrderDtlS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="PreRefundOrderDtl Sync">
+		<member-entity entity-alias="RI" entity-name="PreRefundOrderDtl" />
+		<member-entity entity-alias="R" entity-name="PreRefundOrderHeader" />		
+		<alias-all entity-alias="RI" />	
+		<alias entity-alias="RI" name="lastUpdatedStamp" />
+		<view-link entity-alias="RI" rel-entity-alias="R">
+			<key-map field-name="docId" />
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="PreCollectionOrderDtlS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="PreCollectionOrderDtl Sync">
+		<member-entity entity-alias="RI" entity-name="PreCollectionOrderDtl" />
+		<member-entity entity-alias="R" entity-name="PreCollectionOrderHeader" />		
+		<alias-all entity-alias="RI" />	
+		<alias entity-alias="RI" name="lastUpdatedStamp" />
+		<view-link entity-alias="RI" rel-entity-alias="R">
+			<key-map field-name="docId" />
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="PartyS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="Party Sync">
+		<member-entity entity-alias="P" entity-name="Party" />
+		<member-entity entity-alias="PSR" entity-name="ProductStoreRole" />		
+		<alias-all entity-alias="P" />	
+		<alias entity-alias="P" name="lastUpdatedStamp" />
+		<view-link entity-alias="P" rel-entity-alias="PSR">
+			<key-map field-name="partyId" />
+		</view-link>		
+	</view-entity>
+	<view-entity entity-name="PersonS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="Person Sync">
+		<member-entity entity-alias="P" entity-name="Person" />
+		<member-entity entity-alias="PSR" entity-name="ProductStoreRole" />		
+		<alias-all entity-alias="P" />	
+		<alias entity-alias="P" name="lastUpdatedStamp" />
+		<view-link entity-alias="P" rel-entity-alias="PSR">
+			<key-map field-name="partyId" />
+		</view-link>		
+	</view-entity>
+	<view-entity entity-name="PartyStatusS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="PartyStatus Sync">
+		<member-entity entity-alias="P" entity-name="PartyStatus" />
+		<member-entity entity-alias="PSR" entity-name="ProductStoreRole" />		
+		<alias-all entity-alias="P" />	
+		<alias entity-alias="P" name="lastUpdatedStamp" />
+		<view-link entity-alias="P" rel-entity-alias="PSR">
+			<key-map field-name="partyId" />
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="PartyRoleS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="PartyRole Sync">
+		<member-entity entity-alias="P" entity-name="PartyRole" />
+		<member-entity entity-alias="PSR" entity-name="ProductStoreRole" />		
+		<alias-all entity-alias="P" />	
+		<alias entity-alias="P" name="lastUpdatedStamp" />
+		<view-link entity-alias="P" rel-entity-alias="PSR">
+			<key-map field-name="partyId" />
+			<key-map field-name="roleTypeId" />
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="PartyClassificationS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="PartyClassification Sync">
+		<member-entity entity-alias="P" entity-name="PartyClassification" />
+		<member-entity entity-alias="PSR" entity-name="ProductStoreRole" />		
+		<alias-all entity-alias="P" />	
+		<alias entity-alias="P" name="lastUpdatedStamp" />
+		<view-link entity-alias="P" rel-entity-alias="PSR">
+			<key-map field-name="partyId" />
+		</view-link>		
+	</view-entity>
+	
+	<view-entity entity-name="UserLoginS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="UserLogin Sync">
+		<member-entity entity-alias="P" entity-name="UserLogin" />
+		<member-entity entity-alias="PSR" entity-name="ProductStoreRole" />		
+		<alias-all entity-alias="P" />	
+		<alias entity-alias="P" name="lastUpdatedStamp" />
+		<view-link entity-alias="P" rel-entity-alias="PSR">
+			<key-map field-name="partyId" />
+		</view-link>		
+	</view-entity>
+	<view-entity entity-name="InventoryDetailS" never-cache="true"
+		package-name="org.ofbiz.syncbatch" title="InventoryDetail Sync">
+		<member-entity entity-alias="RI" entity-name="InventoryDetail" />
+		<member-entity entity-alias="R" entity-name="PreOrderHeader" />		
+		<alias-all entity-alias="RI" />	
+		<alias entity-alias="RI" name="lastUpdatedStamp" />
+		<view-link entity-alias="RI" rel-entity-alias="R">
+			<key-map field-name="docId" />
+		</view-link>		
+	</view-entity>
+	
+</entitymodel>

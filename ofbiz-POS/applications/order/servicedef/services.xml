@@ -1,0 +1,873 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Order Component Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+
+    <!-- PreOrder services -->
+    <service name="createPreOrderAll" engine="java"
+            location="org.ofbiz.order.preorder.PreOrderServices" invoke="createPreOrderAll"  export="true">
+        <description>createPreOrderAll</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="updatePreOrderAll" engine="java"
+            location="org.ofbiz.order.preorder.PreOrderServices" invoke="updatePreOrderAll"  export="true">
+        <description>updatePreOrderAll</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="createPreOrder" engine="java"
+            location="org.ofbiz.order.preorder.PreOrderServices" invoke="createPreOrder"  export="true">
+        <description>Create a PreOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="updatePreOrderStatus" engine="java"
+            location="org.ofbiz.order.preorder.PreOrderServices" invoke="updatePreOrderStatus" export="true" >
+        <description>Set the PreOrder status.</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="updatePreOrder" engine="java"
+            location="org.ofbiz.order.preorder.PreOrderServices" invoke="updatePreOrder" export="true">
+        <description>update PreOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="getPreOrderById" engine="java"
+            location="org.ofbiz.order.preorder.PreOrderServices" invoke="getPreOrderById" export="true">
+        <description>getPreOrder By Id</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" /> 
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service> 
+     <service name="deletePreOrderById" engine="java"
+            location="org.ofbiz.order.preorder.PreOrderServices" invoke="deletePreOrderById" export="true" >
+        <description>deletePreOrder By Id</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>  
+    <service name="getPreOrderHeaderByCondition" engine="java"
+            location="org.ofbiz.order.preorder.PreOrderServices" invoke="getPreOrderHeaderByCondition" export="true">
+        <description>getPreOrderHeader By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service>
+     <service name="getPreOrderHeaderById" engine="java"
+            location="org.ofbiz.order.preorder.PreOrderServices" invoke="getPreOrderHeaderById" export="true">
+        <description>getPreOrderHeader By Id</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" />
+       <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service>
+    <service name="getPreOrderDtlByCondition" engine="java"
+            location="org.ofbiz.order.preorder.PreOrderServices" invoke="getPreOrderDtlByCondition" export="true">
+        <description>getPreOrderDtl By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service>
+    <service name="getPreOrderDtlById" engine="java"
+            location="org.ofbiz.order.preorder.PreOrderServices" invoke="getPreOrderDtlById" export="true">
+        <description>getPreOrderDtl By Id</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" />
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service>
+    <service name="addPreOrderRtnQt" engine="java"
+            location="org.ofbiz.order.preorder.PreOrderServices" invoke="addPreOrderRtnQt" export="true">
+        <description>add PreOrder BackQuantity</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="addPreOrderCollectionAmount" engine="java"
+            location="org.ofbiz.order.preorder.PreOrderServices" invoke="addPreOrderCollectionAmount" export="true">
+        <description>add PreOrder BackQuantity</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+     
+      <!-- BackOrder services -->
+     <service name="createBackOrderAll" engine="java"
+           location="org.ofbiz.order.backorder.BackOrderServices" invoke="createBackOrderAll"  export="true">
+       <description>createBackOrderAll</description>
+       <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+       <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="updateBackOrderAll" engine="java"
+           location="org.ofbiz.order.backorder.BackOrderServices" invoke="updateBackOrderAll"  export="true">
+       <description>updateBackOrderAll</description>
+       <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+       <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="createBackOrder" engine="java"
+            location="org.ofbiz.order.backorder.BackOrderServices" invoke="createBackOrder"  export="true">
+        <description>Create a BackOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="updateBackOrderStatus" engine="java"
+            location="org.ofbiz.order.backorder.BackOrderServices" invoke="updateBackOrderStatus" export="true" >
+        <description>Set the BackOrder status.</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="updateBackOrder" engine="java"
+            location="org.ofbiz.order.backorder.BackOrderServices" invoke="updateBackOrder" export="true">
+        <description>update BackOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="getBackOrderById" engine="java"
+            location="org.ofbiz.order.backorder.BackOrderServices" invoke="getBackOrderById" export="true">
+        <description>getBackOrder By Id</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service> 
+    <service name="getBackOrderHeaderById" engine="java"
+            location="org.ofbiz.order.backorder.BackOrderServices" invoke="getBackOrderHeaderById" export="true">
+        <description>getBackOrderHeaderById</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service>
+    <service name="getBackOrderHeaderByCondition" engine="java"
+            location="org.ofbiz.order.backorder.BackOrderServices" invoke="getBackOrderHeaderByCondition" export="true">
+        <description>getBackOrderHeader By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service>
+     <service name="getBackOrderDtlById" engine="java"
+            location="org.ofbiz.order.backorder.BackOrderServices" invoke="getBackOrderDtlById" export="true">
+        <description>getBackOrderDtlById</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service>
+    <service name="getBackOrderDtlByCondition" engine="java"
+            location="org.ofbiz.order.backorder.BackOrderServices" invoke="getBackOrderDtlByCondition" export="true">
+        <description>getBackOrderDtl By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service>
+    <service name="addBackOrderPreRefundAmount" engine="java"
+            location="org.ofbiz.order.backorder.BackOrderServices" invoke="addBackOrderPreRefundAmount" export="true">
+        <description>add BackOrder PreRefundAmount</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+    <!-- QeuryDataForSales services -->
+    <service name="getProductPriceTypeList" engine="java"
+            location="org.ofbiz.querydataforsales.QueryDataForSalesServices" invoke="getProductPriceTypeList" export="true">
+        <description>getProductPriceTypeList</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" />
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service> 
+    <service name="getFacilityByCond" engine="java"
+            location="org.ofbiz.querydataforsales.QueryDataForSalesServices" invoke="getFacilityByCond" export="true">
+        <description>getFacilityByCond</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" />
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service> 
+    <service name="getProductByCond" engine="java"
+            location="org.ofbiz.querydataforsales.QueryDataForSalesServices" invoke="getProductByCond" export="true">
+        <description>getProductByCond</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" />
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service> 
+    <service name="getPreOrderProductByCond" engine="java"
+            location="org.ofbiz.querydataforsales.QueryDataForSalesServices" invoke="getPreOrderProductByCond" export="true">
+        <description>getPreOrderProductByCond</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" />
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service> 
+    <service name="getBomByCond" engine="java"
+            location="org.ofbiz.querydataforsales.QueryDataForSalesServices" invoke="getBomByCond" export="true">
+        <description>getBomByCond</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service> 
+    <service name="getProductByBomCond" engine="java"
+          location="org.ofbiz.querydataforsales.QueryDataForSalesServices" invoke="getProductByBomCond" export="true">
+      <description>getProductByBomCond</description>
+      <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+      <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service> 
+    
+    <service name="getPaymentMethod" engine="java"
+            location="org.ofbiz.querydataforsales.QueryDataForSalesServices" invoke="getPaymentMethod" export="true">
+        <description>getPaymentMethod</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service> 
+     <service name="getPaymentAmount" engine="java"
+            location="org.ofbiz.querydataforsales.QueryDataForSalesServices" invoke="getPaymentAmount" export="true">
+        <description>getPaymentAmount</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service> 
+    
+    
+    
+       <service name="getMemberByPhoneNo" engine="java" auth="false"
+            location="org.ofbiz.querydataforsales.QueryDataForSalesServices" invoke="getMemberByPhoneNo" export="true">
+        <description>getMemberByPhoneNo</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service> 
+    
+       <service name="getSalesPersonBySalesPersonId" engine="java"
+            location="org.ofbiz.querydataforsales.QueryDataForSalesServices" invoke="getSalesPersonBySalesPersonId" export="true">
+        <description>getSalesPersonBySalesPersonId</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service> 
+    
+     <service name="updateHeaderMemo" engine="java"
+            location="org.ofbiz.querydataforsales.QueryDataForSalesServices" invoke="updateHeaderMemo" export="true">
+        <description>getFacilityByCond</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" />
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service> 
+    
+    <service name="updateDetailMemo" engine="java"
+            location="org.ofbiz.querydataforsales.QueryDataForSalesServices" invoke="updateDetailMemo" export="true">
+        <description>getFacilityByCond</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" />
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service> 
+    
+  
+     <!-- QeuryDataCommon services -->
+    <service name="getOrderId" engine="java"
+            location="org.ofbiz.querydatacommon.QueryDataCommonServices" invoke="getOrderId" export="true">
+        <description>getOrderId</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service> 
+
+    
+    
+    
+    <!-- SaleOrder services -->
+      <service name="createSalesOrderAll" engine="java"
+            location="org.ofbiz.order.saleorder.SaleOrderService" invoke="createSalesOrderAll"  export="true">
+        <description>Create a SaleOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+    
+    
+    
+	    <service name="createSalesOrder" engine="java"
+            location="org.ofbiz.order.saleorder.SaleOrderService" invoke="createSalesOrder"  export="true" >
+        <description>Create a SaleOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+   
+    
+     <service name="updateSalesOrderAll" engine="java"
+            location="org.ofbiz.order.saleorder.SaleOrderService" invoke="updateSalesOrderAll"  export="true">
+        <description>updateSalesOrderAll</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+	
+ 	 <service name="updateSalesOrderStatus" engine="java"
+            location="org.ofbiz.order.saleorder.SaleOrderService" invoke="updateSalesOrderStatus"  export="true">
+        <description>updateSalesOrderStatus</description>
+       <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+   	
+    </service>
+
+ <service name="updateSalesOrder" engine="java"
+            location="org.ofbiz.order.saleorder.SaleOrderService" invoke="updateSalesOrder"  export="true">
+        <description>updateSalesOrder</description>
+       <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+    
+  <service name="addSalesOrderWhsQty" engine="java"
+       location="org.ofbiz.order.saleorder.SaleOrderService" invoke="addSalesOrderWhsQty"  export="true">
+        <description>addSalesOrderWhsQty</description>
+       <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+    
+     <service name="addSalesOrderRtnQty" engine="java"
+       location="org.ofbiz.order.saleorder.SaleOrderService" invoke="addSalesOrderRtnQty"  export="true">
+        <description>addSalesOrderRtnQty</description>
+       <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+    
+     <service name="addSalesOrderCollectionAmount" engine="java"
+       location="org.ofbiz.order.saleorder.SaleOrderService" invoke="addSalesOrderCollectionAmount"  export="true">
+        <description>addSalesOrderCollectionAmount</description>
+       <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+    
+    
+     <service name="getSalesOrderById" engine="java"
+            location="org.ofbiz.order.saleorder.SaleOrderService" invoke="getSalesOrderById"  export="true" >
+        <description>getSalesOrderById</description>
+       <attribute name="jsonStr" type="String" mode="IN" optional="true" />
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+   
+     <service name="getSalesOrderByCondition" engine="java"
+            location="org.ofbiz.order.saleorder.SaleOrderService" invoke="getSalesOrderByCondition"  export="true">
+        <description>getSalesOrderByCondition</description>
+    <attribute name="jsonStr" type="String" mode="IN" optional="true" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="true"/>
+    </service>
+    
+     <service name="getSalesOrderHeaderById" engine="java"
+            location="org.ofbiz.order.saleorder.SaleOrderService" invoke="getSalesOrderHeaderById"  export="true">
+        <description>getSalesOrderHeaderById</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+    
+    
+         <service name="deleteSalesOrderById" engine="java"
+            location="org.ofbiz.order.saleorder.SaleOrderService" invoke="deleteSalesOrderById"  export="true">
+        <description>deleteSalesOrderById</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+    
+    
+     <service name="getSalesOrderHeaderByCondition" engine="java"
+            location="org.ofbiz.order.saleorder.SaleOrderService" invoke="getSalesOrderHeaderByCondition"  export="true">
+        <description>getSalesOrderHeaderByCondition</description>
+       <attribute name="jsonStr" type="String" mode="IN" optional="true" allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+    
+     <service name="getSalesOrderDtlByCondition" engine="java"
+            location="org.ofbiz.order.saleorder.SaleOrderService" invoke="getSalesOrderDtlByCondition"  export="true">
+        <description>getSalesOrderDtlByCondition</description>
+      <attribute name="jsonStr" type="String" mode="IN" optional="true" allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+    
+			  <service name="getSalesOrderDtlById" engine="java"
+            location="org.ofbiz.order.saleorder.SaleOrderService" invoke="getSalesOrderDtlById"  export="true">
+        <description>getSalesOrderById</description>
+      <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+		<!-- ====================CollectiomOrder============================= -->		   
+		<!-- CollectionOrder services -->
+	    <service name="createCollectionOrder" engine="java"
+            location="org.ofbiz.order.collectionorder.CollectionOrderService" invoke="createCollectionOrder"  export="true">
+        <description>createCollectionOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+   	 </service>
+	
+ 	<service name="updateCollectionOrderStatus" engine="java"
+            location="org.ofbiz.order.collectionorder.CollectionOrderService" invoke="updateCollectionOrderStatus"  export="true">
+        <description>updateCollectionOrderStatus</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+   	 </service>
+   	 
+   	 <service name="updateCollectionOrder" engine="java"
+            location="org.ofbiz.order.collectionorder.CollectionOrderService" invoke="updateCollectionOrder"  export="true">
+        <description>updateCollectionOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+   	 </service>
+   	 
+   	  <service name="getCollectionOrderById" engine="java"
+            location="org.ofbiz.order.collectionorder.CollectionOrderService" invoke="getCollectionOrderById"  export="true">
+        <description>getCollectionOrderById</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+   	 </service>
+   	 
+   	 
+   	   <service name="getCollectionOrderByCondition" engine="java"
+            location="org.ofbiz.order.collectionorder.CollectionOrderService" invoke="getCollectionOrderByCondition"  export="true">
+        <description>getCollectionOrderByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true" allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+   	 </service>
+   	 
+   	  <service name="getCollectionOrderHeaderByCondition" engine="java"
+            location="org.ofbiz.order.collectionorder.CollectionOrderService" invoke="getCollectionOrderHeaderByCondition"  export="true">
+        <description>getCollectionOrderHeaderByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true" allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+   	 </service>
+   	 
+   	 	  <service name="getCollectionOrderDtlByCondition" engine="java"
+            location="org.ofbiz.order.collectionorder.CollectionOrderService" invoke="getCollectionOrderDtlByCondition"  export="true">
+        <description>getCollectionOrderDtlByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true" allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+   	 </service>
+   	 
+   	
+   	  <service name="updateCollectionAmount" engine="java"
+            location="org.ofbiz.order.collectionorder.CollectionOrderService" invoke="updateCollectionAmount"  export="true">
+        <description>getCollectionOrderDtlByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+   	 </service>
+		
+	
+		 <!-- SalesoutWhsOrder services -->
+    <service name="createSalesOutWhsOrder" engine="java"
+            location="org.ofbiz.order.salesoutwhsorder.SalesOutWhsOrderService" invoke="createSalesOutWhsOrder"  export="true">
+        <description>createSalesOutWhsOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+    
+     <service name="updateSalesOutWhsOrderStatus" engine="java"
+            location="org.ofbiz.order.salesoutwhsorder.SalesOutWhsOrderService" invoke="updateSalesOutWhsOrderStatus"  export="true">
+        <description>updateSalesOutWhsOrderStatus</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+    
+      <service name="updateSalesOutWhsOrder" engine="java"
+            location="org.ofbiz.order.salesoutwhsorder.SalesOutWhsOrderService" invoke="updateSalesOutWhsOrder"  export="true">
+        <description>updateSalesOutWhsOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+    
+     <service name="getSalesOutWhsOrderById" engine="java"
+            location="org.ofbiz.order.salesoutwhsorder.SalesOutWhsOrderService" invoke="getSalesOutWhsOrderById"  export="true">
+        <description>getSalesOutWhsOrderById</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true" />
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+    
+     <service name="getSalesOutWhsOrderByCondition" engine="java"
+            location="org.ofbiz.order.salesoutwhsorder.SalesOutWhsOrderService" invoke="getSalesOutWhsOrderByCondition"  export="true">
+        <description>getSalesOutWhsOrderByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="true" allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="true"/>
+    </service>
+    
+    
+     <service name="getSalesOutWhsOrderHeaderByCondition" engine="java"
+            location="org.ofbiz.order.salesoutwhsorder.SalesOutWhsOrderService" invoke="getSalesOutWhsOrderHeaderByCondition"  export="true">
+        <description>getSalesOutWhsOrderHeaderByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+    
+     <service name="getSalesOutWhsOrderDtlByCondition" engine="java"
+            location="org.ofbiz.order.salesoutwhsorder.SalesOutWhsOrderService" invoke="getSalesOutWhsOrderDtlByCondition"  export="true">
+        <description>getSalesOutWhsOrderDtlByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+		    <service name="getSalesOutWhsOrderHeaderById" engine="java"
+            location="org.ofbiz.order.salesoutwhsorder.SalesOutWhsOrderService" invoke="getSalesOutWhsOrderHeaderById"  export="true">
+        <description>getSalesOutWhsOrderHeaderById</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>		
+				
+		  
+     <service name="getSalesOutWhsOrderDtlById" engine="java"
+            location="org.ofbiz.order.salesoutwhsorder.SalesOutWhsOrderService" invoke="getSalesOutWhsOrderDtlById"  export="true">
+        <description>getSalesOutWhsOrderDtlByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+				
+				   
+    
+     <!-- ReturnOrder services -->
+     <service name="createReturnOrderAll" engine="java"
+            location="org.ofbiz.order.returnorder.ReturnOrderServices" invoke="createReturnOrderAll"  export="true">
+        <description>Create ReturnOrderAll</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+     <service name="updateReturnOrderAll" engine="java"
+            location="org.ofbiz.order.returnorder.ReturnOrderServices" invoke="updateReturnOrderAll"  export="true">
+        <description>Create ReturnOrderAll</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="createReturnOrder" engine="java"
+            location="org.ofbiz.order.returnorder.ReturnOrderServices" invoke="createReturnOrder"  export="true">
+        <description>Create a ReturnOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="updateReturnOrderStatus" engine="java"
+            location="org.ofbiz.order.returnorder.ReturnOrderServices" invoke="updateReturnOrderStatus" export="true" >
+        <description>Set the ReturnOrder status.</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="updateReturnOrder" engine="java"
+            location="org.ofbiz.order.returnorder.ReturnOrderServices" invoke="updateReturnOrder" export="true">
+        <description>update ReturnOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="getReturnOrderById" engine="java"
+            location="org.ofbiz.order.returnorder.ReturnOrderServices" invoke="getReturnOrderById" export="true">
+        <description>getReturnOrder By Id</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service> 
+    <service name="getReturnOrderHeaderByCondition" engine="java"
+            location="org.ofbiz.order.returnorder.ReturnOrderServices" invoke="getReturnOrderHeaderByCondition" export="true">
+        <description>getReturnOrderHeader By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service>
+    <service name="getReturnOrderDtlByCondition" engine="java"
+            location="org.ofbiz.order.returnorder.ReturnOrderServices" invoke="getReturnOrderDtlByCondition" export="true">
+        <description>getReturnOrderDtl By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service>
+    <service name="addReturnOrderRefundAmount" engine="java"
+            location="org.ofbiz.order.returnorder.ReturnOrderServices" invoke="addReturnOrderRefundAmount" export="true">
+        <description>add ReturnOrder RefundAmount</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="addReturnOrderWhsQty" engine="java"
+            location="org.ofbiz.order.returnorder.ReturnOrderServices" invoke="addReturnOrderWhsQty" export="true">
+        <description>add ReturnOrder WarehouseQuantity</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="getReturnOrderHeaderById" engine="java"
+            location="org.ofbiz.order.returnorder.ReturnOrderServices" invoke="getReturnOrderHeaderById" export="true">
+        <description>getReturnOrderHeader By ID</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" />
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service>
+	<service name="getReturnOrderDtlById" engine="java"
+            location="org.ofbiz.order.returnorder.ReturnOrderServices" invoke="getReturnOrderDtlById" export="true">
+        <description>getReturnOrderDtl By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" />
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service>
+	   <!-- PreCollectionOrder services -->
+    <service name="createPreCollectionOrder" engine="java"
+            location="org.ofbiz.order.precollectionorder.PreCollectionOrderServices" invoke="createPreCollectionOrder"  export="true">
+        <description>Create a PreCollectionOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="updatePreCollectionOrderStatus" engine="java"
+            location="org.ofbiz.order.precollectionorder.PreCollectionOrderServices" invoke="updatePreCollectionOrderStatus" export="true" >
+        <description>Set the PreCollectionOrderStatus.</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="updatePreCollectionOrder" engine="java"
+            location="org.ofbiz.order.precollectionorder.PreCollectionOrderServices" invoke="updatePreCollectionOrder" export="true">
+        <description>update PreCollectionOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="getPreCollectionOrderById" engine="java"
+            location="org.ofbiz.order.precollectionorder.PreCollectionOrderServices" invoke="getPreCollectionOrderById" export="true">
+        <description>getPreCollectionOrder By Id</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service> 
+    <service name="getPreCollectionOrderHeaderByCondition" engine="java"
+            location="org.ofbiz.order.precollectionorder.PreCollectionOrderServices" invoke="getPreCollectionOrderHeaderByCondition" export="true">
+        <description>getPreCollectionOrderHeader  ByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service>
+    <service name="getPreCollectionOrderDtlByCondition" engine="java"
+            location="org.ofbiz.order.precollectionorder.PreCollectionOrderServices" invoke="getPreCollectionOrderDtlByCondition" export="true">
+        <description>getPreCollectionOrder By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false" />
+    </service>
+    <service name="addPreCollectionAmount" engine="java"
+            location="org.ofbiz.order.precollectionorder.PreCollectionOrderServices" invoke="addPreCollectionAmount" export="true">
+        <description>addPreCollectionOrderAmount</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+    
+       <!-- PreRefundOrder services -->
+    <service name="createPreRefundOrder" engine="java"
+            location="org.ofbiz.order.prerefundorder.PreRefundOrderServices" invoke="createPreRefundOrder"  export="true">
+        <description>Create a PreRefundOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="updatePreRefundOrderStatus" engine="java"
+            location="org.ofbiz.order.prerefundorder.PreRefundOrderServices" invoke="updatePreRefundOrderStatus" export="true" >
+        <description>Set the PreRefundOrderStatus.</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="updatePreRefundOrder" engine="java"
+            location="org.ofbiz.order.prerefundorder.PreRefundOrderServices" invoke="updatePreRefundOrder" export="true">
+        <description>update PreRefundOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="getPreRefundOrderById" engine="java"
+            location="org.ofbiz.order.prerefundorder.PreRefundOrderServices" invoke="getPreRefundOrderById" export="true">
+        <description>getPreRefundOrder By Id</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service> 
+    <service name="getPreRefundOrderHeaderByCondition" engine="java"
+            location="org.ofbiz.order.prerefundorder.PreRefundOrderServices" invoke="getPreRefundOrderHeaderByCondition" export="true">
+        <description>getPreRefundOrderHeader  ByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="getPreRefundOrderDtlByCondition" engine="java"
+            location="org.ofbiz.order.prerefundorder.PreRefundOrderServices" invoke="getPreRefundOrderDtlByCondition" export="true">
+        <description>getPreRefundOrderDtl By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+    <!--  create refundorder -->
+      <service name="createRefundOrder" engine="java"
+            location="org.ofbiz.order.refundorder.RefundOrderService" invoke="createRefundOrder" export="true">
+        <description>createRefundOrder By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+    
+    	 <!-- ReturnInWhsOrder services -->
+    <service name="createReturnInWhsOrder" engine="java"
+            location="org.ofbiz.order.returninwhsorder.ReturnInWhsOrderServices" invoke="createReturnInWhsOrder"  export="true">
+        <description>createReturnInWhsOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+    <service name="updateReturnInWhsOrderStatus" engine="java"
+            location="org.ofbiz.order.returninwhsorder.ReturnInWhsOrderServices" invoke="updateReturnInWhsOrderStatus"  export="true">
+        <description>updateReturnInWhsOrderStatus</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+    <service name="updateReturnInWhsOrder" engine="java"
+            location="org.ofbiz.order.returninwhsorder.ReturnInWhsOrderServices" invoke="updateReturnInWhsOrder"  export="true">
+        <description>updateReturnInWhsOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+    <service name="getReturnInWhsOrderById" engine="java"
+            location="org.ofbiz.order.returninwhsorder.ReturnInWhsOrderServices" invoke="getReturnInWhsOrderById"  export="true">
+        <description>getReturnInWhsOrderById</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" />
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+    <service name="getReturnInWhsOrderByCondition" engine="java"
+            location="org.ofbiz.order.returninwhsorder.ReturnInWhsOrderServices" invoke="getReturnInWhsOrderByCondition"  export="true">
+        <description>getReturnInWhsOrderByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+    <service name="getReturnInWhsOrderHeaderByCondition" engine="java"
+            location="org.ofbiz.order.returninwhsorder.ReturnInWhsOrderServices" invoke="getReturnInWhsOrderHeaderByCondition"  export="true">
+        <description>getReturnInWhsOrderHeaderByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+    <service name="getReturnInWhsOrderDtlByCondition" engine="java"
+            location="org.ofbiz.order.returninwhsorder.ReturnInWhsOrderServices" invoke="getReturnInWhsOrderDtlByCondition"  export="true">
+        <description>getReturnInWhsOrderDtlByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+   		
+      <service name="updateRefundOrderStatus" engine="java"
+            location="org.ofbiz.order.refundorder.RefundOrderService" invoke="updateRefundOrderStatus" export="true">
+        <description>updateRefundOrderStatus By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+    
+     <service name="updateRefundOrder" engine="java"
+            location="org.ofbiz.order.refundorder.RefundOrderService" invoke="updateRefundOrder" export="true">
+        <description>updateRefundOrder By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+  
+      <service name="getRefundOrderHeaderByCondition" engine="java"
+            location="org.ofbiz.order.refundorder.RefundOrderService" invoke="getRefundOrderHeaderByCondition" export="true">
+        <description>getRefundOrderHeaderByCondition By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+     <service name="getRefundOrderDtlByCondition" engine="java"
+            location="org.ofbiz.order.refundorder.RefundOrderService" invoke="getRefundOrderDtlByCondition" export="true">
+        <description>getRefundOrderDtlByCondition By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+    
+      <service name="getRefundOrderById" engine="java"
+            location="org.ofbiz.order.refundorder.RefundOrderService" invoke="getRefundOrderById" export="true">
+        <description>getRefundOrderById By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+       <service name="getRefundOrderByCondition" engine="java"
+            location="org.ofbiz.order.refundorder.RefundOrderService" invoke="getRefundOrderByCondition" export="true">
+        <description>getRefundOrderByCondition By Condition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+
+       <service name="updateChangedPriceList" engine="java"
+            location="org.ofbiz.order.pricelist.PriceListService" invoke="updateChangedPriceList" export="true">
+        <description>update ChangedPriceList By Condition</description>
+        <attribute name="whereCondition" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+
+     <service name="findPostingDateWeb" engine="java"
+            location="org.ofbiz.order.payment.PaymentInOrderService" invoke="findPostingDate"  export="true">
+        <description>Create a PreOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+     <service name="addPostingDateOneDay" engine="java"
+            location="org.ofbiz.order.payment.PaymentInOrderService" invoke="addPostingDateOneDay"  export="true">
+        <description>addPostingDateOneDay</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+
+         <service name="getPersonByProductStoreId" engine="java"
+            location="org.ofbiz.querydataforsales.QueryDataForSalesServices" invoke="getPersonByProductStoreId" export="true">
+        <description>getPersonByProductStoreId</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+
+ 
+  <service name="createPaymentInOrder" engine="java"
+            location="org.ofbiz.order.payment.PaymentInOrderService" invoke="createPaymentInOrder"  export="true" >
+        <description>createPaymentInOrder</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"   allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+   
+
+   <service name="getPaymentInOrderHeaderById" engine="java"
+            location="org.ofbiz.order.payment.PaymentInOrderService" invoke="getPaymentInOrderHeaderById"  export="true" >
+        <description>getPaymentInOrderHeaderById</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"  allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+   
+  <service name="getPaymentInOrderHeaderByCondition" engine="java"
+            location="org.ofbiz.order.payment.PaymentInOrderService" invoke="getPaymentInOrderHeaderByCondition"  export="true" >
+        <description>getPaymentInOrderHeaderByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"  allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+
+    
+     <service name="getPaymentInOrderDtlById" engine="java"
+            location="org.ofbiz.order.payment.PaymentInOrderService" invoke="getPaymentInOrderDtlById"  export="true" >
+        <description>getPaymentInOrderDtlById</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"  allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+
+      <service name="getPaymentInOrderDtlByCondition" engine="java"
+            location="org.ofbiz.order.payment.PaymentInOrderService" invoke="getPaymentInOrderDtlByCondition"  export="true" >
+        <description>getPaymentInOrderDtlByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"  allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+
+
+    <service name="getPaymentInOrderById" engine="java"
+            location="org.ofbiz.order.payment.PaymentInOrderService" invoke="getPaymentInOrderById"  export="true" >
+        <description>getPaymentInOrderById</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"  allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+
+
+
+    <service name="getPaymentInOrderByCondition" engine="java"
+            location="org.ofbiz.order.payment.PaymentInOrderService" invoke="getPaymentInOrderByCondition"  export="true" >
+        <description>getPaymentInOrderByCondition</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"  allow-html="safe"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+    <service name="getPersonByPriceType" engine="java"
+            location="org.ofbiz.querydataforsales.QueryDataForSalesServices" invoke="getPersonByPriceType" export="true">
+        <description>getPersonByPriceType</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="result" type="String" mode="OUT" optional="false"/>
+    </service>
+	 
+	 <!-- SalesPromotionServices -->
+	 <service name="getSalesPromotionList" engine="java"
+            location="org.ofbiz.order.salespromotion.SalesPromotionServices" invoke="getSalesPromotionList"  export="true" >
+        <description>getSalesPromotionList</description>
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"  allow-html="safe"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+     </service>
+     <service name="getProductPromoList" engine="java"
+            location="org.ofbiz.order.salespromotion.SalesPromotionServices" invoke="getProductPromoList"  export="true" >
+        <description>getProductPromoList</description>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+     </service>
+
+</services>

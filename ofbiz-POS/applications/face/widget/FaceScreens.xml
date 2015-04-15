@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+ 
+	<!-- 接口log管理 -->
+	<screen name="logMgr">
+		<section>
+			<actions>
+				<set field="headerItem" value="main" /><!-- this highlights the selected 
+					menu-item with name "main" -->
+				<set field="viewIndex" from-field="requestParameters.VIEW_INDEX"
+					type="Integer" />
+				<set field="viewSize" from-field="requestParameters.VIEW_SIZE"
+					type="Integer" default-value="20" />
+			</actions>
+			<widgets>
+				<decorator-screen name="FaceCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+								<decorator-screen name="FindScreenDecorator"
+									location="component://common/widget/CommonScreens.xml">
+									<decorator-section name="search-options">
+										<include-form name="FindLog"
+											location="component://Face/widget/FaceForms.xml" />
+									</decorator-section>
+									<decorator-section name="search-results">
+										<include-form name="ListLog"
+											location="component://Face/widget/FaceForms.xml" />
+									</decorator-section>
+								</decorator-screen>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<!-- 仓库映射管理 -->
+	<screen name="storageMappingMgr">
+		<section>
+			<actions>
+				<set field="headerItem" value="main" />
+				<set field="viewIndex" from-field="requestParameters.VIEW_INDEX"
+					type="Integer" />
+				<set field="viewSize" from-field="requestParameters.VIEW_SIZE"
+					type="Integer" default-value="20" />
+			</actions>
+			<widgets>
+				<decorator-screen name="FacilityCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+								<decorator-screen name="FindScreenDecorator"
+									location="component://common/widget/CommonScreens.xml">
+									<decorator-section name="menu-bar">
+										<container style="button-bar">
+											<include-menu name="storageMappingMenu"
+												location="component://Face/widget/FaceMenus.xml" />
+										</container>
+									</decorator-section>
+									<decorator-section name="search-options">
+										<include-form name="FindStorageMapping"
+											location="component://Face/widget/FaceForms.xml" />
+									</decorator-section>
+									<decorator-section name="search-results">
+										<include-form name="ListStorageMapping"
+											location="component://Face/widget/FaceForms.xml" />
+									</decorator-section>
+								</decorator-screen>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<!-- 修改仓库映射 创建仓库映射 -->
+	<screen name="editStorageMapping">
+		<section>
+			<actions>
+				<set field="tabButtonItem" value="storageMappingMgr" /><!-- tab默认值 -->
+				<entity-one entity-name="ErpFacilityMap" value-field="entity" />
+			</actions>
+			<widgets>
+				<decorator-screen name="FacilityCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<include-form name="editStorageMapping"
+							location="component://Face/widget/FaceForms.xml" />
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<!-- 销售政策管理 -->
+	<screen name="salesPolicyMgr">
+		<section>
+			<actions>
+				<set field="headerItem" value="main" />
+				<set field="viewIndex" from-field="requestParameters.VIEW_INDEX"
+					type="Integer" />
+				<set field="viewSize" from-field="requestParameters.VIEW_SIZE"
+					type="Integer" default-value="20" />
+			</actions>
+			<widgets>
+				<decorator-screen name="SMFTMgrCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<section>
+							<widgets>
+								<decorator-screen name="FindScreenDecorator"
+									location="component://common/widget/CommonScreens.xml">
+									<decorator-section name="menu-bar">
+										<container style="button-bar">
+											<include-menu name="salesPolicyMenu"
+												location="component://Face/widget/FaceMenus.xml" />
+										</container>
+									</decorator-section>
+									<decorator-section name="search-options">
+										<include-form name="FindSalesPolicy"
+											location="component://Face/widget/FaceForms.xml" />
+									</decorator-section>
+									<decorator-section name="search-results">
+										<include-form name="ListSalesPolicy"
+											location="component://Face/widget/FaceForms.xml" />
+									</decorator-section>
+								</decorator-screen>
+							</widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="editSalesPolicy">
+		<section>
+			<actions>
+				<entity-one entity-name="ErpPolicyRelation" value-field="entity" />
+			</actions>
+			<widgets>
+				<decorator-screen name="SMFTMgrCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<include-form name="editSalesPolicy"
+							location="component://Face/widget/FaceForms.xml" />
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="EditOperators">
+		<section>
+			<actions>
+				<set field="tabButtonItem" value="ERPOperators" />
+				<entity-one entity-name="ErpOperatorsBusiness" value-field="entity" />
+			</actions>
+			<widgets>
+				<decorator-screen name="OperatorsCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<include-form name="EditOperators"
+							location="component://Face/widget/FaceForms.xml" />
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="FindOperators">
+		<section>
+			<actions>
+				<set field="tabButtonItem" value="ERPOperators" /><!-- button选中 设置 -->
+				<entity-one entity-name="ErpPolicyRelation" value-field="entity" />
+			</actions>
+			<widgets>
+				<decorator-screen name="OperatorsCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+							<decorator-section name="menu-bar">
+                                <container style="button-bar">
+                                    <link target="EditOperators" text="新建运营商信息" style="buttontext create"/>
+                                </container>
+                                <screenlet>
+									<include-form name="UploadOperators" location="component://Face/widget/FaceForms.xml" />
+								</screenlet>
+                            </decorator-section>
+							<decorator-section name="search-options">
+								<include-form name="FindOperators" location="component://Face/widget/FaceForms.xml" />
+							</decorator-section>
+							<decorator-section name="search-results">
+								<include-form name="ListOperators" location="component://Face/widget/FaceForms.xml" />
+							</decorator-section>
+						</decorator-screen>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="EditCheck">
+		<section>
+			<actions>
+				<set field="tabButtonItem" value="ERPCheck" />
+				<entity-one entity-name="ErpOptBusinessCheck" value-field="entity" />
+			</actions>
+			<widgets>
+				<decorator-screen name="OperatorsCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<include-form name="EditCheck"
+							location="component://Face/widget/FaceForms.xml" />
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="FindCheck">
+		<section>
+			<actions>
+				<set field="tabButtonItem" value="ERPCheck" /><!-- button选中 设置 -->
+				<entity-one entity-name="ErpOptBusinessCheck" value-field="entity" />
+			</actions>
+			<widgets>
+				<decorator-screen name="OperatorsCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+							<decorator-section name="menu-bar">
+                                <include-menu name="checkMenu" location="component://Face/widget/FaceMenus.xml" />
+                                <screenlet>
+									<include-form name="UploadCheck" location="component://Face/widget/FaceForms.xml" />
+								</screenlet>
+                            </decorator-section>
+							<decorator-section name="search-options">
+								<include-form name="FindCheck" location="component://Face/widget/FaceForms.xml" />
+							</decorator-section>
+							<decorator-section name="search-results">
+								<include-form name="ListCheck" location="component://Face/widget/FaceForms.xml" />
+							</decorator-section>
+						</decorator-screen>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="EditSalesOptBusiness">
+		<section>
+			<actions>
+				<set field="tabButtonItem" value="SaleBusiness" />
+				<entity-one entity-name="ErpSalesOptBusiness" value-field="entity" />
+			</actions>
+			<widgets>
+				<decorator-screen name="OperatorsCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<include-form name="EditSalesOptBusiness"
+							location="component://Face/widget/FaceForms.xml" />
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	<screen name="FindSalesOptBusiness">
+		<section>
+			<actions>
+				<set field="tabButtonItem" value="SaleBusiness" /><!-- button选中 设置 -->
+				<entity-one entity-name="ErpSalesOptBusiness" value-field="entity" />
+			</actions>
+			<widgets>
+				<decorator-screen name="OperatorsCommonDecorator"
+					location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+							<decorator-section name="menu-bar">
+                                <container style="button-bar">
+                                    <link target="CreateSalesOptBusiness" text="获取销售数据" style="buttontext"/>
+                                </container>
+                            </decorator-section>
+							<decorator-section name="search-options">
+								<include-form name="FindSalesOptBusiness" location="component://Face/widget/FaceForms.xml" />
+							</decorator-section>
+							<decorator-section name="search-results">
+								<include-form name="ListSalesOptBusiness" location="component://Face/widget/FaceForms.xml" />
+							</decorator-section>
+						</decorator-screen>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+</screens>

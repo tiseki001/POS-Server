@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+  <!-- ========================================================= -->
+  <!-- ======================== Defaults ======================= -->
+  <!-- ========================================================= -->
+    <title>Entity of an Open For Business Project Component</title>
+    <description>None</description>
+    <version>1.0</version>
+
+  <!-- ========================================================= -->
+  <!-- ======================== Data Model ===================== -->
+  <!-- The modules in this file are as follows:                  -->
+  <!-- ========================================================= -->
+  <!-- org.ofbiz.query -->
+  <!-- ========================================================= -->
+
+	<view-entity entity-name="ProductStoreAndFacility"
+        package-name="org.ofbiz.query"
+        title="ProductStore And Facility View Entity">
+        <member-entity entity-alias="PSF" entity-name="ProductStoreFacility"/>
+        <member-entity entity-alias="PS" entity-name="ProductStore"/>
+		<member-entity entity-alias="FA" entity-name="Facility"/>
+        <alias name="productStoreId" entity-alias="PS" field="productStoreId"/>
+		<alias name="storeName" entity-alias="PS" field="storeName"/>
+		<alias name="ownerPartyId" entity-alias="FA" field="ownerPartyId"/>
+        <view-link entity-alias="PSF" rel-entity-alias="PS">
+            <key-map field-name="productStoreId"/>
+        </view-link>
+         <view-link entity-alias="PSF" rel-entity-alias="FA">
+            <key-map field-name="facilityId"/>
+        </view-link> 
+    </view-entity>
+
+	<view-entity entity-name="PriceListChangeView"
+		package-name="org.ofbiz.syncbatch" title="PriceListChange View">
+		<member-entity entity-alias="PLC" entity-name="PriceListChange" />
+		<member-entity entity-alias="PPRS" entity-name="ProductPriceRuleStoreList" />	
+		<member-entity entity-alias="PSI" entity-name="PosStoreInfo" />	
+		<alias entity-alias="PLC" name="productId" group-by="true"/>
+		<alias entity-alias="PLC" name="productSalesPolicyId" group-by="true"/>
+		<alias entity-alias="PPRS" name="storeId" group-by="true"/>				
+		<view-link entity-alias="PLC" rel-entity-alias="PPRS">
+			<key-map field-name="productPriceRuleId" />
+			<entity-condition>
+			  <condition-expr entity-alias="PPRS" field-name="enable"
+				operator="equals" value="Y" />
+		   </entity-condition>
+		</view-link>
+		<view-link entity-alias="PPRS" rel-entity-alias="PSI">
+			<key-map field-name="storeId" />
+		</view-link>
+		<entity-condition>
+		  <condition-expr entity-alias="PLC" field-name="isSee"
+			operator="equals" value="N" />
+		</entity-condition>		
+	</view-entity>
+    
+    
+    
+
+    <view-entity entity-name="ProductPriceListQuery"
+        package-name="org.ofbiz.query"
+        title="ProductPriceListQuery View Entity">
+        <member-entity entity-alias="P0" entity-name="ProductPriceListView"/>        
+        <member-entity entity-alias="P1" entity-name="ProductPriceListView"/>        
+        <member-entity entity-alias="P2" entity-name="ProductPriceListView"/>   
+        <member-entity entity-alias="S" entity-name="ProductSalesPolicy"/>   
+        <member-entity entity-alias="D" entity-name="Product"/>
+        <member-entity entity-alias="A0" entity-name="ProductFeatureAppl"/>            
+        <member-entity entity-alias="A1" entity-name="ProductFeatureAppl"/>   
+        <member-entity entity-alias="F0" entity-name="ProductFeature"/>    
+        <member-entity entity-alias="F1" entity-name="ProductFeature"/>    
+        <alias entity-alias="P0" name="storeId"/>
+        <alias entity-alias="F1" name="brands" field="description"/>
+        <alias entity-alias="F1" name="brandsType" field="productFeatureTypeId"/>	
+        <alias entity-alias="F0" name="models" field="description"/>
+        <alias entity-alias="F0" name="modelsType" field="productFeatureTypeId"/>        
+        <alias entity-alias="P0" name="productId"/>
+        <alias entity-alias="D" name="productName"/>
+        <alias entity-alias="P0" name="productSalesPolicyId"/>        
+        <alias entity-alias="S" name="policyName"/>         
+ 		<alias entity-alias="P0" name="standardPrice" field="price"/>
+ 		<alias entity-alias="P1" name="minPrice" field="price"/>
+ 		<alias entity-alias="P2" name="costPrice" field="price"/> 		
+        <view-link entity-alias="P0" rel-entity-alias="P1">
+          <key-map field-name="productId"/>
+          <key-map field-name="storeId"/>
+          <key-map field-name="productSalesPolicyId"/>	
+          <entity-condition>
+          <condition-expr entity-alias="P1" field-name="productPriceTypeId"
+				operator="equals" value="SALES_PRICE" />
+		 </entity-condition>    	 
+        </view-link>
+        <view-link entity-alias="P0" rel-entity-alias="P2">
+          <key-map field-name="productId"/>
+          <key-map field-name="storeId"/>
+          <key-map field-name="productSalesPolicyId"/>
+          <entity-condition>
+          <condition-expr entity-alias="P2" field-name="productPriceTypeId"
+				operator="equals" value="CKECK_PRICE" />
+		 </entity-condition>    
+        </view-link>
+        <view-link entity-alias="P0" rel-entity-alias="S">
+          <key-map field-name="productSalesPolicyId"/>
+        </view-link>
+        <view-link entity-alias="P0" rel-entity-alias="D">
+          <key-map field-name="productId"/>
+        </view-link>
+        <view-link entity-alias="P0" rel-entity-alias="A0">
+          <key-map field-name="productId"/>
+          
+        </view-link>
+        <view-link entity-alias="A0" rel-entity-alias="F0">
+          <key-map field-name="productFeatureId"/>
+                 
+          <entity-condition>
+          <condition-expr entity-alias="F0" field-name="productFeatureTypeId"
+				operator="equals" value="MODELS" />
+		 </entity-condition>    
+          
+        </view-link>
+        <view-link entity-alias="P0" rel-entity-alias="A1">
+          <key-map field-name="productId"/>
+        </view-link>
+        <view-link entity-alias="A1" rel-entity-alias="F1">
+          <key-map field-name="productFeatureId"/>
+          <entity-condition>
+          <condition-expr entity-alias="F1" field-name="productFeatureTypeId"
+				operator="equals" value="BRANDS" />
+		 </entity-condition>    
+          
+        </view-link>
+		<entity-condition>
+			<condition-list combine="and">
+			<condition-expr entity-alias="P0" field-name="productPriceTypeId"
+				operator="equals" value="GUIDE_PRICE" />		
+			
+			</condition-list>	
+		</entity-condition>        
+    </view-entity>
+
+
+    <view-entity entity-name="ChangedPriceListNotRead"
+        package-name="org.ofbiz.query"
+        title="ChangedPriceList View Entity">
+        <member-entity entity-alias="C" entity-name="PriceListChangeView"/>
+        <member-entity entity-alias="Q" entity-name="ProductPriceListQuery"/>
+        <alias entity-alias="C" name="storeId" />
+        <alias entity-alias="Q" name="brands" />
+        <alias entity-alias="Q" name="models" />
+        <alias entity-alias="C" name="productId" />
+        <alias entity-alias="Q" name="productName" />
+        <alias entity-alias="Q" name="policyName" />
+ 		<alias entity-alias="Q" name="standardPrice" />
+ 		<alias entity-alias="Q" name="minPrice" />
+ 		<alias entity-alias="Q" name="costPrice" />
+        <view-link entity-alias="C" rel-entity-alias="Q">
+          <key-map field-name="productId"/>
+          <key-map field-name="storeId"/>
+          <key-map field-name="productSalesPolicyId"/>
+        </view-link>
+		
+    </view-entity>
+
+
+	
+
+</entitymodel>

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/axis2/axis2-web/Error
+END
+GenError.html
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/axis2/axis2-web/Error/GenError.html
+END
+error500.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/axis2/axis2-web/Error/error500.jsp
+END
+error404.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/axis2/axis2-web/Error/error404.jsp
+END
+AuthError.html
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/axis2/axis2-web/Error/AuthError.html
+END

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-eca xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entity-eca.xsd">
+	<eca entity="InventorynTransfer" operation="create" event="return">
+		<condition operator="not-equals" field-name="onhand" value="0" type="Long"/>
+		<action service="updateInventorynItemToOnhead" mode="sync" value-attr="inventoryn"/>
+	</eca>
+	<eca entity="InventorynTransfer" operation="create" event="return">
+		<condition operator="not-equals" field-name="promise" value="0" type="Long"/>
+		<action service="updateInventorynItemToPromise" mode="sync" value-attr="inventoryn"/>
+	</eca>
+	<eca entity="DeliveryItemcommand" operation="create" event="return">
+    	<condition field-name="isSequence" operator="equals" value="Y"/>
+        <action service="lockProductSequence" mode="sync" value-attr="deliveryItemcommand"/>
+    </eca>
+    <eca entity="ReceiveItem" operation="create" event="return">
+    	<condition field-name="isSequence" operator="equals" value="Y"/>
+        <action service="updateProductSequence" mode="sync" value-attr="receiveItem"/>
+    </eca>
+</entity-eca>

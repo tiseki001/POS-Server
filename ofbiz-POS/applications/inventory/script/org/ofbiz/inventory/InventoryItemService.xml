@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+	<!-- 相当于简单的dao层 -->
+	<!--  修改库存的方法-->
+	<simple-method method-name="updateInventoryItem" short-description="Find all MovementType">
+		
+        <make-value entity-name="InventoryItem" value-field="lookupPKMap"/>
+        <set-pk-fields map="parameters" value-field="lookupPKMap"/>
+        <find-by-primary-key entity-name="InventoryItem" map="lookupPKMap" value-field="lookedUpValue"/>
+        <set-nonpk-fields map="parameters" value-field="lookedUpValue"/>
+        <store-value value-field="lookedUpValue"/>
+	</simple-method>
+</simple-methods>

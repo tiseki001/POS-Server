@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+	<!-- 单据状态 -->
+	<DllConstant storeId="DEFAULT" constantName="docstatus_1" constantValue="0" constantText="草稿" remark=""/>
+	<DllConstant storeId="DEFAULT" constantName="docstatus_2" constantValue="1" constantText="确定" remark=""/>
+	<DllConstant storeId="DEFAULT" constantName="docstatus_3" constantValue="2" constantText="批准" remark=""/>
+	<DllConstant storeId="DEFAULT" constantName="docstatus_4" constantValue="3" constantText="已清" remark=""/>
+	<DllConstant storeId="DEFAULT" constantName="docstatus_5" constantValue="4" constantText="作废" remark=""/>
+	<!-- 查询间隔天数 -->
+	<DllConstant storeId="DEFAULT" constantName="searchDate" constantValue="6" constantText="" remark=""/>
+	<!-- 业务状态 -->
+	<DllConstant storeId="DEFAULT" constantName="businessStatus_0" constantValue="0" constantText="未清" remark=""/>
+	<DllConstant storeId="DEFAULT" constantName="businessStatus_1" constantValue="1" constantText="部分已清" remark=""/>
+	<DllConstant storeId="DEFAULT" constantName="businessStatus_2" constantValue="2" constantText="已清" remark=""/>
+
+</entity-engine-xml>

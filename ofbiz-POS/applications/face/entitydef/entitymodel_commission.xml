@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<!-- ========================================================= -->
+	<!-- ======================== Defaults ======================= -->
+	<!-- ========================================================= -->
+	<title>Entity of an Open For Business Project Component</title>
+	<description>None</description>
+	<version>1.0</version>
+	<!-- 现金提成 -->
+	<entity entity-name="Commission" package-name="org.ofbiz.commission.Commission"
+		title="Commission">
+		<field name="id" type="id"></field>
+		<!-- 主键id -->
+		<field name="startDate" type="date-time"></field>
+		<!-- 起始日期 -->
+		<field name="endDate" type="date-time"></field>
+		<!-- 终止日期 -->
+		<field name="storeId" type="id"></field>
+		<!-- 门店编码 -->
+		<field name="storeName" type="name"></field>
+		<!-- 门店名称 -->
+		<field name="type" type="id"></field>
+		<!-- 类型-->
+		<field name="role" type="description"></field>
+		<!-- 角色-->
+		<field name="base" type="short-varchar"></field>
+		<!-- 基数-->
+		<field name="qualify" type="id"></field>
+		<!-- 资格线 -->
+		<field name="award" type="numeric"></field>
+		<!-- 奖励-->
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="id" />
+	</entity>
+	
+	<!-- 现金奖励 -->
+	<entity entity-name="Award" package-name="org.ofbiz.commission.Award"
+		title="Award">
+		<field name="id" type="id"></field>
+		<!-- 主键id -->
+		<field name="startDate" type="date-time"></field>
+		<!-- 起始日期 -->
+		<field name="endDate" type="date-time"></field>
+		<!-- 终止日期 -->
+		<field name="storeId" type="id"></field>
+		<!-- 门店编码 -->
+		<field name="productId" type="id"></field>
+		<!-- 商品编码 -->
+		<field name="productName" type="description"></field>
+		<!-- 商品名称 -->
+		<field name="role" type="description"></field>
+		<!-- 角色-->
+		<field name="salesModel" type="id"></field>
+		<!-- 销售模式-->
+		<field name="qualify" type="numeric"></field>
+		<!-- 资格线 -->
+		<field name="award" type="numeric"></field>
+		<!-- 奖励-->
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="id" />
+	</entity>
+	
+	<!-- 积分基数 -->
+	<entity entity-name="Base" package-name="org.ofbiz.commission.Base"
+		title="Award">
+		<field name="id" type="id"></field>
+		<!-- 主键id -->
+		<field name="startDate" type="date-time"></field>
+		<!-- 起始日期 -->
+		<field name="endDate" type="date-time"></field>
+		<!-- 终止日期 -->
+		<field name="storeId" type="id"></field>
+		<!-- 门店编码 -->
+		<field name="storeName" type="name"></field>
+		<!-- 门店名称 -->
+		<field name="type" type="id"></field>
+		<!-- 类型 -->
+		<field name="base" type="numeric"></field>
+		<!-- 基数-->
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="id" />
+	</entity>
+	
+	<!-- 积分倍率 -->
+	<entity entity-name="Rate" package-name="org.ofbiz.commission.Rate"
+		title="Rate">
+		<field name="id" type="id"></field>
+		<!-- 主键id -->
+		<field name="startDate" type="date-time"></field>
+		<!-- 起始日期 -->
+		<field name="endDate" type="date-time"></field>
+		<!-- 终止日期 -->
+		<field name="storeId" type="id"></field>
+		<!-- 门店编码 -->
+		<field name="storeName" type="name"></field>
+		<!-- 门店名称 -->
+		<field name="productId" type="id"></field>
+		<!-- 商品编码 -->
+		<field name="productName" type="description"></field>
+		<!-- 商品名称 -->
+		<field name="rate" type="numeric"></field>
+		<!-- 倍率-->
+		<field name="attrName1" type="short-varchar"></field>
+		<field name="attrName2" type="short-varchar"></field>
+		<field name="attrName3" type="short-varchar"></field>
+		<field name="attrName4" type="short-varchar"></field>
+		<field name="attrName5" type="short-varchar"></field>
+		<field name="attrName6" type="short-varchar"></field>
+		<field name="attrName7" type="short-varchar"></field>
+		<field name="attrName8" type="short-varchar"></field>
+		<field name="attrName9" type="short-varchar"></field>
+		<prim-key field="id" />
+	</entity>
+
+</entitymodel>

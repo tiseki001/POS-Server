@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+    <form name="findReport" list-name="listIt" target="getReport" title="" type="list" paginate-target=""
+        odd-row-style="alternate-row" default-table-style="basic-table">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="Report"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="reportId" title="数据编号"><display/></field>
+        <field name="reportName" title="数据名称"><display/></field>
+        <field name="reportType" title="类型"><display/></field>
+    </form>
+</forms>

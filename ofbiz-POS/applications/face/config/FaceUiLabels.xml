@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<property key="InterFaceManager">
+		<value xml:lang="en">ERP Interface Manager</value>
+		<value xml:lang="zh">接口管理</value>
+	</property>
+	<property key="FaceApplication">
+		<value xml:lang="en">ERP Interface Manager</value>
+		<value xml:lang="zh">ERP接口管理</value>
+	</property>
+	<property key="FaceCompanyName">
+		<value xml:lang="en">OFBiz: Face</value>
+	</property>
+	<property key="FaceCompanySubtitle">
+		<value xml:lang="en">Part of the Open For Business Family of Open
+			Source Software</value>
+		<value xml:lang="it">Un modulo della famiglia di software open source
+			Open For Business</value>
+		<value xml:lang="zh">开源软件OFBiz的组成部分</value>
+	</property>
+	<property key="FaceViewPermissionError">
+		<value xml:lang="en">You are not allowed to view this page.</value>
+		<value xml:lang="zh">不允许你浏览这个页面。</value>
+	</property>
+	<property key="FinanceTypeMgr">
+		<value xml:lang="en">FinanceTypeMgr</value>
+		<value xml:lang="zh">财务类型管理</value>
+	</property>
+	<!-- 日志Labels -->
+	<property key="LogMgr">
+		<value xml:lang="en">LogMgr</value>
+		<value xml:lang="zh">日志管理</value>
+	</property>
+	<property key="RecordId">
+		<value xml:lang="en">RecordId</value>
+		<value xml:lang="zh">字段Id</value>
+	</property>
+	<property key="Model">
+		<value xml:lang="en">Modle</value>
+		<value xml:lang="zh">接口类型</value>
+	</property>
+	<property key="Event">
+		<value xml:lang="en">Event</value>
+		<value xml:lang="zh">接口名称</value>
+	</property>
+	<property key="ResultInfo">
+		<value xml:lang="en">ResultInfo</value>
+		<value xml:lang="zh">消息</value>
+	</property>
+	<property key="Result">
+		<value xml:lang="en">Result</value>
+		<value xml:lang="zh">执行结果</value>
+	</property>
+	<property key="State">
+		<value xml:lang="en">State</value>
+		<value xml:lang="zh">状态</value>
+	</property>
+	<!-- 仓库映射Labels -->
+	<property key="StorageMappingMgr">
+		<value xml:lang="en">StorageMappingMgr</value>
+		<value xml:lang="zh">仓库映射管理</value>
+	</property>
+	<property key="FacilityId">
+		<value xml:lang="en">FacilityId</value>
+		<value xml:lang="zh">仓库编号</value>
+	</property>
+	<property key="ERPFacilityId">
+		<value xml:lang="en">ERPFacilityId</value>
+		<value xml:lang="zh">ERP仓库Id</value>
+	</property>
+	<property key="FinanceTypeId">
+		<value xml:lang="en">FinanceTypeId</value>
+		<value xml:lang="zh">财务类型</value>
+	</property>
+	<!-- 销售政策Labels -->
+	<property key="SalesPolicyMgr">
+		<value xml:lang="en">SalesPolicyMgr</value>
+		<value xml:lang="zh">销售政策管理</value>
+	</property>
+	<property key="ProductSalesPolicyId">
+		<value xml:lang="en">ProductSalesPolicyId</value>
+		<value xml:lang="zh">销售政策Id</value>
+	</property>
+	<property key="ERPPolicyId">
+		<value xml:lang="en">ERPPolicyId</value>
+		<value xml:lang="zh">ERP销售政策Id</value>
+	</property>
+	<property key="ERPOperatorsId">
+		<value xml:lang="en">ERPOperatorsId</value>
+		<value xml:lang="zh">ERP运营商</value>
+	</property>
+	<!-- 运营商接入Labels -->
+	<property key="Operators">
+		<value xml:lang="en">Operators</value>
+		<value xml:lang="zh">运营商接入信息</value>
+	</property>
+	<property key="ERPCheck">
+		<value xml:lang="en">Check</value>
+		<value xml:lang="zh">校验</value>
+	</property>
+	<property key="SaleBusiness">
+		<value xml:lang="en">SaleBusiness</value>
+		<value xml:lang="zh">销售绑定</value>
+	</property>
+	<!-- after accepted -->
+	<property key="AfterAccepted">
+		<value xml:lang="en">AfterAccepted</value>
+		<value xml:lang="zh">售后受理</value>
+	</property>
+	<property key="Status">
+		<value xml:lang="en">Status</value>
+		<value xml:lang="zh">状态</value>
+	</property>
+	<!-- 销售奖励 Labels-->
+	<property key="SalesCommission">
+		<value xml:lang="en">SalesCommission</value>
+		<value xml:lang="zh">销售奖励</value>
+	</property>
+	
+	<!-- 现金提成Labels -->
+	<property key="CashCommission">
+		<value xml:lang="en">CashCommission</value>
+		<value xml:lang="zh">现金提成</value>
+	</property>
+	<property key="StoreId">
+		<value xml:lang="en">RecordId</value>
+		<value xml:lang="zh">门店编码</value>
+	</property>
+	<property key="StoreName">
+		<value xml:lang="en">Modle</value>
+		<value xml:lang="zh">门店名称</value>
+	</property>
+	<property key="Type">
+		<value xml:lang="en">Type</value>
+		<value xml:lang="zh">类型</value>
+	</property>
+	<property key="Role">
+		<value xml:lang="en">Role</value>
+		<value xml:lang="zh">角色</value>
+	</property>
+	<property key="Base">
+		<value xml:lang="en">Base</value>
+		<value xml:lang="zh">基数</value>
+	</property>
+	<property key="Qualify">
+		<value xml:lang="en">Qualify</value>
+		<value xml:lang="zh">资格线</value>
+	</property>
+	<property key="Award">
+		<value xml:lang="en">Award</value>
+		<value xml:lang="zh">奖励</value>
+	</property>
+
+	<!-- 现金奖励Labels -->
+	<property key="CashAward">
+		<value xml:lang="en">CashAward</value>
+		<value xml:lang="zh">现金奖励</value>
+	</property>
+	<property key="StoreId">
+		<value xml:lang="en">StoreId</value>
+		<value xml:lang="zh">门店编码</value>
+	</property>
+	<property key="ProductId">
+		<value xml:lang="en">ProductId</value>
+		<value xml:lang="zh">商品编码</value>
+	</property>
+	<property key="ProductName">
+		<value xml:lang="en">ProductName</value>
+		<value xml:lang="zh">商品名称</value>
+	</property>
+	<property key="Role">
+		<value xml:lang="en">Role</value>
+		<value xml:lang="zh">角色</value>
+	</property>
+	<property key="SalesModel">
+		<value xml:lang="en">SalesModel</value>
+		<value xml:lang="zh">销售模式</value>
+	</property>
+	<property key="Qualify">
+		<value xml:lang="en">Qualify</value>
+		<value xml:lang="zh">资格线</value>
+	</property>
+	<property key="Award">
+		<value xml:lang="en">Award</value>
+		<value xml:lang="zh">奖励</value>
+	</property>
+	<!-- 积分基数Labels -->
+	<property key="IntegralBase">
+		<value xml:lang="en">IntegralBase</value>
+		<value xml:lang="zh">积分基数</value>
+	</property>
+	<property key="StoreId">
+		<value xml:lang="en">StoreId</value>
+		<value xml:lang="zh">门店编码</value>
+	</property>
+	<property key="StoreName">
+		<value xml:lang="en">StoreName</value>
+		<value xml:lang="zh">门店名称</value>
+	</property>
+	<property key="Type">
+		<value xml:lang="en">Type</value>
+		<value xml:lang="zh">类型</value>
+	</property>
+	<property key="Base">
+		<value xml:lang="en">Base</value>
+		<value xml:lang="zh">基数</value>
+	</property>
+	
+    <!-- 积分倍率Labels -->
+	<property key="IntegralRate">
+		<value xml:lang="en">IntegralRate</value>
+		<value xml:lang="zh">积分基数</value>
+	</property>
+	<property key="StoreId">
+		<value xml:lang="en">StoreId</value>
+		<value xml:lang="zh">门店编码</value>
+	</property>
+	<property key="StoreName">
+		<value xml:lang="en">Modle</value>
+		<value xml:lang="zh">门店名称</value>
+	</property>
+	<property key="ProductId">
+		<value xml:lang="en">Modle</value>
+		<value xml:lang="zh">商品编码</value>
+	</property>
+	<property key="ProductName">
+		<value xml:lang="en">ProductName</value>
+		<value xml:lang="zh">商品名称</value>
+	</property>
+	<property key="Rate">
+		<value xml:lang="en">Rate</value>
+		<value xml:lang="zh">倍率</value>
+	</property>
+	
+	<!-- 竞品信息 -->
+	<property key="Competing">
+		<value xml:lang="en">Competing</value>
+		<value xml:lang="zh">查找</value>
+	</property>
+	<property key="findCompeting">
+		<value xml:lang="en">findCompeting</value>
+		<value xml:lang="zh">竞品信息</value>
+	</property>
+	
+	<property key="productStoreId">
+		<value xml:lang="en">Id</value>
+		<value xml:lang="zh">编码</value>
+	</property>
+	
+	<property key="storeName">
+		<value xml:lang="en">storeName</value>
+		<value xml:lang="zh">门店</value>
+	</property>
+	<property key="validity">
+		<value xml:lang="en">validity</value>
+		<value xml:lang="zh">有效期</value>
+	</property>
+	<property key="date">
+		<value xml:lang="en">date</value>
+		<value xml:lang="zh">日期</value>
+	</property>
+	<property key="status">
+		<value xml:lang="en">status</value>
+		<value xml:lang="zh">状态</value>
+	</property>
+	<property key="circle">
+		<value xml:lang="en">Circle</value>
+		<value xml:lang="zh">商圈</value>
+	</property>
+	<property key="memo">
+		<value xml:lang="en">Memo</value>
+		<value xml:lang="zh">备注</value>
+	</property>
+	
+	<property key="monitoring">
+		<value xml:lang="en">Monitoring</value>
+		<value xml:lang="zh">监测人</value>
+	</property>
+	
+	<!-- Competing -->
+	<property key="monitoringObject">
+		<value xml:lang="en">MonitoringObject</value>
+		<value xml:lang="zh">监测对象</value>
+	</property>
+	
+	<property key="brand">
+		<value xml:lang="en">Brand</value>
+		<value xml:lang="zh">品牌</value>
+	</property>
+	
+	<property key="model">
+		<value xml:lang="en">Model</value>
+		<value xml:lang="zh">型号</value>
+	</property>
+	
+	<property key="publicityPice">
+		<value xml:lang="en">PublicityPrice</value>
+		<value xml:lang="zh">公示价</value>
+	</property>
+	
+	<property key="transactionPrice">
+		<value xml:lang="en">transactionPrice</value>
+		<value xml:lang="zh">成交价</value>
+	</property>
+	
+	<property key="salesPolicy">
+		<value xml:lang="en">SalesPolicy </value>
+		<value xml:lang="zh">促销策略</value>
+	</property>
+	
+	<property key="sourcesInfo">
+		<value xml:lang="en">sourcesOfInformation</value>
+		<value xml:lang="zh">货源信息</value>
+	</property>
+	
+	<property key="memo">
+		<value xml:lang="en">memo </value>
+		<value xml:lang="zh">备注</value>
+	</property>
+	
+	<property key="price">
+		<value xml:lang="en">price </value>
+		<value xml:lang="zh">价格</value>
+	</property>
+	
+	<property key="suggestedPrice">
+		<value xml:lang="en">SuggestedPrice</value>
+		<value xml:lang="zh">建议价格</value>
+	</property>
+	
+	<property key="reason">
+		<value xml:lang="en">reason</value>
+		<value xml:lang="zh">理由</value>
+	</property>
+	
+	<property key="opinion">
+		<value xml:lang="en">opinion </value>
+		<value xml:lang="zh">意见</value>
+	</property>
+	
+	<!-- search -->
+	<property key="getCompeting">
+		<value xml:lang="en">getCompeting </value>
+		<value xml:lang="zh">竞品信息</value>
+	</property>
+	
+	
+	  <property key="CompetingCreatePermissionError">
+        <value xml:lang="en">Security Error: to run ${resourceDescription} you must have the CATALOG_CREATE or CATALOG_ADMIN permission, or the limited CATALOG_ROLE_CREATE permission</value>
+        <value xml:lang="it">Errore di sicurezza: per eseguire ${resourceDescription} tu devi avere il permesso CATALOG_CREATE o CATALOG_ADMIN, il permesso limitato CATALOG_ROLE_CREATE</value>
+    </property>
+	
+</resource>

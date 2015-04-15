@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/birt/WEB-INF
+END
+birt.tld
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/birt/WEB-INF/birt.tld
+END
+controller.xml
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/birt/WEB-INF/controller.xml
+END
+server-config.wsdd
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/birt/WEB-INF/server-config.wsdd
+END
+web.xml
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/birt/WEB-INF/web.xml
+END

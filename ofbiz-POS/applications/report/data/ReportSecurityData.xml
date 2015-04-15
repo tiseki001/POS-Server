@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityPermission description="View operations in the report Component." permissionId="REPORT_VIEW"/>
+    <SecurityPermission description="Create operations in the report Component." permissionId="REPORT_CREATE"/>
+    <SecurityPermission description="Update operations in the report Component." permissionId="REPORT_UPDATE"/>
+    <SecurityPermission description="Delete operations in the report Component." permissionId="REPORT_DELETE"/>
+    <SecurityPermission description="ALL operations in the report Component." permissionId="REPORT_ADMIN"/>
+    
+
+    <SecurityGroup groupId="REPORT_USER" description="Content report group; all limited content permissions."/>
+    <SecurityGroupPermission groupId="REPORT_USER" permissionId="REPORT_ADMIN"/>
+    <SecurityGroupPermission groupId="REPORT_USER" permissionId="REPORT_CREATE"/>
+    <SecurityGroupPermission groupId="REPORT_USER" permissionId="REPORT_DELETE"/>
+    <SecurityGroupPermission groupId="REPORT_USER" permissionId="REPORT_UPDATE"/>
+    <SecurityGroupPermission groupId="REPORT_USER" permissionId="REPORT_VIEW"/>
+</entity-engine-xml>

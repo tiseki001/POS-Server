@@ -1,0 +1,132 @@
+10
+
+dir
+579
+https://168.168.168.97/svn/pos_doc/ofbiz-POS/specialpurpose/example
+https://168.168.168.97/svn/pos_doc
+
+
+
+2014-12-13T03:44:54.929625Z
+274
+liubj
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9c2e35bd-4854-0440-98ce-0f2eb36e3af6
+
+build
+dir
+
+servicedef
+dir
+
+widget
+dir
+
+script
+dir
+
+config
+dir
+
+lib
+dir
+
+src
+dir
+
+ofbiz-component.xml
+file
+
+
+
+
+2015-01-03T02:27:18.914317Z
+1c293590fa62689ee50546a60ff066d8
+2014-10-22T17:36:40.883000Z
+63
+liubj
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3564
+
+data
+dir
+
+dtd
+dir
+
+entitydef
+dir
+
+testdef
+dir
+
+webapp
+dir
+
+build.xml
+file
+
+
+
+
+2015-01-03T02:27:18.921317Z
+459f0f2f81fa73c173fad2b245ae056a
+2014-10-22T17:36:40.883000Z
+63
+liubj
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2734
+

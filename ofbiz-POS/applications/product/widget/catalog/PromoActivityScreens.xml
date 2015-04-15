@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="CommonPromoActivityDecorator">
+        <section>
+            <widgets>
+                <decorator-screen name="main-decorator"  location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="left-column">
+                        <include-screen name="leftbar" location="component://product/widget/catalog/CommonScreens.xml"/>
+                    </decorator-section>                    
+                    <decorator-section name="body">
+                        <section>
+                            <!-- do check for CATALOG, _VIEW permission -->
+                            <condition>
+                                    <if-has-permission permission="CATALOG" action="_VIEW"/>
+                            </condition>
+                            <widgets>
+                            	<link target="EditPromotionActivity" style="buttontext" text="创建促销活动"> </link>
+                                <decorator-section-include name="body"/>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.ProductCatalogViewPermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="CommonPromotionActivityDecorator">
+        <section>
+            <widgets>
+                <decorator-screen name="main-decorator"  location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="left-column">
+                        <include-screen name="leftbar" location="component://product/widget/catalog/CommonScreens.xml"/>
+                    </decorator-section>                    
+                    <decorator-section name="body">
+                        <section>
+                            <!-- do check for CATALOG, _VIEW permission -->
+                            <condition>
+                                <or>
+                                    <if-has-permission permission="CATALOG" action="_ADMIN"/>
+                                    <if-has-permission permission="CATALOG" action="_CREATE"/>
+                                    <if-has-permission permission="CATALOG" action="_UPDATE"/>
+                                    <if-has-permission permission="CATALOG" action="_VIEW"/>
+                                </or>
+                            </condition>
+                            <actions>
+                                <set field="productPromoId" from-field="parameters.productPromoId"/>
+                                <set field="productPromoRangeId" from-field="parameters.productPromoRangeId"/>
+                                <entity-one entity-name="ProductPromo" value-field="productPromo" auto-field-map="true"/>
+                            </actions>
+                            <widgets>
+                            	<label style="h1">促销活动 ${productPromo.promoName} 【${productPromoId}】</label>
+                                <decorator-section-include name="body"/>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.ProductCatalogViewPermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="FindPromoActivity">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindProductPriceType"/>
+                <set field="headerItem" value="promoActivity"/>
+                <set field="tabButtonItem" value=""/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+                <!--script location="component://product/webapp/catalog/WEB-INF/actions/feature/EditFeatureCategories.groovy"/-->
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPromoActivityDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                                <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                     <decorator-section name="search-options">
+                                       <include-form name="FindPromoActivity" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                                     </decorator-section>
+                                    <decorator-section name="search-results">
+                                        <include-form name="ListPromoActivity" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                                    </decorator-section>
+                                </decorator-screen>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!--  ============CREATE 活动============= -->
+    <screen name="EditPromotionActivity">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditPromotionActivity"/>
+                <set field="headerItem" value="promoActivity"/>
+                <set field="tabButtonItem" value="PromoActivity"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPromotionActivityDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                            	<screenlet title="基础信息">
+	                                <include-form name="EditPromotionBasicInformation" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            	<screenlet title="详细">
+	                                <include-form name="AddPromotionConditions" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!--  ============活动============= -->
+    <screen name="FindPromotionActivity">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindProductPriceType"/>
+                <set field="headerItem" value="promoActivity"/>
+                <set field="tabButtonItem" value="PromoActivity"/>
+                <set field="productPromoId" from-field="parameters.productPromoId"/>
+                <entity-one entity-name="ProductPromo" value-field="productPromo" auto-field-map="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+                <!--script location="component://product/webapp/catalog/WEB-INF/actions/feature/EditFeatureCategories.groovy"/-->
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPromotionActivityDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                            	<screenlet title="基础信息">
+	                                <include-form name="FindPromotionBasicInformation" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            	<screenlet title="详细">
+	                                <include-menu name="promoActivityTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+	                                <include-form name="AddPromotionConditions" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+	                                <include-form name="ListPromotionConditions" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!--  ============商品============= -->
+    <screen name="FindPromotionProduct">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindPromotionProduct"/>
+                <set field="headerItem" value="promoActivity"/>
+                <set field="tabButtonItem" value="PromoProduct"/>
+                <set field="productPromoId" from-field="parameters.productPromoId"/>
+                <entity-one entity-name="ProductPromo" value-field="productPromo" auto-field-map="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+                <script location="component://product/webapp/catalog/WEB-INF/actions/promoactivity/ProductPromoProduct.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPromotionActivityDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                            	<screenlet title="基础信息">
+	                                <include-form name="FindPromotionBasicInformation" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            	<include-menu name="promoActivityTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+                            	<platform-specific>
+		                            <html><html-template location="component://product/webapp/catalog/promoactivity/EditProductPromoProduct.ftl"/></html>
+		                        </platform-specific>
+		                        <section>
+		                            <widgets>
+		                            	<screenlet title="搜索结果">
+		                                    <include-form name="ListProductPromoProduct" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+		                                </screenlet>
+		                            </widgets>
+		                        </section>
+                            	<!-- <screenlet title="详细">
+	                                <include-menu name="promoActivityTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+	                                <link target="FindPromotionProductSetting" style="buttontext" text="设定" ><parameter param-name="productPromoId" /></link>
+	                                <link target="FindPromotionProductAdvanced" style="buttontext" text="高级"><parameter param-name="productPromoId" /></link>
+	                                <include-form name="ListPromoActivity" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet> -->
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!--  ============特价商品============= -->
+    <screen name="FindProductPromoSpecialProduct">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindProductPromoSpecialProduct"/>
+                <set field="createProductPromoCond" value="CreateProductPromoSpecialProduct"/>
+                <set field="headerItem" value="promoActivity"/>
+                <set field="tabButtonItem" value="SpecialProduct"/>
+                <set field="productPromoId" from-field="parameters.productPromoId"/>
+                <entity-one entity-name="ProductPromo" value-field="productPromo" auto-field-map="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+                <script location="component://product/webapp/catalog/WEB-INF/actions/promoactivity/ProductPromoCond.groovy"/>
+                <!-- <script location="component://product/webapp/catalog/WEB-INF/actions/promoactivity/ProductPromoSpecialProductCond.groovy"/> -->
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPromotionActivityDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                            	<screenlet title="基础信息">
+	                                <include-form name="FindPromotionBasicInformation" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            	<include-menu name="specialProductTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+                            	<platform-specific>
+		                            <html><html-template location="component://product/webapp/catalog/promoactivity/EditProductPromoCond.ftl"/></html>
+		                        </platform-specific>
+		                        <screenlet title="商品列表">
+	                                <include-form name="ListProductPromoSpecialProduct" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+		                        
+		                        <!-- <platform-specific>
+		                            <html><html-template location="component://product/webapp/catalog/promoactivity/findProductPromoSpecialProduct.ftl"/></html>
+		                        </platform-specific> -->
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!--  ============门店============= -->
+    <screen name="FindPromotionStore">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindProductPriceType"/>
+                <set field="headerItem" value="promoActivity"/>
+                <set field="tabButtonItem" value="PromoStore"/>
+                <set field="productPromoId" from-field="parameters.productPromoId"/>
+                <entity-one entity-name="ProductPromo" value-field="productPromo" auto-field-map="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+                <script location="component://product/webapp/catalog/WEB-INF/actions/promoactivity/ProductPromoStore.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPromotionActivityDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                            	<screenlet title="基础信息">
+	                                <include-form name="FindPromotionBasicInformation" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            	<include-menu name="promoActivityTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+                            	<platform-specific>
+		                            <html><html-template location="component://product/webapp/catalog/promoactivity/EditProductPromoStore.ftl"/></html>
+		                        </platform-specific>
+		                        <section>
+		                            <widgets>
+		                            	<screenlet title="搜索结果">
+		                                    <include-form name="ListPromotionStore" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+		                                </screenlet>
+		                            </widgets>
+		                        </section>
+                            	<!-- <screenlet title="详细">
+	                                <include-menu name="promoActivityTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+	                                <link target="FindPromotionStoreSetting" style="buttontext" text="设定" ><parameter param-name="productPromoId" /></link>
+	                                <link target="FindPromotionStoreAdvanced" style="buttontext" text="高级"><parameter param-name="productPromoId" /></link>
+	                                <include-form name="ListPromoActivity" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet> -->
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+   
+    <!--  ============顾客============= -->
+    <screen name="FindPromotionCustomer">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindProductPriceType"/>
+                <set field="headerItem" value="promoActivity"/>
+                <set field="tabButtonItem" value="PromoCustomer"/>
+                <set field="productPromoId" from-field="parameters.productPromoId"/>
+                <entity-one entity-name="ProductPromo" value-field="productPromo" auto-field-map="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+                <script location="component://product/webapp/catalog/WEB-INF/actions/promoactivity/ProductPromoParty.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPromotionActivityDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                            	<screenlet title="基础信息">
+	                                <include-form name="FindPromotionBasicInformation" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            	<include-menu name="promoActivityTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+                            	<platform-specific>
+		                            <html><html-template location="component://product/webapp/catalog/promoactivity/EditProductPromoParty.ftl"/></html>
+		                        </platform-specific>
+		                        <section>
+		                            <widgets>
+		                            	<screenlet title="搜索结果">
+		                                    <include-form name="ListProductPromoParty" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+		                                </screenlet>
+		                            </widgets>
+		                        </section>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <!--  ============时间============= -->
+    <screen name="FindPromotionTime">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindProductPriceType"/>
+                <set field="headerItem" value="promoActivity"/>
+                <set field="tabButtonItem" value="PromoTime"/>
+                <set field="productPromoId" from-field="parameters.productPromoId"/>
+                <entity-one entity-name="ProductPromo" value-field="productPromo" auto-field-map="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPromotionActivityDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                            	<screenlet title="基础信息">
+	                                <include-form name="FindPromotionBasicInformation" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            	<screenlet title="详细">
+	                                <include-menu name="promoActivityTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+	                                <include-form name="EditPromotionTime" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+	                                <screenlet title="列表集">
+		                                <include-form name="ListPromotionTime" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+	                                </screenlet>
+                            	</screenlet>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+   
+    <!--  ============渠道============= -->
+    <screen name="FindPromotionTrench">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindProductPriceType"/>
+                <set field="headerItem" value="promoActivity"/>
+                <set field="tabButtonItem" value="PromoTrench"/>
+                <set field="productPromoId" from-field="parameters.productPromoId"/>
+                <entity-one entity-name="ProductPromo" value-field="productPromo" auto-field-map="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+                <!--script location="component://product/webapp/catalog/WEB-INF/actions/feature/EditFeatureCategories.groovy"/-->
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPromotionActivityDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                            	<screenlet title="基础信息">
+	                                <include-form name="FindPromotionBasicInformation" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                                <include-menu name="promoActivityTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+                                <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                     <decorator-section name="search-options">
+                                        <include-form name="FindPromotionTrench" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                                    </decorator-section>
+                                    <decorator-section name="search-results">
+                                        <include-form name="ListPromotionTrench" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                                    </decorator-section>
+                                </decorator-screen>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!--  ============配套礼品============= -->
+    <screen name="FindProductPromoGiftProduct">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindProductPromoGiftProduct"/>
+                <set field="createProductPromoCond" value="CreateProductPromoGiftProduct"/>
+                <set field="headerItem" value="promoActivity"/>
+                <set field="tabButtonItem" value="GiftProduct"/>
+                <set field="productPromoId" from-field="parameters.productPromoId"/>
+                <set field="productPromoRangeId" from-field="parameters.productPromoRangeId"/>
+                <entity-one entity-name="ProductPromo" value-field="productPromo" auto-field-map="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+                <script location="component://product/webapp/catalog/WEB-INF/actions/promoactivity/ProductPromoGiftProduct.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPromotionActivityDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                            	<screenlet title="基础信息">
+	                                <include-form name="FindPromotionBasicInformation" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            	<include-menu name="giftProductTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+                            	<platform-specific>
+		                            <html><html-template location="component://product/webapp/catalog/promoactivity/EditProductPromoGiftProduct.ftl"/></html>
+		                        </platform-specific>
+		                        <section>
+		                            <widgets>
+		                            	<screenlet title="搜索结果">
+		                                    <include-form name="ListProductPromoGiftProduct" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+		                                </screenlet>
+		                            </widgets>
+		                        </section>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <!--  ============串号特价============= -->
+    <screen name="FindProductPromoSpecialserial">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindProductPromoSpecialserial"/>
+                <set field="headerItem" value="promoActivity"/>
+                <set field="tabButtonItem" value="SerialProduct"/>
+                <set field="productPromoId" from-field="parameters.productPromoId"/>
+                <entity-one entity-name="ProductPromo" value-field="productPromo" auto-field-map="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+                <script location="component://product/webapp/catalog/WEB-INF/actions/promoactivity/ProductPromoCond.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPromotionActivityDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                            	<screenlet title="基础信息">
+	                                <include-form name="FindPromotionBasicInformation" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            	<include-menu name="serialProductTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+                            	<screenlet title="新增串号特价">
+	                                <include-form name="FindProductPromoSpecialserial" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            	<screenlet title="条件结果列表">
+	                                <include-form name="ListProductPromoSpecialserial" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            	<!-- <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                    <decorator-section name="search-options">
+                                        <include-form name="FindProductPromoSpecialserial" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                                    </decorator-section>
+                                    <decorator-section name="search-results">
+                                        <include-form name="ListProductPromoSpecialserial" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                                    </decorator-section>
+                                </decorator-screen> -->
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <!--  ============渠道设定============= -->
+   <!--  <screen name="FindPromotionTrenchSetting">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindProductPriceType"/>
+                <set field="headerItem" value="promoActivity"/>
+                <set field="tabButtonItem" value="PromoTrench"/>
+                <set field="productPromoId" from-field="parameters.productPromoId"/>
+                <entity-one entity-name="ProductPromo" value-field="productPromo" auto-field-map="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPromotionActivityDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                            	<screenlet title="基础信息">
+	                                <include-form name="FindPromotionBasicInformation" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            	<screenlet title="详细">
+	                                <include-menu name="promoActivityTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+	                                <link target="FindPromotionTrenchSetting" style="buttontext" text="设定" ><parameter param-name="productPromoId"/></link>
+	                                <link target="FindPromotionTrenchAdvanced" style="buttontext" text="高级"><parameter param-name="productPromoId"/></link>
+	                                <include-form name="ListPromoActivity" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen> -->
+    <!--  ============渠道高级============= -->
+    <!--<screen name="FindPromotionTrenchAdvanced">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleFindProductPriceType"/>
+                <set field="headerItem" value="promoActivity"/>
+                <set field="tabButtonItem" value="PromoTrench"/>
+                <set field="productPromoId" from-field="parameters.productPromoId"/>
+                <entity-one entity-name="ProductPromo" value-field="productPromo" auto-field-map="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+                <script location="component://product/webapp/catalog/WEB-INF/actions/promoactivity/ProductPromoTrench.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPromotionActivityDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                            	<screenlet title="基础信息">
+	                                <include-form name="FindPromotionBasicInformation" location="component://product/widget/catalog/PromoActivityForms.xml"/>
+                            	</screenlet>
+                            	<screenlet title="详细">
+	                                <include-menu name="promoActivityTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+	                                <link target="FindPromotionTrenchSetting" style="buttontext" text="设定" ><parameter param-name="productPromoId" /></link>
+	                                <link target="FindPromotionTrenchAdvanced" style="buttontext" text="高级"><parameter param-name="productPromoId" /></link>
+	                                <platform-specific>
+			                            <html><html-template location="component://product/webapp/catalog/promoactivity/EditProductPromoTrench.ftl"/></html>
+			                        </platform-specific>
+                            	</screenlet>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen> -->
+</screens>

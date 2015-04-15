@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Inventory Component Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+    <!-- 查询盘点头 -->
+    <service name="findInventoryWeb" engine="java" export="true"
+            location="org.ofbiz.inventoryDetail.webService.InventoryDetailWebService" invoke="findInventory">
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询盘点明细 -->
+    <service name="findInventoryDetailWeb" engine="java" export="true"
+    		location="org.ofbiz.inventoryDetail.webService.InventoryDetailWebService" invoke="findInventoryDetail">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 创建盘点 -->
+    <service name="createInventoryWeb" engine="java" export="true"
+            location="org.ofbiz.inventoryDetail.webService.InventoryDetailWebService" invoke="createInventory">
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 修改盘点 -->
+    <service name="updateInventoryWeb" engine="java" export="true"
+            location="org.ofbiz.inventoryDetail.webService.InventoryDetailWebService" invoke="updateInventory">
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 删除盘点 -->
+    <service name="deleteInventoryWeb" engine="java" export="true"
+            location="org.ofbiz.inventoryDetail.webService.InventoryDetailWebService" invoke="deleteInventory">
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询盘点指令 -->
+    <service name="findInventoryCommandWeb" engine="java" export="true"
+            location="org.ofbiz.inventoryDetail.webService.InventoryDetailWebService" invoke="findInventoryCommand">
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询商店盘点指令-->
+    <service name="findInventoryCommandStoreWeb" engine="java" export="true"
+            location="org.ofbiz.inventoryDetail.webService.InventoryDetailWebService" invoke="findInventoryCommandStore">
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询仓库盘点指令 -->
+    <service name="findInventoryCommandFacilityWeb" engine="java" export="true"
+            location="org.ofbiz.inventoryDetail.webService.InventoryDetailWebService" invoke="findInventoryCommandFacility">
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询仓库盘点指令 -->
+    <service name="createInventoryDetailOtherWeb" engine="java" export="true"
+            location="org.ofbiz.inventoryDetail.webService.InventoryDetailWebService" invoke="createInventoryDetailOther">
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+</services>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<title/>
+	<description/>
+	<version>1.0</version>
+	<entity entity-name="Inventory" package-name="org.ofbiz.inventory.inventoryDetail">
+		<field name="docId" type="d-id"/>
+		<field name="baseEntry" type="d-id"/>
+		<field name="docDate" type="date-time"/>
+		<field name="updateDate" type="date-time"/>
+		<field name="approveDate" type="date-time"/>
+		<field name="baseEntity" type="name"></field>
+		<field name="extSystemNo" type="name"></field>
+		<field name="userId" type="id"/>
+		<field name="updateUserId" type="id"/>
+		<field name="docStatus" type="name"/>
+		<field name="status" type="name"/>
+		<field name="memo" type="name"/>
+		<field name="partyId" type="name"/>
+		<field name="printNum" type="numeric"/>
+		<field name="productStoreId" type="id"/>
+		<field name="approveUserId" type="id"/>
+		<field name="isSync" type="name"/>
+		<field name="attrName1" type="name"/>
+		<field name="attrName2" type="name"/>
+		<field name="attrName3" type="name"/>
+		<field name="attrName4" type="name"/>
+		<field name="attrName5" type="name"/>
+		<field name="attrName6" type="name"/>
+		<field name="attrName7" type="name"/>
+		<field name="attrName8" type="name"/>
+		<field name="attrName9" type="name"/>
+		<field name="attrName10" type="name"/>
+		<prim-key field="docId"/>
+		<index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+	</entity>
+	<entity entity-name="InventoryDetail" package-name="org.ofbiz.inventory.inventoryDetail" title="InventoryDetail Entity">
+		<field name="docId" type="d-id"/>
+		<field name="baseEntry" type="d-id"/>
+		<field name="lineNo" type="numeric"/>
+		<field name="baseLienNo" type="numeric"/>
+		<field name="memo" type="name"/>
+		<field name="quantity" type="numeric"/>
+		<field name="onHand" type="numeric"/>
+		<field name="productId" type="name"/>
+		<field name="idValue" type="name"/>
+		<field name="sequenceId" type="name"/>
+		<field name="facilityId" type="name"/>
+		<field name="isSequence" type="name"/>
+		<field name="attrName1" type="name"/>
+		<field name="attrName2" type="name"/>
+		<field name="attrName3" type="name"/>
+		<field name="attrName4" type="name"/>
+		<field name="attrName5" type="name"/>
+		<field name="attrName6" type="name"/>
+		<field name="attrName7" type="name"/>
+		<field name="attrName8" type="name"/>
+		<field name="attrName9" type="name"/>
+		<field name="attrName10" type="name"/>
+		<prim-key field="docId"/>
+		<prim-key field="lineNo"/>
+	</entity>
+	<view-entity entity-name="InventoryAndUser" package-name="org.ofbiz.inventory.inventoryDetail">
+		<member-entity entity-alias="INV" entity-name="Inventory" />
+		<member-entity entity-alias="PE" entity-name="Person" />
+		<member-entity entity-alias="PE1" entity-name="Person" />
+		<alias-all entity-alias="INV"/>
+		<alias entity-alias="PE" name="lastName"/> 
+        <alias entity-alias="PE" name="middleName"/> 
+        <alias entity-alias="PE" name="firstName"/> 
+		<alias entity-alias="PE1" name="updateLastName" field="lastName"/> 
+        <alias entity-alias="PE1" name="updateMiddleName" field="middleName"/> 
+        <alias entity-alias="PE1" name="updateFirstName" field="firstName"/> 
+		<view-link entity-alias="INV" rel-entity-alias="PE" rel-optional="true">
+			<key-map field-name="userId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="INV" rel-entity-alias="PE1" rel-optional="true">
+			<key-map field-name="updateUserId" rel-field-name="partyId" />
+		</view-link>
+	</view-entity>
+	<view-entity entity-name="InventoryDetailAndProductAndFacility" package-name="org.ofbiz.inventory.inventoryDetail">
+		<member-entity entity-alias="IND" entity-name="InventoryDetail" />
+		<member-entity entity-alias="PR" entity-name="Product" />
+		<member-entity entity-alias="FA" entity-name="Facility" />
+		<alias-all entity-alias="IND" />
+		<alias entity-alias="PR" name="productName"/>
+		<alias entity-alias="FA" name="facilityName"/>
+		<view-link entity-alias="IND" rel-entity-alias="PR" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="IND" rel-entity-alias="FA" rel-optional="true">
+			<key-map field-name="facilityId" />
+		</view-link>
+	</view-entity>
+	
+	<view-entity entity-name="InventorynItemAndProductView" package-name="org.ofbiz.inventory.inventoryDetail">
+		<member-entity entity-alias="II" entity-name="InventorynItem" />
+		<member-entity entity-alias="PRO" entity-name="Product" />
+		<member-entity entity-alias="FA" entity-name="Facility" />
+		<alias entity-alias="II" name="onhand" function="sum"/>
+		<alias entity-alias="II" name="productStoreId" group-by="true"/>
+		<alias entity-alias="II" name="productId" group-by="true"/>
+		<alias entity-alias="PRO" name="productName" group-by="true"/>
+		<alias entity-alias="PRO" name="config" group-by="true"/>
+		<alias entity-alias="PRO" name="isSequence" group-by="true"/>
+		<view-link entity-alias="II" rel-entity-alias="PRO" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="II" rel-entity-alias="FA">
+			<key-map field-name="facilityId" />
+			<entity-condition>
+				<condition-expr entity-alias="FA" field-name="facilityTypeId" operator="not-equals" value="T-WAREHOUSE" />
+			</entity-condition>
+		</view-link>
+		
+	</view-entity>
+	
+	<view-entity entity-name="InventorynItemAndProductSequenceView" package-name="org.ofbiz.inventory.inventoryDetail">
+		<member-entity entity-alias="PS" entity-name="ProductSequence" />
+		<member-entity entity-alias="PRO" entity-name="Product" />
+		<alias entity-alias="PRO" name="productId"/>
+		<alias entity-alias="PRO" name="productName"/>
+		<alias entity-alias="PRO" name="isSequence" />
+		<alias entity-alias="PRO" name="config"/>
+		<alias entity-alias="PS" name="sequenceId"/>
+		<alias entity-alias="PS" name="facilityId" />
+		
+		
+		<view-link entity-alias="PRO" rel-entity-alias="PS"  rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+	</view-entity>
+	
+	
+	
+</entitymodel>

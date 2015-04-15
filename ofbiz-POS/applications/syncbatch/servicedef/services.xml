@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Sync Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+
+	<service name="exportDBSync" engine="java"
+            location="org.ofbiz.syncbatch.webservice.SyncService" invoke="exportDBSync" auth="false" validate="false" export="true">
+        <description>exportDBSync</description>
+        <attribute name="inJsonParam" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="outJsonParam" type="String" mode="OUT" optional="false"/>
+    </service>
+	<service name="importDBSync" engine="java"
+            location="org.ofbiz.syncbatch.webservice.SyncService" invoke="importDBSync" auth="false" validate="false" export="true" use-transaction="false">
+        <description>importDBSync</description>
+        <attribute name="inJsonParam" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="outJsonParam" type="String" mode="OUT" optional="false"/>
+    </service>
+    <service name="importSyncStoreInfo" engine="java"
+            location="org.ofbiz.syncbatch.webservice.SyncService" invoke="importSyncStoreInfo" auth="false" validate="false" export="true" use-transaction="false">
+        <description>importDBSync</description>
+        <attribute name="inJsonParam" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="outJsonParam" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+	<!-- <service name="exportDBSyncExt" engine="java"
+            location="org.ofbiz.syncbatch.webservice.SyncService" invoke="exportDBSyncExt" auth="false" export="true">
+        <description>exportDBSyncExt</description>
+        <attribute name="inJsonParam" type="String" mode="IN" optional="false"/>
+        <attribute name="outJsonParam" type="String" mode="OUT" optional="false"/>
+    </service> -->
+   	<!-- add by ft start-->
+    <service name="updateStoreSyncTime" engine="java"
+            location="org.ofbiz.syncbatch.webservice.SyncService" invoke="updateStoreSyncTime" auth="false" validate="false" export="true">
+        <description>updateStoreSyncTime</description>
+        <attribute name="inJsonParam" type="String" mode="IN" optional="false" allow-html="safe"/>
+        <attribute name="outJsonParam" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- add by ft end-->
+    
+    <service name="import2StoreJob" engine="java"
+            location="org.ofbiz.syncbatch.scheduledjob.SyncJob" invoke="importData2Store" auth="false" validate="false" transaction-timeout="30000" use-transaction="false" export="true">
+		<description>import2StoreJob</description>
+		<attribute name="entityKey" type="String" mode="IN" optional="false" allow-html="safe"/>
+	</service> 
+    <!-- <service name="import2StoreJobExt" engine="java"
+            location="org.ofbiz.syncbatch.scheduledjob.SyncJob" invoke="importData2StoreExt" auth="false" use-transaction="false">
+		<description>import2StoreJobExt</description>
+
+	</service> -->
+    <service name="import2StoreJobTest" engine="java"
+            location="org.ofbiz.syncbatch.scheduledjob.SyncJob" invoke="importData2StoreTest" auth="false" validate="false" export="true" use-transaction="false">
+		<description>import2StoreJobTest</description>
+	</service>
+	<service name="uploadDataToSyncStoreInfo" engine="java"
+            location="org.ofbiz.syncbatch.scheduledjob.SyncJob" invoke="uploadDataToSyncStoreInfo" auth="false" validate="false" export="true" use-transaction="false">
+		<description>uploadDataToSyncStoreInfo</description>
+		<attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+	</service>  
+    <service name="uploadData2Store" engine="java"
+            location="org.ofbiz.syncbatch.scheduledjob.SyncJob" invoke="uploadData2Store" auth="false" validate="false" use-transaction="false" export="true">
+		<description>uploadData2Store</description>
+		<attribute name="entityKey" type="String" mode="IN" optional="false" allow-html="safe"/>
+	</service> 
+    <service name="importInitStoreJob" engine="java"
+            location="org.ofbiz.syncbatch.scheduledjob.SyncJob" invoke="importInitDataStore" auth="false" validate="false" use-transaction="false">
+		<description>import2StoreJob</description>
+
+	</service> 
+</services>

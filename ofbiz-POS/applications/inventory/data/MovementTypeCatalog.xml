@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+	<!-- 初始数据 -->
+	<!-- 表名   表字段="数据值" -->
+	<MovementTypeCatalog movementTypeId="DZ" orderType="GoodsDelivery" memo="调拨发货单"/>
+	<MovementTypeCatalog movementTypeId="DG" orderType="GoodsDelivery" memo="调拨发货单"/>
+	<MovementTypeCatalog movementTypeId="DY" orderType="GoodsDelivery" memo="调拨发货单"/>
+	<MovementTypeCatalog movementTypeId="DO" orderType="GoodsDelivery" memo="总部调拨发货"/>
+	<MovementTypeCatalog movementTypeId="RO" orderType="GoodsReceipt" memo="总部调拨收货"/>
+	<MovementTypeCatalog movementTypeId="RZ" orderType="GoodsReceipt" memo="调拨收货单"/>
+	<MovementTypeCatalog movementTypeId="RG" orderType="GoodsReceipt" memo="调拨收货单"/>
+	<MovementTypeCatalog movementTypeId="RY" orderType="GoodsReceipt" memo="调拨收货单"/>
+	<MovementTypeCatalog movementTypeId="OZ" orderType="WarehouseOut" memo="出库"/>
+	<MovementTypeCatalog movementTypeId="OG" orderType="WarehouseOut" memo="出库"/>
+	<MovementTypeCatalog movementTypeId="OY" orderType="WarehouseOut" memo="出库"/>
+	<MovementTypeCatalog movementTypeId="IZ" orderType="WarehouseIn" memo="入库"/>
+	<MovementTypeCatalog movementTypeId="IG" orderType="WarehouseIn" memo="入库"/>
+	<MovementTypeCatalog movementTypeId="IY" orderType="WarehouseIn" memo="入库"/>
+	<MovementTypeCatalog movementTypeId="ZO" orderType="WarehouseReplenishment" memo="总部指令"/>
+	<MovementTypeCatalog movementTypeId="ZG" orderType="WarehouseReplenishment" memo="移库单"/>
+	<MovementTypeCatalog movementTypeId="SZ" orderType="SaleOut" memo="销售出库单"/>
+	<MovementTypeCatalog movementTypeId="TC" orderType="ReturnIn" memo="冲红退货"/>
+	<MovementTypeCatalog movementTypeId="TG" orderType="ReturnIn" memo="退货入库"/>
+</entity-engine-xml>

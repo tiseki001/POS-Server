@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SystemOfProcesses xmlVersion="20120203" releaseVersion="7.0.0" name="System1">
+<processes>
+<![CDATA[申请流程]]></processes>
+<Parameters>
+<Parameter>
+<Attributes name="suppid" isAutoInc="false"/>
+<O t="L">
+<![CDATA[0]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="aa" isAutoInc="true"/>
+<O t="D">
+<![CDATA[0.0]]></O>
+</Parameter>
+</Parameters>
+</SystemOfProcesses>

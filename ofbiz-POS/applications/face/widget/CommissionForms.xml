@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+	
+	<!-- CashCommission -->
+	<form name="FindCommission" target="FindCashCommission" title="" type="single"
+		header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind"> <hidden value="Y" /> </field>
+		<field name="startDate" title="${uiLabelMap.CommonFromDate}"><date-time type="timestamp"/></field>
+        <field name="endDate" title="${uiLabelMap.CommonThruDate}"><date-time type="timestamp"/></field>
+		<field name="storeId" title="${uiLabelMap.StoreId}"  >
+			<lookup target-form-name="LookupProductStore"></lookup>
+		</field>
+		<field name="type" title="${uiLabelMap.Type}">
+			<drop-down allow-empty="true" >
+				<entity-options description="${description}" entity-name="ProductFeature" key-field-name="productFeatureId">
+					<entity-constraint name="productFeatureTypeId" value="SECOND_CLASS"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="role" title="${uiLabelMap.Role}">
+			<drop-down allow-empty="true">
+				<option key="0" description="店员" />
+				<option key="1" description="店长" />
+			</drop-down>
+		</field>
+		<field name="base" title="${uiLabelMap.Base}">
+			<drop-down allow-empty="true">
+				<option key="0" description="毛利" />
+				<option key="1" description="销售额" />
+			</drop-down>
+		</field>
+		<field name="qualify" title="${uiLabelMap.Qualify}">
+			<drop-down allow-empty="true" >
+				<entity-options description="${description}" entity-name="ProductPriceType" key-field-name="productPriceTypeId">
+					<entity-constraint name="isBase" value="N"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="Award" title="${uiLabelMap.Award}">
+			<text size="10"></text> 
+		</field>
+		<field name="searchButton" title="${uiLabelMap.CommonSearch}"
+			widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+
+	<form name="ListCommission" target="" title="" list-name="listIt" type="list"
+		paginate-target="FindCommission" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="parameters.noConditionFind" value="Y" />
+			<service service-name="performFind" result-map="result"
+				result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="parameters" />
+				<field-map field-name="entityName" value="Commission" />
+				<field-map field-name="orderBy"  value="-createdStamp" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+		</actions>
+		<field name="startDate" sort-field="true" title="${uiLabelMap.CommonFromDate}">
+			<display />
+		</field>
+		<field name="endDate" sort-field="true" title="${uiLabelMap.CommonThruDate}">
+			<display />
+		</field>
+		<field name="storeId" sort-field="true" title="${uiLabelMap.StoreId}">
+			<display />
+		</field>
+		<field name="storeName" sort-field="true" title="${uiLabelMap.StoreName}">
+			<display />
+		</field>
+		<field name="type" sort-field="true" title="${uiLabelMap.Type}">
+			<display-entity entity-name="ProductFeature" description="${description}" key-field-name="productFeatureId"/>
+		</field>
+		<field name="role"  title="${uiLabelMap.Role}" use-when="&quot;${role}&quot;.equals(&quot;0&quot;)">
+			<display description="店员"/> 
+		</field>
+		<field name="role"  title="${uiLabelMap.Role}" use-when="&quot;${role}&quot;.equals(&quot;1&quot;)">
+			<display description="店长"/> 
+		</field>
+		<field name="base"  title="${uiLabelMap.Base}" use-when="&quot;${role}&quot;.equals(&quot;0&quot;)">
+			<display description="毛利"/>
+		</field>
+		<field name="base"  title="${uiLabelMap.Base}" use-when="&quot;${role}&quot;.equals(&quot;1&quot;)">
+			<display description="销售额"/>
+		</field>
+		<field name="qualify" sort-field="true" title="${uiLabelMap.Qualify}">
+			<display-entity entity-name="ProductPriceType" description="${description}" key-field-name="productPriceTypeId"/>
+		</field>
+		<field name="award" sort-field="true" title="${uiLabelMap.Award}">
+			<display description="${award}%"/>
+			
+		</field>
+		<field name="editLink" title="${uiLabelMap.CommonEdit}"
+			widget-style="buttontext">
+			<hyperlink target="EditCashCommission" description="${uiLabelMap.CommonEdit}">
+				<parameter param-name="id" />
+			</hyperlink>
+		</field>
+		<field name="deleteLink" title="${uiLabelMap.CommonDelete}"
+			widget-style="buttontext">
+			<hyperlink target="DeleteCommission" description="${uiLabelMap.CommonDelete}"
+				also-hidden="false">
+				<parameter param-name="id" />
+			</hyperlink>
+		</field>
+	</form>
+	
+	<form name="EditCashCommission" type="single" target="UpdateCommission"
+		title="" default-map-name="entity" default-entity-name="Commission">
+		<alt-target use-when="entity==null" target="CreateCommission" />
+		<field name="id" title="单号" id-name="id" use-when="entity!=null" tooltip="${uiLabelMap.CommonNotModifRecreat}"><display ></display> </field>
+		<field name="startDate" title="开始日期" id-name="startDate"><date-time default-value="${startDate}"/> </field>
+		<field name="endDate" title="终止日期" id-name="endDate"><date-time default-value="${endDate}"/> </field>
+		<field name="storeId" title="门店编码"  id-name="storeId" >
+			<drop-down allow-empty="true" >
+				<entity-options description="${storeName}${productStoreId}" entity-name="ProductStore" key-field-name="productStoreId">
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="type" title="类型" id-name="type">
+			<drop-down allow-empty="true" >
+				<entity-options description="${description}" entity-name="ProductFeature" key-field-name="productFeatureId">
+					<entity-constraint name="productFeatureTypeId" value="SECOND_CLASS"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="role" title="${uiLabelMap.Role}" id-name="role">
+			<drop-down allow-empty="true">
+				<option key="0" description="店员" />
+				<option key="1" description="店长" />
+			</drop-down>
+		</field>
+		<field name="base" title="${uiLabelMap.Base}" id-name="base">
+			<drop-down allow-empty="true">
+				<option key="0" description="毛利" />
+				<option key="1" description="销售额" />
+			</drop-down>
+		</field>
+		<field name="qualify" title="${uiLabelMap.Qualify}" id-name="qualify">
+			<drop-down allow-empty="true" >
+				<entity-options description="${description}" entity-name="ProductPriceType" key-field-name="productPriceTypeId">
+					<entity-constraint name="isBase" value="N"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="award" title="${uiLabelMap.Award}" id-name="award"> 
+			<text size="10"></text> 
+		</field>
+		<field name="jsonStr" id-name="jsonStr"><hidden/></field>
+		<field name="submitButton" use-when="entity==null" title="${uiLabelMap.CommonCreate}"
+				event="onClick" action="setCommissionValues();">
+			<submit button-type="button" />
+		</field>
+		<field name="submitButton" use-when="entity!=null" title="${uiLabelMap.CommonUpdate}"
+				event="onClick" action="setCommissionValues();">
+			<submit button-type="button" />
+		</field>
+		
+	</form>
+	
+	
+	
+	
+	<!-- CashAward -->
+	<form name="FindAward" target="FindCashAward" title="" type="single"
+		header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind">
+			<hidden value="Y" />
+		</field>
+		<field name="fromDate" title="${uiLabelMap.CommonFromDate}"><date-time type="timestamp"/></field>
+        <field name="thruDate" title="${uiLabelMap.CommonThruDate}"><date-time type="timestamp"/></field>
+		<field name="storeId" title="${uiLabelMap.StoreId}">
+			<lookup target-form-name="LookupProductStore"></lookup>
+		</field>
+		<field name="productId" title="${uiLabelMap.ProductId}">
+			<lookup target-form-name="LookupProduct"></lookup>
+		</field>
+		<field name="role" title="${uiLabelMap.Role}">
+			<drop-down allow-empty="true">
+				<option key="0" description="店员" />
+				<option key="1" description="店长" />
+			</drop-down>
+		</field>
+		<field name="SalesModel" title="${uiLabelMap.SalesModel}">
+			<drop-down allow-empty="true" >
+				<entity-options description="${policyName}" entity-name="ProductSalesPolicy" key-field-name="productSalesPolicyId">
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="qualify" title="${uiLabelMap.Qualify}">
+			<text size="10"></text>
+		</field>
+		<field name="Award" title="${uiLabelMap.Award}">
+			<text size="10"></text> 
+		</field>
+		<field name="searchButton" title="${uiLabelMap.CommonSearch}"
+			widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+
+	<form name="ListAward" target="" title="" list-name="listIt" type="list"
+		paginate-target="FindAward" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="parameters.noConditionFind" value="Y" />
+			<service service-name="performFind" result-map="result"
+				result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="parameters" />
+				<field-map field-name="entityName" value="Award" />
+				<field-map field-name="orderBy"  value="-createdStamp" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+		</actions>
+		<field name="startDate" sort-field="true" title="${uiLabelMap.CommonFromDate}">
+			<display />
+		</field>
+		<field name="endDate" sort-field="true" title="${uiLabelMap.CommonThruDate}">
+			<display />
+		</field>
+		<field name="storeId" sort-field="true" title="${uiLabelMap.StoreId}">
+			<display />
+		</field>
+		<field name="productId" sort-field="true" title="${uiLabelMap.ProductId}">
+			<display />
+		</field>
+		<field name="productName" sort-field="true" title="${uiLabelMap.ProductName}">
+			<display />
+		</field>
+		<field name="role"  title="${uiLabelMap.Role}" use-when="&quot;${role}&quot;.equals(&quot;0&quot;)">
+			<display description="店员"/> 
+		</field>
+		<field name="role"  title="${uiLabelMap.Role}" use-when="&quot;${role}&quot;.equals(&quot;1&quot;)">
+			<display description="店长"/> 
+		</field>
+		<field name="salesModel" sort-field="true" title="${uiLabelMap.SalesModel}">
+			<display-entity entity-name="ProductSalesPolicy" description="${policyName}" key-field-name="productSalesPolicyId"/>
+		</field>
+		<field name="qualify" sort-field="true" title="${uiLabelMap.Qualify}">
+			<display />
+		</field>
+		<field name="award" sort-field="true" title="${uiLabelMap.Award}">
+			<display />
+		</field>
+		<field name="editLink" title="${uiLabelMap.CommonEdit}"
+			widget-style="buttontext">
+			<hyperlink target="EditCashAward" description="${uiLabelMap.CommonEdit}">
+				<parameter param-name="id" />
+			</hyperlink>
+		</field>
+		<field name="deleteLink" title="${uiLabelMap.CommonDelete}"
+			widget-style="buttontext">
+			<hyperlink target="DeleteAward" description="${uiLabelMap.CommonDelete}"
+				also-hidden="false">
+				<parameter param-name="id" />
+			</hyperlink>
+		</field>
+	</form>
+	
+	
+	<form name="EditCashAward" type="single" target="UpdateAward"
+		title="" default-map-name="entity" default-entity-name="Award">
+		<alt-target use-when="entity==null" target="CreateAward" />
+		<field name="id" title="单号" id-name="id" use-when="entity!=null" tooltip="${uiLabelMap.CommonNotModifRecreat}"><display ></display> </field>
+		<field name="startDate" title="开始日期" id-name="startDate"><date-time default-value="${startDate}"/> </field>
+		<field name="endDate" title="终止日期" id-name="endDate"><date-time default-value="${endDate}"/> </field>
+		<field name="storeId" title="门店编码"  id-name="storeId" >
+			<drop-down allow-empty="true" >
+				<entity-options description="${storeName}${productStoreId}" entity-name="ProductStore" key-field-name="productStoreId">
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="productId" title="商品编码"  id-name="productId" >
+			<drop-down allow-empty="true" >
+			<entity-options description="${productId}" entity-name="Product" key-field-name="productId">
+			</entity-options>
+			</drop-down>
+		</field>
+		<field name="role" title="${uiLabelMap.Role}" id-name="role">
+			<drop-down allow-empty="true">
+				<option key="0" description="店员" />
+				<option key="1" description="店长" />
+			</drop-down>
+		</field>
+		<field name="salesModel" title="${uiLabelMap.SalesModel}" id-name="salesModel">
+			<drop-down allow-empty="true" >
+				<entity-options description="${policyName}" entity-name="ProductSalesPolicy" key-field-name="productSalesPolicyId">
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="qualify" title="${uiLabelMap.Qualify}" id-name="qualify">
+			<text size="10"></text>
+		</field>
+		<field name="award" title="${uiLabelMap.Award}" id-name="award">
+			<text size="10"></text> 
+		</field>
+		<field name="jsonStr" id-name="jsonStr"><hidden/></field>
+		<field name="submitButton" use-when="entity==null" title="${uiLabelMap.CommonCreate}"
+				event="onClick" action="setAwardValues();">
+			<submit button-type="button" />
+		</field>
+		<field name="submitButton" use-when="entity!=null" title="${uiLabelMap.CommonUpdate}"
+				event="onClick" action="setAwardValues();">
+			<submit button-type="button" />
+		</field>
+		
+	</form>
+	
+	
+	
+	<!-- IntegralBase -->
+	<form name="FindBase" target="FindIntegralBase" title="" type="single"
+		header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind">
+			<hidden value="Y" />
+		</field>
+		<field name="fromDate" title="${uiLabelMap.CommonFromDate}"><date-time type="timestamp"/></field>
+        <field name="thruDate" title="${uiLabelMap.CommonThruDate}"><date-time type="timestamp"/></field>
+		<field name="storeId" title="${uiLabelMap.StoreId}">
+			<lookup target-form-name="LookupProductStore"></lookup>
+		</field>
+		<field name="type" title="${uiLabelMap.Type}">
+			<drop-down allow-empty="true" >
+				<entity-options description="${description}" entity-name="ProductFeature" key-field-name="productFeatureId">
+					<entity-constraint name="productFeatureTypeId" value="SECOND_CLASS"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="base" title="${uiLabelMap.Base}">
+			<text size="10"></text> 
+		</field>
+		<field name="searchButton" title="${uiLabelMap.CommonSearch}"
+			widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+
+	<form name="ListBase" target="" title="" list-name="listIt" type="list"
+		paginate-target="FindBase" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="parameters.noConditionFind" value="Y" />
+			<service service-name="performFind" result-map="result"
+				result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="parameters" />
+				<field-map field-name="entityName" value="Base" />
+				<field-map field-name="orderBy"  value="-createdStamp" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+		</actions>
+		<field name="id" sort-field="true" title=" ">
+			<hidden/>
+		</field>
+		<field name="startDate" sort-field="true" title="${uiLabelMap.CommonFromDate}">
+			<display />
+		</field>
+		<field name="endDate" sort-field="true" title="${uiLabelMap.CommonThruDate}">
+			<display />
+		</field>
+		<field name="storeId" sort-field="true" title="${uiLabelMap.StoreId}">
+			<display />
+		</field>
+		<field name="storeName" sort-field="true" title="${uiLabelMap.StoreName}">
+			<display />
+		</field>
+		<field name="type" sort-field="true" title="${uiLabelMap.Type}">
+			<display-entity entity-name="ProductFeature" description="${description}" key-field-name="productFeatureId"/>
+		</field>
+		<field name="base" sort-field="true" title="${uiLabelMap.Base}">
+			<display />
+		</field>
+		<field name="editLink" title="${uiLabelMap.CommonEdit}"
+			widget-style="buttontext">
+			<hyperlink target="EditIntegralBase" description="${uiLabelMap.CommonEdit}">
+				<parameter param-name="id" />
+			</hyperlink>
+		</field>
+		<field name="deleteLink" title="${uiLabelMap.CommonDelete}"
+			widget-style="buttontext">
+			<hyperlink target="DeleteBase" description="${uiLabelMap.CommonDelete}"
+				also-hidden="false">
+				<parameter param-name="id" />
+			</hyperlink>
+		</field>
+	</form>
+	
+	<form name="EditIntegralBase" type="single" target="UpdateBase"
+		title="" default-map-name="entity" default-entity-name="Base">
+		<alt-target use-when="entity==null" target="CreateBase" />
+		<field name="id" title="单号" id-name="id" use-when="entity!=null" tooltip="${uiLabelMap.CommonNotModifRecreat}"><display ></display> </field>
+		<field name="startDate" title="开始日期" id-name="startDate"><date-time default-value="${startDate}"/> </field>
+		<field name="endDate" title="终止日期" id-name="endDate"><date-time default-value="${endDate}"/> </field>
+		<field name="storeId" title="门店编码"  id-name="storeId" >
+			<drop-down allow-empty="true" >
+				<entity-options description="${storeName}${productStoreId}" entity-name="ProductStore" key-field-name="productStoreId">
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="type" title="类型" id-name="type">
+			<drop-down allow-empty="true" >
+				<entity-options description="${description}" entity-name="ProductFeature" key-field-name="productFeatureId">
+					<entity-constraint name="productFeatureTypeId" value="SECOND_CLASS"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="base" title="${uiLabelMap.Base}" id-name="base">
+			<text size="10"></text> 
+		</field>
+		<field name="jsonStr" id-name="jsonStr"><hidden/></field>
+		<field name="submitButton" use-when="entity==null" title="${uiLabelMap.CommonCreate}"
+				event="onClick" action="setBaseValues();">
+			<submit button-type="button" />
+		</field>
+		<field name="submitButton" use-when="entity!=null" title="${uiLabelMap.CommonUpdate}"
+				event="onClick" action="setBaseValues();">
+			<submit button-type="button" />
+		</field>
+	</form>
+	
+	
+	<!-- IntegralRate -->
+	<form name="FindRate" target="FindIntegralRate" title="" type="single"
+		header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind">
+			<hidden value="Y" />
+		</field>
+		<field name="fromDate" title="${uiLabelMap.CommonFromDate}"><date-time type="timestamp"/></field>
+        <field name="thruDate" title="${uiLabelMap.CommonThruDate}"><date-time type="timestamp"/></field>
+		<field name="storeId" title="${uiLabelMap.StoreId}">
+			<lookup target-form-name="LookupProductStore"></lookup>
+		</field>
+		<field name="productId" title="${uiLabelMap.ProductId}">
+			<lookup target-form-name="LookupProduct"></lookup>
+		</field>
+		<field name="rate" title="${uiLabelMap.Rate}">
+			<text size="10"></text> 
+		</field>
+		<field name="searchButton" title="${uiLabelMap.CommonSearch}"
+			widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+
+	<form name="ListRate" target="" title="" list-name="listIt" type="list"
+		paginate-target="FindRate" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="parameters.noConditionFind" value="Y" />
+			<service service-name="performFind" result-map="result"
+				result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="parameters" />
+				<field-map field-name="entityName" value="Rate" />
+				<field-map field-name="orderBy"  value="-createdStamp" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+		</actions>
+		<field name="id" sort-field="true" title="${uiLabelMap.CommonTime}">
+			<hidden/>
+		</field>
+		<field name="startDate" sort-field="true" title="${uiLabelMap.CommonFromDate}">
+			<display />
+		</field>
+		<field name="endDate" sort-field="true" title="${uiLabelMap.CommonThruDate}">
+			<display />
+		</field>
+		<field name="storeId" sort-field="true" title="${uiLabelMap.StoreId}">
+			<display />
+		</field>
+		<field name="storeName" sort-field="true" title="${uiLabelMap.StoreName}">
+			<display />
+		</field>
+		<field name="productId" sort-field="true" title="${uiLabelMap.ProductId}">
+			<display />
+		</field>
+		<field name="productName" sort-field="true" title="${uiLabelMap.ProductName}">
+			<display />
+		</field>
+		<field name="rate" sort-field="true" title="${uiLabelMap.Rate}">
+			<display />
+		</field>
+		<field name="editLink" title="${uiLabelMap.CommonEdit}"
+			widget-style="buttontext">
+			<hyperlink target="EditIntegralRate" description="${uiLabelMap.CommonEdit}">
+				<parameter param-name="id" />
+			</hyperlink>
+		</field>
+		<field name="deleteLink" title="${uiLabelMap.CommonDelete}"
+			widget-style="buttontext">
+			<hyperlink target="DeleteRate" description="${uiLabelMap.CommonDelete}"
+				also-hidden="false">
+				<parameter param-name="id" />
+			</hyperlink>
+		</field>
+	</form>
+	
+	<form name="EditIntegralRate" type="single" target="UpdateRate"
+		title="" default-map-name="entity" default-entity-name="Rate">
+		<alt-target use-when="entity==null" target="CreateRate" />
+		<field name="id" title="单号" id-name="id" use-when="entity!=null" tooltip="${uiLabelMap.CommonNotModifRecreat}"><display ></display> </field>
+		<field name="startDate" title="开始日期" id-name="startDate"><date-time default-value="${startDate}"/> </field>
+		<field name="endDate" title="终止日期" id-name="endDate"><date-time default-value="${endDate}"/> </field>
+		<field name="storeId" title="门店编码"  id-name="storeId" use-when="">
+			<drop-down allow-empty="true" >
+				<entity-options description="${storeName}${productStoreId}" entity-name="ProductStore" key-field-name="productStoreId">
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="productId" title="商品编码"  id-name="productId" >
+			<drop-down allow-empty="true" >
+				<entity-options description="${productId}" entity-name="Product" key-field-name="productId">
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="rate" title="${uiLabelMap.Rate}" id-name="rate">
+			<text size="10"></text> 
+		</field>
+		<field name="jsonStr" id-name="jsonStr"><hidden/></field>
+		<field name="submitButton" use-when="entity==null" title="${uiLabelMap.CommonCreate}"
+				event="onClick" action="setRateValues();">
+			<submit button-type="button" />
+		</field>
+		<field name="submitButton" use-when="entity!=null" title="${uiLabelMap.CommonUpdate}"
+				event="onClick" action="setRateValues();">
+			<submit button-type="button" />
+		</field>
+	</form>
+	
+</forms>

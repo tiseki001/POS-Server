@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityPermission description="View operations in the Face Component." permissionId="Face_VIEW"/>
+    <SecurityPermission description="Create operations in the Face Component." permissionId="Face_CREATE"/>
+    <SecurityPermission description="Update operations in the Face Component." permissionId="Face_UPDATE"/>
+    <SecurityPermission description="Delete operations in the Face Component." permissionId="Face_DELETE"/>
+    <SecurityPermission description="ALL operations in the Face Component." permissionId="Face_ADMIN"/>
+    
+    <SecurityGroupPermission groupId="FULLADMIN" permissionId="Face_ADMIN"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="Face_CREATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="Face_DELETE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="Face_UPDATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="Face_VIEW"/>
+    <SecurityGroupPermission groupId="VIEWADMIN" permissionId="Face_VIEW"/>
+    <SecurityGroupPermission groupId="BIZADMIN" permissionId="Face_ADMIN"/>
+</entity-engine-xml>

@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+	<!-- 售后受理 -->
+	<form name="FindAccept" target="FindAccept" title=""
+		type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="accepteStoreId" title="受理门店"><lookup target-form-name="LookupProductStore"></lookup></field>
+		<field name="accepteDate" title="受理日期"><date-find type="date" /></field>
+		<field name="status" title="状态">
+			<drop-down>
+				<option key="0" description="草稿"/>
+				<option key="1" description="报价确认"/>
+				<option key="2" description="审核"/>
+				<option key="3" description="已清"/>
+				<option key="4" description="作废"/>
+			</drop-down>
+		</field>
+		<field name="productId" title="商品"><lookup target-form-name="LookupProduct"></lookup></field>
+		<field name="sequenceId" title="串号"><lookup target-form-name="LookupSerialName"></lookup></field>
+		<field name="touchPartyId" title="制单人"><text-find/></field>
+		<field name="searchButton" title="${uiLabelMap.CommonSearch}"
+			widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+	<form name="ListAccept" target="" title="" list-name="listIt"
+		type="list" paginate-target="FindAccept" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="parameters.noConditionFind" value="Y" />
+			<service service-name="performFind" result-map="result"
+				result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="parameters" />
+				<field-map field-name="entityName" value="AfterSaleAccepted" />
+				<field-map field-name="orderBy" from-field="parameters.sortField" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+		</actions>
+		<field name="docId" title="单号" widget-style="buttontext">
+            <hyperlink target="EditAccept" description="${docId}">
+                <parameter param-name="docId"/>
+            </hyperlink>
+        </field>
+		<field name="accepteStoreId" sort-field="true" title="门店">
+			<display-entity entity-name="ProductStore" description="${storeName}" key-field-name="productStoreId"/>
+		</field>
+		<field name="accepteDate" sort-field="true" title="日期"><display /></field>
+		<field name="productId" sort-field="true" title="商品名称">
+			<display-entity entity-name="Product" description="${productName}" key-field-name="productId"/>
+		</field>
+		<field name="faultCategory" title="故障类别" >
+			<display-entity entity-name="AfterSaleCode" description="${description}" key-field-name="codeId"></display-entity>
+		</field>
+		<field name="faultDesc" title="故障描述"><display /></field>
+		<field name="status" title="状态" use-when="&quot;${status}&quot;.equals(&quot;0&quot;)">
+			<display description="草稿" />
+		</field>
+		<field name="status" title="状态" use-when="&quot;${status}&quot;.equals(&quot;1&quot;)">
+			<display description="报价确认" />
+		</field>
+		<field name="status" title="状态" use-when="&quot;${status}&quot;.equals(&quot;2&quot;)">
+			<display description="审核" />
+		</field>
+		<field name="status" title="状态" use-when="&quot;${status}&quot;.equals(&quot;3&quot;)">
+			<display description="已清" />
+		</field>
+		<field name="status" title="状态" use-when="&quot;${status}&quot;.equals(&quot;4&quot;)">
+			<display description="作废" />
+		</field>
+       
+		<field name="deleteLink" title="${uiLabelMap.CommonDelete}"
+			widget-style="buttontext">
+			<hyperlink target="DeleteAccept" description="${uiLabelMap.CommonDelete}">
+				<parameter param-name="docId" />
+			</hyperlink>
+		</field>
+	</form>
+	<!-- 受理 -->
+	<form name="EditAccept" type="single" target="UpdateAccept" 
+		title="" default-map-name="entity" default-entity-name="AfterSaleAccepted">
+
+		<alt-target use-when="entity==null" target="CreateAccept" />
+		<!-- <auto-fields-service service-name="updateAccept" /> -->
+		<!-- 基础信息 -->
+		<field name="docId" title="单号" id-name="docId" use-when="entity!=null" tooltip="${uiLabelMap.CommonNotModifRecreat}"><display ></display> </field>
+		<field name="docName" title="名称" use-when="entity!=null" tooltip="${uiLabelMap.CommonNotModifRecreat}"><display ></display> </field>
+		<field name="accepteStoreId" title="受理门店" required-field="true" widget-style="required"
+				event="onBlur" id-name="accepteStoreId"
+				action="getDependentDropdownValues('getPartyByStoreId', 'storeId', '0_lookupId_accepteStoreId', 'touchPartyId', 'partyList', 'productFeatureId', 'description');
+						getDependentDropdownValues('getPartyByStoreId', 'storeId', '0_lookupId_accepteStoreId', 'auditorId', 'partyList', 'productFeatureId', 'description');">
+			<lookup target-form-name="LookupProductStore"></lookup> 
+		</field>
+		<field name="status" title="状态" id-name="status">
+			<drop-down>
+				<option key="0" description="草稿"/>
+				<option key="1" description="报价确认"/>
+				<option key="2" description="审核"/>
+				<option key="3" description="已清"/>
+				<option key="4" description="作废"/>
+			</drop-down>
+		</field>
+		<field name="accepteDate" title="受理日期" id-name="accepteDate"><date-time default-value="${nowTimestamp}"/> </field>
+		<field name="touchPartyId" title="制单人" id-name="touchPartyId">
+			<drop-down allow-empty="true" >
+				<entity-options description="${lastName}${firstName}" entity-name="CustomerAndpersonView" key-field-name="partyId">
+					<entity-constraint name="roleTypeId" value="EMPLOYEE"/>
+					<entity-constraint name="productStoreId" value="${entity.accepteStoreId}"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="auditorId" title="审核人" id-name="auditorId">
+			<drop-down allow-empty="true" >
+				<entity-options description="${lastName}${firstName}" entity-name="CustomerAndpersonView" key-field-name="partyId">
+					<entity-constraint name="roleTypeId" value="EMPLOYEE"/>
+					<entity-constraint name="productStoreId" value="${entity.accepteStoreId}"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="auditorDate" title="审核日期" id-name="auditorDate"
+				event="onChange" action="setStatusValue();">
+			<date-time/>
+		</field>
+		<field name="demo" title="备注" id-name="demo"><text size="50"/> </field>
+		<!-- 商品信息 -->
+		<field name="productId" title="商品编码" required-field="true" widget-style="required" id-name="productId">
+			<lookup target-form-name="LookupProduct"></lookup>
+		</field>
+		<field name="sequenceId" title="串号" id-name="sequenceId" event="onBlur" 
+				action="getFieldsValue('valList');">
+			<lookup target-form-name="LookupSerialName"></lookup>
+		</field>
+		<field name="productSN" title="productSN"><text></text> </field>
+		<field name="productStoreId" title="购买门店" id-name="productStoreId">
+			<lookup target-form-name="LookupProductStore"></lookup> 
+		</field>
+		<field name="price" title="价格" id-name="price"><text></text> </field>
+		<field name="productDate" title="购买日期" id-name="productDate"><date-time default-value="${nowTimestamp}"/> </field>
+		<field name="acceptedFacility" title="受理仓库" id-name="acceptedFacility">
+			<drop-down>
+				<option key="R" description="正品仓"/>
+				<option key="F" description="故件仓"/>
+				<option key="T" description="在途仓"/>
+				<option key="D" description="演示机仓"/>
+			</drop-down>
+		</field>
+		<field name="customerName" title="客户姓名" id-name="customerName"><text></text> </field>
+		<field name="customerPhone" title="客户手机" id-name="customerPhone"><text></text> </field>
+		<field name="customerAddr" title="通信地址" id-name="customerAddr"><text size="50"></text> </field>
+		<field name="attachment" title="随机附件" id-name="attachment"><text size="50"></text> </field>
+		<field name="inspectUnit" title="送检单位" id-name="inspectUnit"><text size="50"></text> </field>
+		<field name="inspectNumber" title="送检批号" id-name="inspectNumber"><text></text> </field>
+		<!--受理信息 -->
+		<field name="initSStatus" title="初检状态" id-name="initSStatus">
+			<drop-down>
+				<option key="" description="---"/>
+				<entity-options description="${description}" entity-name="AfterSaleCode" key-field-name="codeId">
+					<entity-constraint name="type" value="I"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="initSAppearance" title="初检外观"><text size="50"></text> </field>
+		<field name="faultCategory" title="故障类别" id-name="faultCategory">
+			<drop-down>
+				<option key="" description="---"/>
+				<entity-options description="${description}" entity-name="AfterSaleCode" key-field-name="codeId">
+					<entity-constraint name="type" value="F"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="faultDesc" title="故障描述"><text size="50"></text> </field>
+		<field name="accepteDemo" title="受理备注"><text size="50"></text> </field>
+		<!--维修信息 -->
+		<field name="NewProductId" title="换新商品"><lookup target-form-name="LookupProduct"></lookup></field>
+		<field name="NewSequenceId" title="串号"><lookup target-form-name="LookupSerialName"></lookup></field>
+		<field name="NewSN" title="NewSN"><text></text> </field>
+		<field name="qualityResult" title="质检结果" id-name="qualityResult">
+			<drop-down>
+				<option key="" description="---"/>
+				<entity-options description="${description}" entity-name="AfterSaleCode" key-field-name="codeId">
+					<entity-constraint name="type" value="Q"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="maintainMethod" title="维修方式"><text size="50"></text> </field>
+		<field name="account" title="原因"><text></text> </field>
+		<field name="jsonStr" id-name="jsonStr"><hidden/></field>
+		<field name="submitButton" use-when="entity==null" title="${uiLabelMap.CommonCreate}"
+				event="onClick" action="setAcceptValues();">
+			<submit button-type="button" />
+		</field>
+		<field name="submitButton" use-when="entity!=null" title="${uiLabelMap.CommonUpdate}"
+				event="onClick" action="setAcceptValues();">
+			<submit button-type="button" />
+		</field>
+	</form>
+	<!-- 报价 -->
+	<form name="EditQuote" type="single" target="UpdateAccept" 
+		title="" default-map-name="entity" default-entity-name="AfterSaleAccepted">
+
+		<!-- <auto-fields-service service-name="updateAccept" /> -->
+		<!-- 基础信息 -->
+		<field name="docId" title="单号"  use-when="entity!=null" tooltip="${uiLabelMap.CommonNotModifRecreat}"><display ></display> </field>
+		<field name="docName" title="名称" use-when="entity!=null" tooltip="${uiLabelMap.CommonNotModifRecreat}"><display ></display> </field>
+		<field name="accepteStoreId" title="受理门店"
+				event="onBlur"  id-name="accepteStoreId"
+				action="getDependentDropdownValues('getPartyByStoreId', 'storeId', '0_lookupId_accepteStoreId', 'touchPartyId', 'partyList', 'productFeatureId', 'description');
+					getDependentDropdownValues('getPartyByStoreId', 'storeId', '0_lookupId_accepteStoreId', 'department', 'partyList', 'productFeatureId', 'description');
+					getDependentDropdownValues('getPartyByStoreId', 'storeId', '0_lookupId_accepteStoreId', 'confirmor', 'partyList', 'productFeatureId', 'description');
+					getDependentDropdownValues('getPartyByStoreId', 'storeId', '0_lookupId_accepteStoreId', 'offerer', 'partyList', 'productFeatureId', 'description');
+					getDependentDropdownValues('getPartyByStoreId', 'storeId', '0_lookupId_accepteStoreId', 'auditorId', 'partyList', 'productFeatureId', 'description');">
+			<lookup target-form-name="LookupProductStore"></lookup> 
+		</field>
+		<field name="status" title="状态" id-name="status">
+			<drop-down>
+				<option key="0" description="草稿"/>
+				<option key="1" description="报价确认"/>
+				<option key="2" description="审核"/>
+				<option key="3" description="已清"/>
+				<option key="4" description="作废"/>
+			</drop-down>
+		</field>
+		<field name="accepteDate" title="受理日期" id-name="accepteDate"><date-time default-value="${nowTimestamp}"/> </field>
+		<field name="touchPartyId" title="制单人" id-name="touchPartyId">
+			<drop-down>
+				<entity-options description="${lastName}${firstName}" entity-name="CustomerAndpersonView" key-field-name="partyId">
+					<entity-constraint name="roleTypeId" value="EMPLOYEE"/>
+					<entity-constraint name="productStoreId" value="${entity.accepteStoreId}"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="auditorId" title="审核人" id-name="auditorId">
+			<drop-down>
+				<entity-options description="${lastName}${firstName}" entity-name="CustomerAndpersonView" key-field-name="partyId">
+					<entity-constraint name="roleTypeId" value="EMPLOYEE"/>
+					<entity-constraint name="productStoreId" value="${entity.accepteStoreId}"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="auditorDate" title="审核日期" id-name="auditorDate"
+				event="onChange" action="setStatusValue();">
+			<date-time/>
+		</field>
+		<field name="demo" title="备注" id-name="demo"><text size="50"/> </field>
+		<!-- 报价信息 -->
+		<field name="quoteDate" title="报价日期" id-name="quoteDate"><date-time default-value="${nowTimestamp}"/> </field>
+		<field name="offerer" title="报价人" id-name="offerer">
+			<drop-down >
+				<option key="" description="---"/>
+				<entity-options description="${lastName}${firstName}" entity-name="CustomerAndpersonView" key-field-name="partyId">
+					<entity-constraint name="roleTypeId" value="EMPLOYEE"/>
+					<entity-constraint name="productStoreId" value="${entity.accepteStoreId}"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="department" title="报价部门" id-name="department" >
+			<drop-down>
+				<option key="" description="---"/>
+				<entity-options description="${lastName}${firstName}" entity-name="CustomerAndpersonView" key-field-name="partyId">
+					<entity-constraint name="roleTypeId" value="EMPLOYEE"/>
+					<entity-constraint name="productStoreId" value="${entity.accepteStoreId}"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="quoteAccount" title="报价原因" id-name="quoteAccount"><text></text> </field>
+		<field name="extDocNo" title="单据编码"><text disabled="true"></text> </field>
+		<field name="cost1" title="代收维护费" id-name="cost1"><text ></text> </field>
+		<field name="cost2" title="物流费" id-name="cost2" event="onBlur" action="setCostTotalValue();">
+			<text ></text> 
+		</field>
+		<field name="costTotal" title="费用合计" id-name="costTotal"><text ></text> </field>
+		<field name="quoteDemo" title="报价备注" id-name="quoteDemo"><text></text> </field>
+		<!-- 报价确认 -->
+		<field name="confirmDate" title="确认日期" id-name="confirmDate"><date-time default-value="${nowTimestamp}"/> </field>
+		<field name="confirmor" title="确认人" id-name="confirmor">
+			<drop-down>
+				<option key="" description="---"/>
+				<entity-options description="${lastName}${firstName}" entity-name="CustomerAndpersonView" key-field-name="partyId">
+					<entity-constraint name="roleTypeId" value="EMPLOYEE"/>
+					<entity-constraint name="productStoreId" value="${entity.accepteStoreId}"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="confirmResult" title="确认结果" id-name="confirmResult"
+				event="onChange" action="setStatusValue3();">
+			<drop-down>
+				<option key="---" description="---"/>
+				<option key="Y" description="确认"/>
+				<option key="N" description="未确认"/>
+			</drop-down>
+		</field>
+		<field name="confirmDemo" title="确认备注" id-name="confirmDemo"><text size="50"></text> </field>
+		<field name="jsonStr" id-name="jsonStr"><hidden/></field>
+		<field name="submitButton" use-when="entity!=null" title="${uiLabelMap.CommonUpdate}"
+				event="onClick" action="setQuoteValues();">
+			<submit button-type="button" />
+		</field>
+	</form>
+	
+</forms>

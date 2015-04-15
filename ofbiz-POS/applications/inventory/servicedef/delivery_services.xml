@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Inventory Component Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+    <!-- 查询指令头 -->
+    <service name="findDeliveryCommandWeb" engine="java" export="true"
+            location="org.ofbiz.delivery.webService.DeliveryWebService" invoke="findDeliveryCommand">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询固件类型 -->
+    <service name="findFaultTypeWeb" engine="java" export="true"
+    		location="org.ofbiz.delivery.webService.DeliveryWebService" invoke="findFaultType">
+        <attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询发货单 -->
+    <service name="findDeliveryDocWeb" engine="java" export="true"
+            location="org.ofbiz.delivery.webService.DeliveryWebService" invoke="findDeliveryDoc">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询发货单明细 -->
+    <service name="findDeliveryItemWeb" engine="java" export="true"
+            location="org.ofbiz.delivery.webService.DeliveryWebService" invoke="findDeliveryItem">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询指令明细 -->
+    <service name="findDeliveryItemcommandWeb" engine="java" export="true"
+            location="org.ofbiz.delivery.webService.DeliveryWebService" invoke="findDeliveryItemcommand">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询状态 -->
+    <service name="findDllConstantWeb" engine="java" export="true"
+            location="org.ofbiz.delivery.webService.DeliveryWebService" invoke="findDllConstant">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 查询移动类型 -->
+    <service name="findMovementWeb" engine="java" export="true"
+            location="org.ofbiz.delivery.webService.DeliveryWebService" invoke="findMovementWeb">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 根据移动类型和店面id查询仓库 -->
+    <service name="findFacilityWeb" engine="java" export="true"
+            location="org.ofbiz.delivery.webService.DeliveryWebService" invoke="findFacility">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 删除指令头 ，明细-->
+    <service name="deleteDeliveryCommandWeb" engine="java" export="true"
+            location="org.ofbiz.delivery.webService.DeliveryWebService" invoke="deleteDeliveryCommand">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>  
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 修改发货单头状态-->
+    <service name="updateDeliveryDocWeb" engine="java" export="true"
+            location="org.ofbiz.delivery.webService.DeliveryWebService" invoke="updateDeliveryItem">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>  
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 修改发货单明细-->
+    <service name="updateDeliveryItemWeb" engine="java" export="true"
+            location="org.ofbiz.delivery.webService.DeliveryWebService" invoke="updateDeliveryItem">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>  
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 创建发货单 -->
+    <service name="createDeliveryWeb" engine="java" export="true"
+            location="org.ofbiz.delivery.webService.DeliveryWebService" invoke="allocateDelivery">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>  
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+     <!-- 修改发货单 -->
+    <service name="updateDeliveryWeb" engine="java" export="true"
+            location="org.ofbiz.delivery.webService.DeliveryWebService" invoke="updateDelivery">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>  
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+     <!-- 强制修改状态-->
+    <service name="updateDeliveryCommandStatusWeb" engine="java" export="true"
+            location="org.ofbiz.delivery.webService.DeliveryWebService" invoke="updateDeliveryCommandStatus">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>  
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+     <!-- 修改打印次数 -->
+    <service name="updateDeliveryPrintWeb" engine="java" export="true"
+            location="org.ofbiz.delivery.webService.DeliveryWebService" invoke="updateDeliveryPrint">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>  
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+</services>

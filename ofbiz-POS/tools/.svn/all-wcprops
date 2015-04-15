@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools
+END
+functions.sh
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/functions.sh
+END
+rc.ofbiz.for.ubuntu
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/rc.ofbiz.for.ubuntu
+END
+rc.ofbiz.for.debian
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/rc.ofbiz.for.debian
+END
+stopofbiz.sh
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/stopofbiz.sh
+END
+startofbiz.bat
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/startofbiz.bat
+END
+startofbiz.sh
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/startofbiz.sh
+END
+git-rebase-runner.sh
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/git-rebase-runner.sh
+END
+svnUpHotdeploy.bat
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/svnUpHotdeploy.bat
+END
+startofbizBoth.bat
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/startofbizBoth.bat
+END
+ij.ofbiz
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/ij.ofbiz
+END
+applyOfbizPatchesAndHotDeploy.sh
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/applyOfbizPatchesAndHotDeploy.sh
+END
+svnUpHotdeploy.sh
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/svnUpHotdeploy.sh
+END
+revert.bat
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/revert.bat
+END
+rc.ofbiz
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/rc.ofbiz
+END
+ofbiz.aptana.js.format.xml
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/ofbiz.aptana.js.format.xml
+END
+startofbizPos.bat
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/tools/startofbizPos.bat
+END

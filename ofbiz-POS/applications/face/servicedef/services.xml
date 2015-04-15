@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+	<description>face Services</description>
+	<vendor>OFBiz</vendor>
+	<version>1.0</version>
+
+	<!-- simple generic service to watch and entity through an EECA -->
+
+	<service name="importEntity" engine="java"
+		location="org.ofbiz.face.EntityImport" invoke="importEntity" auth="false"
+		export="true" validate="false">
+		<description>selectByConditions</description>
+		<attribute name="default" type="String" mode="IN" optional="false"
+			allow-html="safe" />
+		<attribute name="jsonOut" type="String" mode="OUT" optional="false"
+			allow-html="safe" />
+	</service>
+
+	<service name="getAllEntity" engine="java"
+		location="org.ofbiz.face.EntityImport" invoke="getAllEntity" auth="false"
+		export="true">
+		<description>selectByConditions</description>
+		<attribute name="default" type="String" mode="IN" optional="false" />
+		<attribute name="outJsonParam" type="String" mode="OUT"
+			optional="false" />
+	</service>
+
+	<service name="testERPServer" engine="java"
+		location="org.ofbiz.face.webservice.FaceService" invoke="testERPServer"
+		auth="false" validate="false" export="true">
+		<description>testERPServer</description>
+	</service>
+	<service name="storeEbsToPos" engine="java"
+		location="org.ofbiz.face.erpface.FaceDownloadServer" invoke="storeToPos"
+		auth="false" export="true">
+		<description>storeEbsToPos</description>
+	</service>
+	<service name="productEbsToPos" engine="java"
+		location="org.ofbiz.face.erpface.FaceDownloadServer" invoke="productToPos"
+		auth="false" export="true">
+		<description>productEbsToPos</description>
+	</service>
+	<service name="featureEbsToPos" engine="java"
+		location="org.ofbiz.face.erpface.FaceDownloadServer" invoke="featureToPos"
+		auth="false" export="true">
+		<description>featureEbsToPos</description>
+	</service>
+	<service name="productFeatureEbsToPos" engine="java"
+		location="org.ofbiz.face.erpface.FaceDownloadServer" invoke="productFeatureToPos"
+		auth="false" export="true">
+		<description>productFeatureEbsToPos</description>
+	</service>
+	<service name="priceEbsToPos" engine="java"
+		location="org.ofbiz.face.erpface.FaceDownloadServer" invoke="priceToPos"
+		auth="false" export="true">
+		<description>priceEbsToPos</description>
+	</service>
+	<service name="paymentEbsToPos" engine="java"
+		location="org.ofbiz.face.erpface.FaceDownloadServer" invoke="paymentToPos"
+		auth="false" export="true">
+		<description>paymentEbsToPos</description>
+	</service>
+	<!-- 调拨指令 -->
+	<service name="deliveryEbsToPos" engine="java" transaction-timeout="1800"
+		location="org.ofbiz.face.erpface.FaceDownloadServer" invoke="deliveryToPos"
+		auth="false" export="true">
+		<description>deliveryEbsToPos</description>
+	</service>
+	<!-- 杂出指令 -->
+	<service name="outDeliveryEbsToPos" engine="java"
+		location="org.ofbiz.face.erpface.FaceDownloadServer" invoke="outDeliveryToPos"
+		auth="false" export="true">
+		<description>outDeliveryEbsToPos</description>
+	</service>
+	<!-- 杂入指令 -->
+	<service name="receiveEbsToPos" engine="java"
+		location="org.ofbiz.face.erpface.FaceDownloadServer" invoke="inReceiveToPos"
+		auth="false" export="true">
+		<description>receiveEbs2Pos</description>
+	</service>
+	<!-- 门店要货单下载-->
+	<service name="replenishmentItemEbsToPos" engine="java"
+		location="org.ofbiz.face.erpface.FaceDownloadServer" invoke="replenishmentItemToPos"
+		auth="false" export="true">
+		<description>replenishmentItemEbsToPos</description>
+	</service>
+	<!-- 售后受理维护数据下载 -->
+	<service name="acceptEbsToPos" engine="java"
+		location="org.ofbiz.face.erpface.FaceDownloadServer" invoke="acceptToPos"
+		auth="false" export="true">
+		<description>acceptEbsToPos</description>
+	</service>
+	<!-- 运营商套餐值下载(取行中相关信息)-->
+	<service name="operationEbsToPos" engine="java"
+		location="org.ofbiz.face.erpface.FaceDownloadServer" invoke="operationToPos"
+		auth="false" export="true">
+		<description>operationEbsToPos</description>
+	</service>
+
+	<service name="selectGoodsReceiptList" engine="java"
+		location="org.ofbiz.face.webservice.FaceService" invoke="selectGoodsReceiptList"
+		auth="false" export="true">
+		<description>杂项入库</description>
+		<attribute name="whereCondition" type="String" mode="IN"
+			optional="true" />
+		<attribute name="xmlString" type="String" mode="OUT"
+			optional="false" />
+	</service>
+	<service name="selectGoodsIssueList" engine="java"
+		location="org.ofbiz.face.webservice.FaceService" invoke="selectGoodsIssueList"
+		auth="false" export="true">
+		<description>杂项出库</description>
+		<attribute name="whereCondition" type="String" mode="IN"
+			optional="true" />
+		<attribute name="xmlString" type="String" mode="OUT"
+			optional="false" />
+	</service>
+	<service name="selectPreOrder" engine="java"
+		location="org.ofbiz.face.webservice.FaceService" invoke="selectPreOrder"
+		auth="false" export="true">
+		<description>销售预订单</description>
+		<attribute name="whereCondition" type="String" mode="IN"
+			optional="true" />
+		<attribute name="xmlString" type="String" mode="OUT"
+			optional="false" />
+	</service>
+	<service name="selectPreCollectionOrder" engine="java"
+		location="org.ofbiz.face.webservice.FaceService" invoke="selectPreCollectionOrder"
+		auth="false" export="true">
+		<description>销售预订金</description>
+		<attribute name="whereCondition" type="String" mode="IN"
+			optional="true" />
+		<attribute name="xmlString" type="String" mode="OUT"
+			optional="false" />
+	</service>
+	<service name="getNowTime" engine="java" export="true"
+            location="org.ofbiz.face.erpface.FaceDownloadServer" invoke="getNowTime">
+       <attribute name="jsonOut" type="String" mode="OUT" /> 
+    </service>
+
+</services>

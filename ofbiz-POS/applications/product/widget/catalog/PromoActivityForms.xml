@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+    <form name="FindPromoActivity" type="single" target="FindPromoActivity"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="promoName" title="活动名称"><text-find size="25"></text-find></field>
+        <field name="fromDate" title="${uiLabelMap.CommonFromDate}"><date-time type="timestamp"/></field>
+        <field name="thruDate" title="${uiLabelMap.CommonThruDate}"><date-time type="timestamp"/></field>
+        <field name="promoType" title="状态" >
+   			<drop-down allow-empty="false">
+   				<option key="" description=""/>
+   				<option key="C" description="草稿"/>
+   				<option key="S" description="已审批"/>
+   				<option key="F" description="已废弃"/>
+            </drop-down>
+   		</field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit find" ><submit/></field>
+        <!-- <field name="searchLink" title="高级${uiLabelMap.CommonFind}" widget-style="buttontext">
+            <hyperlink target="searchLink" description="高级${uiLabelMap.CommonFind}" also-hidden="false" >
+                <parameter param-name="productPriceTypeId"/>
+                <parameter param-name="isBase"/>
+            </hyperlink>
+        </field> -->
+    </form>
+    <form name="ListPromoActivity" type="list" list-name="listIt" paginate-target="FindPromoActivity" target="DeletePromoActivity"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="ProductPromo"/>
+                <field-map field-name="orderBy" value="productPromoId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="productPromoId" title="${uiLabelMap.CommonId}" widget-style="buttontext">
+            <hyperlink target="FindPromotionActivity" description="${productPromoId}">
+                <parameter param-name="productPromoId"/>
+            </hyperlink>
+        </field>
+        <field name="promoName" title="名称" ><display /></field>
+        <field name="promoType" use-when="&quot;${promoType}&quot;.equals(&quot;S&quot;)" title="状态">
+        	<display description="已审批"/>
+         </field>
+         <field name="promoType" use-when="&quot;${promoType}&quot;.equals(&quot;C&quot;)" title="状态">
+        	<display description="草稿"/>
+         </field>
+         <field name="promoType" use-when="&quot;${promoType}&quot;.equals(&quot;F&quot;)" title="状态">
+        	<display description="废弃"/>
+         </field>
+        <field name="fromDate" title="起始日期"><display /></field>
+        <field name="thruDate" title="结束日期"><display /></field>
+        <field name="promoText" title="备注"><display /></field>
+        <field name="delete" title="${uiLabelMap.CommonDelete}" ><submit confirmation-message="do you delete"/></field>
+    </form>    
+    <form name="ListPromotionConditions" type="list" list-name="listIt"  paginate-target="FindPromotionActivity" target="DeletePromotionConditions"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="findNotPrameList" result-map="result" result-map-list="listIt">
+            <!-- performFind findNotPrameList-->
+           		<field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="ProductPromoConditions"/>
+                <field-map field-name="orderBy" value="productPromoRangeId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="productPromoId" ><hidden /></field>
+        <field name="productPromoRangeId" use-when="&quot;${productPromoType}&quot;.equals(&quot;T&quot;)" title="${uiLabelMap.CommonId}" widget-style="buttontext">
+        	<hyperlink target="FindProductPromoSpecialProduct" description="${productPromoRangeId}">
+                <parameter param-name="productPromoId"/>
+            </hyperlink>
+        </field>
+        <field name="productPromoRangeId" use-when="&quot;${productPromoType}&quot;.equals(&quot;L&quot;)" title="${uiLabelMap.CommonId}" widget-style="buttontext">
+        	<hyperlink target="FindProductPromoGiftProduct" description="${productPromoRangeId}">
+                <parameter param-name="productPromoId"/>
+                <parameter param-name="productPromoRangeId"/>
+            </hyperlink>
+        </field>
+        <field name="productPromoRangeId" use-when="&quot;${productPromoType}&quot;.equals(&quot;C&quot;)" title="${uiLabelMap.CommonId}" widget-style="buttontext">
+        	<hyperlink target="FindProductPromoSpecialserial" description="${productPromoRangeId}">
+                <parameter param-name="productPromoId"/>
+            </hyperlink>
+        </field>
+        <field name="productPromoRangeId" use-when="&quot;${productPromoType}&quot;.equals(&quot;J&quot;)" title="${uiLabelMap.CommonId}" >
+        	<display></display>
+        </field>
+        <field name="productPromoRangeId" use-when="&quot;${productPromoType}&quot;.equals(&quot;Z&quot;)" title="${uiLabelMap.CommonId}" >
+        	<display></display>
+        </field>
+        <field name="productPromoType" use-when="&quot;${productPromoType}&quot;.equals(&quot;T&quot;)" title="促销类型">
+        	<display description="特价"/>
+         </field>
+         <field name="productPromoType" use-when="&quot;${productPromoType}&quot;.equals(&quot;Z&quot;)" title="促销类型">
+        	<display description="折扣"/>
+         </field>
+         <field name="productPromoType" use-when="&quot;${productPromoType}&quot;.equals(&quot;J&quot;)" title="促销类型">
+        	<display description="减免"/>
+         </field>
+         <field name="productPromoType" use-when="&quot;${productPromoType}&quot;.equals(&quot;L&quot;)" title="促销类型">
+        	<display description="礼品"/>
+         </field>
+         <field name="productPromoType" use-when="&quot;${productPromoType}&quot;.equals(&quot;C&quot;)" title="促销类型">
+        	<display description="串号"/>
+         </field>
+        <field name="startValue" title="下限LTEQ"><display /></field>
+        <field name="endValue" title="GT上限"><display /></field>
+        <field name="productPriceTypeId" title="价格等级"><display-entity entity-name="ProductPriceType" description="${description}"/></field>
+        <field name="rate" title="值"><display /></field>
+        <field name="delete" title="${uiLabelMap.CommonDelete}"><submit/></field>
+    </form>   
+    <form name="FindPromotionBasicInformation" type="single" target=""
+        header-row-style="header-row" default-table-style="basic-table" default-map-name="productPromo">
+        <field name="productPromoId" title="促销活动" position="1"><text size="20" ></text></field>
+        <field name="promoName" title="名称" position="2"><text size="35"></text></field>
+        <field name="promoType" title="状态" position="3">
+   			<drop-down allow-empty="false">
+   				<option key="C" description="草稿"/>
+   				<option key="S" description="已审批"/>
+   				<option key="F" description="已废弃"/>
+            </drop-down>
+   		</field>
+        <field name="fromDate" title="${uiLabelMap.CommonFromDate}" position="1"><date-time type="timestamp"/></field>
+        <field name="thruDate" title="${uiLabelMap.CommonThruDate}" position="2"><date-time type="timestamp"/></field>
+   		<field name="promoText" title="" position="3"><textarea/> </field>
+    </form>
+    <form name="EditPromotionBasicInformation" type="single" target="CreatePromotionBasicInformation"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="productPromoId" title="促销活动" position="1"><text size="25" ></text></field>
+        <field name="promoName" title="名称" position="2"><text size="30"></text></field>
+        <field name="promoType" title="状态" position="3">
+   			<drop-down allow-empty="false">
+   				<option key="C" description="草稿"/>
+   				<option key="S" description="已审批"/>
+   				<option key="F" description="已废弃"/>
+            </drop-down>
+   		</field>
+        <field name="fromDate" title="${uiLabelMap.CommonFromDate}" position="1"><date-time type="timestamp"/></field>
+        <field name="thruDate" title="${uiLabelMap.CommonThruDate}" position="2"><date-time type="timestamp"/></field>
+   		<field name="promoText" title="" position="3"><textarea/> </field>
+   		<field name="add" title="创建基础信息" ><submit/></field>
+    </form>
+    <form name="AddPromotionConditions" type="single" target="CreatePromotionConditions"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="productPromoId" ><hidden/> </field>
+        <field name="productPromoType" title="促销类型" position="1">
+   			<drop-down allow-empty="false">
+   				<option key="T" description="特价"/>
+   				<option key="Z" description="折扣"/>
+   				<option key="J" description="减免"/>
+   				<option key="L" description="礼品"/>
+   				<option key="C" description="串号"/>
+            </drop-down>
+   		</field>
+   		<field name="ConditionsType" title=" " position="2">
+   			<drop-down allow-empty="false">
+   				<option key="S" description="数量"/>
+            </drop-down>
+   		</field>
+   		<field name="startValue" title="下限LTEQ" position="3"><text size="5"/></field>
+   		<field name="endValue" title="上限GT" position="4"><text size="5"/></field>
+   		<field name="productPriceTypeId" title="价格等级" position="5">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" entity-name="ProductPriceType" key-field-name="productPriceTypeId">
+                	<entity-constraint name="isBase" value="N"/>
+                </entity-options>
+            </drop-down>
+        </field>
+   		<field name="rate" title="值" position="6"><text size="5"/></field>
+   		<field name="submitButton" title="添加详细" widget-style="smallSubmit" position="7"><submit/></field>   
+    </form>
+    <form name="ListProductPromoProduct" type="list" list-name="listIt" paginate-target="FindPromotionProduct" target="UpdateFeatureCategory"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="findProductList" result-map="result" result-map-list="listIt">
+            	<field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="productId" title="商品编码"><display/></field>
+        <field name="productName" title="商品名称"><display/></field>
+        <field name="brandName" title="品牌"><display/></field>
+        <field name="featureAll" title="特征"><display/></field>
+        <field name="categoryAll" title="分类"><display/></field>
+    </form>
+    <form name="ListProductPromoSpecialProduct" type="list" list-name="lists" paginate-target="FindProductPromoSpecialProduct" target="UpdateProductPromoSpecialProduct"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="findSpecialProductList" result-map="result" result-map-list="lists">
+            	<field-map field-name="inputFields" from-field="parameters"/>
+            	<field-map field-name="findType" value="findSpecialProductList" />
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="productPromoId" ><hidden/> </field>
+        <field name="productId" title="商品编码"><display/></field>
+        <field name="productName" title="商品名称"><display/></field>
+        <field name="brandName" title="品牌"><display/></field>
+        <field name="featureAll" title="特征"><display/></field>
+        <field name="categoryAll" title="分类"><display/></field>
+        <field name="checkPrice" title="促销考核底价" ><text size="10"/></field>
+        <field name="guidePrice" title="促销指导价" ><text size="10"/></field>
+        <field name="salesPrice" title="促销销售底价" ><text size="10"/></field>
+        <field name="update" title="更新" ><submit/></field>
+    </form> 
+    <form name="ListPromotionStore" type="list" list-name="listIt" 
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            	<service service-name="findStoreList" result-map="result" result-map-list="listIt">
+	            	<field-map field-name="inputFields" from-field="parameters"/>
+	                <field-map field-name="viewIndex" from-field="viewIndex"/>
+	                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="productStoreId" title="门店编码"><display/></field>
+        <field name="storeName" title="门店名称"><display/></field>
+        <field name="allAttribute" title="属性"><display/></field>
+    </form>
+    <form name="ListProductPromoParty" type="list" list-name="listIt" 
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+           	<service service-name="findCustomerList" result-map="result" result-map-list="listIt">
+            	<field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="partyId" title="会员编码"><display/></field>
+        <field name="lastName" title="姓"><display/></field>
+        <field name="firstName" title="名"><display/></field>
+        <field name="phoneMobile" title="手机号码"><display/></field>
+        <field name="cardId" title="会员卡号"><display/></field>
+        <field name="address1" title="地址"><display/></field>
+        <field name="gender" title="性别" use-when="&quot;${gender}&quot;.equals(&quot;1&quot;)"><display description="男"/></field>
+        <field name="gender" title="性别" use-when="&quot;${gender}&quot;.equals(&quot;2&quot;)"><display description="女"/></field>
+        <field name="description" title="等级"><display/></field> 
+    </form>
+    <form name="EditPromotionTime" type="single" target="CreatePromotionTime"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="productPromoId" ><hidden/> </field>
+        <field name="productPromoTimeType" title="促销周期" position="1">
+   			<drop-down allow-empty="false">
+   				<option key="T" description="每日"/>
+   				<option key="Z" description="每周"/>
+   				<option key="Y" description="每月"/>
+            </drop-down>
+   		</field>
+   		<field name="startValue" title="下限LTEQ" position="3"><text size="5"/></field>
+   		<field name="endValue" title="上限GT" position="4"><text size="5"/></field>
+   		<field name="add" title="添加一行" position="5"><submit/></field>
+    </form>
+    <form name="ListPromotionTime" type="list" list-name="listIt"  paginate-target="FindPromotionTime" target="DeletePromotionTime"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="findNotPrameList" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="ProductPromoTime"/>
+                <field-map field-name="orderBy" value="productPromoId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="seqnum" title="req"><hidden /></field>
+        <field name="productPromoId" title="编码"><display /></field>
+        <field name="productPromoTimeType" use-when="&quot;${productPromoTimeType}&quot;.equals(&quot;T&quot;)" title="促销周期">
+        	<display description="日"/>
+         </field>
+         <field name="productPromoTimeType" use-when="&quot;${productPromoTimeType}&quot;.equals(&quot;Z&quot;)" title="促销周期">
+        	<display description="周"/>
+         </field>
+         <field name="productPromoTimeType" use-when="&quot;${productPromoTimeType}&quot;.equals(&quot;Y&quot;)" title="促销周期">
+        	<display description="月"/>
+         </field>
+        <field name="startValue" title="下限LTEQ"><display /></field>
+        <field name="endValue" title="上限GT"><display /></field>
+        <field name="delete" title="${uiLabelMap.CommonDelete}"><submit/></field>
+    </form>  
+    <form name="ListProductPromoGiftProduct" type="list" list-name="listIt" paginate-target="" target=""
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="findGiftProductList" result-map="result" result-map-list="listIt">
+            	<field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="productId" title="商品编码"><display/></field>
+        <field name="productName" title="商品名称"><display/></field>
+        <field name="brandName" title="品牌"><display/></field>
+        <field name="featureAll" title="特征"><display/></field>
+        <field name="categoryAll" title="分类"><display/></field>
+    </form> 
+    <form name="FindProductPromoSpecialserial" type="single" target="CreateProductPromoSpecialserial"
+        header-row-style="header-row" default-table-style="basic-table" >
+        <field name="productPromoId" ><hidden/></field>
+        <field name="sequenceId" title="串号标识"><lookup target-form-name="LookupSerialName"/></field>
+        <field name="checkPrice" title="促销考核底价" ><text size="10"/></field>
+        <field name="guidePrice" title="促销指导价" ><text size="10"/></field>
+        <field name="salesPrice" title="促销销售底价" ><text size="10"/></field>
+        <field name="save" title="${uiLabelMap.CommonAdd}"><submit/></field>
+    </form>
+    <form name="ListProductPromoSpecialserial" type="list" list-name="listIt" paginate-target="FindProductPromoSpecialserial" target="DeleteProductPromoSpecialserial"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="findNotPrameList" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="ProductPromoSpecialserial"/>
+                <field-map field-name="orderBy" value="productPromoSPCondId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="productPromoSPCondId" title="标识"><display/></field>
+        <field name="productPromoId" title="促销活动标识"><display/></field>
+        <field name="sequenceId" title="串号标识"><display/></field>
+        <field name="productId" title="商品标识"><display/></field>
+        <field name="checkPrice" title="促销考核底价"><display/></field>
+        <field name="guidePrice" title="促销指导价"><display/></field>
+        <field name="salesPrice" title="促销销售底价"><display/></field>
+        <field name="remove" title="${uiLabelMap.CommonRemove}"><submit/></field>
+    </form> 
+    <form name="FindPromotionTrench" type="single" target="CreatePromotionTrench"
+        header-row-style="header-row" default-table-style="basic-table" >
+        <field name="productPromoId" ><hidden/></field>
+        <field name="trenchTypeId" title="渠道标识"><lookup target-form-name="LookupTrenchName"/></field>
+        <field name="save" title="${uiLabelMap.CommonAdd}"><submit/></field>
+    </form>
+    <form name="ListPromotionTrench" type="list" list-name="listIt" paginate-target="FindPromotionTrench" target="DeletePromotionTrench"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="findNotPrameList" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="ProductPromoTrench"/>
+                <field-map field-name="orderBy" value="productPromoTrenchId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="productPromoTrenchId" ><hidden /></field>
+        <field name="seqnum" ><hidden /></field>
+        <field name="productPromoId" title="促销活动标识"><display/></field>
+        <field name="trenchTypeId" title="渠道名称"><display-entity entity-name="TrenchType" description="${name}" key-field-name="trenchTypeId"/></field>
+        <field name="remove" title="${uiLabelMap.CommonRemove}"><submit/></field>
+    </form> 
+</forms>

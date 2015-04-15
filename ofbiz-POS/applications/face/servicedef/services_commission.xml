@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+	
+	<service name="createCommission" default-entity-name="Commission"
+		engine="java" invoke="createCommission" auth="true" location="org.ofbiz.face.commission.CommissionService">
+		<description></description>
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+		<attribute name="jsonStr" mode="IN" type="String" optional="true"/>
+	</service>
+	<service name="deleteCommission" default-entity-name="Commission"
+		engine="entity-auto" invoke="delete" auth="true">
+		<description></description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+	</service>
+	<service name="updateCommission" default-entity-name="Commission"
+		engine="java" invoke="updateCommission" auth="false" 
+		 location="org.ofbiz.face.commission.CommissionService">
+		<description></description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+		<attribute name="jsonStr" mode="IN" type="String" optional="true"/>
+	</service>
+	<service name="createAward" default-entity-name="Award"
+		engine="java" invoke="createAward" auth="true" location="org.ofbiz.face.commission.CommissionService">
+		<description></description>
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+		<attribute name="jsonStr" mode="IN" type="String" optional="true"/>
+	</service>
+	<service name="deleteAward" default-entity-name="Award"
+		engine="entity-auto" invoke="delete" auth="true">
+		<description></description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+	</service>
+	<service name="updateAward" default-entity-name="Award"
+		engine="java" invoke="updateAward" auth="false" 
+		 location="org.ofbiz.face.commission.CommissionService">
+		<description></description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+		<attribute name="jsonStr" mode="IN" type="String" optional="true"/>
+	</service>
+	<service name="createBase" default-entity-name="Base"
+		engine="java" invoke="createBase" auth="true" location="org.ofbiz.face.commission.CommissionService">
+		<description></description>
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+		<attribute name="jsonStr" mode="IN" type="String" optional="true"/>
+	</service>
+	<service name="deleteBase" default-entity-name="Base"
+		engine="entity-auto" invoke="delete" auth="true">
+		<description></description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+	</service>
+	<service name="updateBase" default-entity-name="Base"
+		engine="java" invoke="updateBase" auth="false" 
+		 location="org.ofbiz.face.commission.CommissionService">
+		<description></description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+		<attribute name="jsonStr" mode="IN" type="String" optional="true"/>
+	</service>
+	<service name="createRate" default-entity-name="Rate"
+		engine="java" invoke="createRate" auth="true" location="org.ofbiz.face.commission.CommissionService">
+		<description></description>
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+		<attribute name="jsonStr" mode="IN" type="String" optional="true"/>
+	</service>
+	<service name="deleteRate" default-entity-name="Rate"
+		engine="entity-auto" invoke="delete" auth="true">
+		<description></description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+	</service>
+	<service name="updateRate" default-entity-name="Rate"
+		engine="java" invoke="updateRate" auth="false" 
+		 location="org.ofbiz.face.commission.CommissionService">
+		<description></description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+		<attribute name="jsonStr" mode="IN" type="String" optional="true"/>
+	</service>
+	
+	<service name="getStoreByStoreId" engine="java" auth="false"
+        location="org.ofbiz.face.commission.CommissionService" invoke="getStoreByStoreId">
+        <description>Set the Value options for selected sales Operators Condition Input</description>
+        <attribute name="storeId" mode="IN" type="String" optional="true"/>
+        <attribute name="storeList" mode="OUT" type="java.util.List" optional="true"/><!-- optional="true" because of quantity or other kind of fiels needing an input -->
+    </service>
+    
+    <service name="getProductByProductId" engine="java" auth="false"
+        location="org.ofbiz.face.commission.CommissionService" invoke="getProductByProductId">
+        <description>Set the Value options for selected sales Operators Condition Input</description>
+        <attribute name="productId" mode="IN" type="String" optional="true"/>
+        <attribute name="productList" mode="OUT" type="java.util.List" optional="true"/><!-- optional="true" because of quantity or other kind of fiels needing an input -->
+    </service>
+	
+</services>

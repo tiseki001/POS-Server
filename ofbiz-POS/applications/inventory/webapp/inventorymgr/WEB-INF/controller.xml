@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+    <include location="component://common/webcommon/WEB-INF/security-controller.xml"/>
+    <description>Inventory Manager Module Site Configuration File</description>
+    
+    <handler name="service-multi" type="request" class="org.ofbiz.webapp.event.ServiceMultiEventHandler"/>
+    <handler name="simplecontent" type="view" class="org.ofbiz.content.view.SimpleContentViewHandler"/>
+
+	<request-map uri="view">
+		<security https="true" auth="false"/>
+		<response name="success" type="request" value="main"/>
+	</request-map>
+    <request-map uri="main">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="main"/>
+    </request-map>
+
+	<!-- 调用方法，相当于action配置文件 -->
+    <request-map uri="findInventory">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="findInventory"/>
+    </request-map>
+    <request-map uri="createInventory">
+    	<security https="true" auth="true"/>
+    	<event type="service" invoke="createInventory"/>
+    	<response name="success" type="request-redirect" value="findInventory"/>
+    	<response name="error" type="view" value="SaveInventoryxml"/>
+    </request-map>
+    <request-map uri="deleteInventory">
+    	<security https="true" auth="true"/>
+    	<event type="service" invoke="deleteInventory"/>
+    	<response name="success" type="request-redirect" value="findInventory"/>
+    </request-map>
+    <request-map uri="updateInventory">
+    	<security https="true" auth="true"/>
+    	<event type="service" invoke="updateInventory"/>
+    	<response name="success" type="request-redirect" value="findInventory"/>
+    </request-map>
+    <request-map uri="getInventory">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="getInventory"/>
+    </request-map>
+    <request-map uri="SaveInventoryxml">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="SaveInventoryxml"/>
+    </request-map>
+	<!-- 返回页面 -->
+	<view-map name="main" type="screen" page="component://inventory/widget/inventorymgr/InventoryScreens.xml#findInventory"/>
+    <view-map name="findInventory" type="screen" page="component://inventory/widget/inventorymgr/InventoryScreens.xml#findInventory"/>
+    <view-map name="SaveInventoryxml" type="screen" page="component://inventory/widget/inventorymgr/InventoryScreens.xml#SaveInventoryxml"/>
+    <view-map name="getInventory" type="screen" page="component://inventory/widget/inventorymgr/InventoryScreens.xml#getInventory"/>
+	
+
+</site-conf>

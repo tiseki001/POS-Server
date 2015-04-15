@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+    <form name="FindPriceSule" type="single" target="EditPriceRule"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="productPriceRuleId" title="${uiLabelMap.CommonId}"><text-find size="20" maxlength="255"></text-find></field>
+        <field name="ruleName" title="规则名称"><text-find size="25"></text-find></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit find"><submit/></field>
+    </form>
+
+    <form name="ListPriceSule" type="list" list-name="listIt" paginate-target="EditPriceRule" target="DetailPriceRule"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="ProductPriceRule"/>
+                <field-map field-name="orderBy" value="productPriceRuleId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="productPriceRuleId" title="${uiLabelMap.CommonId}" widget-style="buttontext">
+            <hyperlink target="EditProductPriceRuleProduct" description="${productPriceRuleId}">
+                <parameter param-name="productPriceRuleId"/>
+            </hyperlink>
+        </field>
+        <field name="ruleName" title="名称"><display/></field>
+        <field name="description" ><display/></field>
+        <field name="productPriceTypeId" title="类型"><display-entity entity-name="ProductPriceType" description="${description}"/></field>
+        <field name="baseTypeId" title="基础价格"><hidden/></field>
+        <field name="percent" ><hidden/></field>
+        <field name="digit" ><hidden/></field>
+        <field name="diff" ><hidden/></field>
+        <field name="update" title="${uiLabelMap.CommonUpdate}" ><submit/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonEmptyHeader}" widget-style="buttontext">
+            <hyperlink target="RemoveProductPriceRules" description="${uiLabelMap.CommonDelete}" also-hidden="false" confirmation-message="do you delete" >
+                <parameter param-name="productPriceRuleId"/>
+            </hyperlink>
+        </field>
+    </form>
+
+    <form name="CreatePriceRule" type="single" target="CreateProductPriceRules">
+   		<field name="productPriceRuleId" title="标识"><display></display> </field>
+   		<field name="ruleName" title="名称"><text size="20"></text></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><text size="80"></text></field>
+        <field name="productPriceTypeId" title="类型">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" entity-name="ProductPriceType" key-field-name="productPriceTypeId">
+                	<entity-constraint name="isBase" value="N"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="baseTypeId" title="基础价格" >
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" entity-name="ProductPriceType" key-field-name="productPriceTypeId">
+                	<entity-constraint name="isBase" value="Y"/>
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="percent" title="百分比"><text size="20"></text></field>
+        <field name="digit" title="舍入位数"><text size="20"></text></field>
+        <field name="diff" title="调整值"><text size="20"></text></field>
+        <field name="submitButton" title="${uiLabelMap.CommonSubmit}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="DetailPriceRule" type="single" target="CreateProductPriceRules" default-entity-name="productPriceRule">
+   		<field name="productPriceRuleId" title="标识"><display></display> </field>
+   		<field name="ruleName" title="名称"><text default-value="${productPriceRule.ruleName}"></text></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><text default-value="${productPriceRule.description}"></text></field>
+        <field name="productPriceRule.productPriceTypeId" title="类型" >
+        	<display-entity description="${description}" entity-name="ProductPriceType" key-field-name="productPriceTypeId"></display-entity>
+        </field>
+        <field name="productPriceRule.baseTypeId" title="基础价格" >
+           <display-entity description="${description}" entity-name="ProductPriceType" key-field-name="productPriceTypeId"></display-entity>
+        </field>
+        <field name="percent" title="百分比"><text default-value="${productPriceRule.percent}"></text></field>
+        <field name="digit" title="舍入位数"><text default-value="${productPriceRule.digit}"></text></field>
+        <field name="diff" title="调整值"><text default-value="${productPriceRule.diff}"></text></field>
+        <field name="submitButton" title="${uiLabelMap.CommonSubmit}" widget-style="smallSubmit"><submit button-type="button"/></field>
+        
+       <!--  <field name="add" title="生成价格类型" widget-style="buttontext">
+            <hyperlink target="CreateProductPriceTypeRule_" description="生成价格类型" also-hidden="false">
+                <parameter param-name="productPriceRuleId" from-field="productPriceRuleId"/>
+            </hyperlink>
+        </field>  -->
+    </form>
+    
+     <form name="FindSalesPolicy" type="single" target="EditSalesPolicy"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="productSalesPolicyId" title="${uiLabelMap.CommonId}"><text-find size="20" maxlength="255"></text-find></field>
+        <field name="policyName" title="名称"><text-find size="25"></text-find></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit find"><submit/></field>
+    </form>
+
+    <form name="ListSalesPolicy" type="list" list-name="listIt" paginate-target="EditSalesPolicy" target="UpdateSalesPolicy"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="ProductSalesPolicy"/>
+                <field-map field-name="orderBy" value="productSalesPolicyId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="productSalesPolicyId" title="${uiLabelMap.CommonId}" widget-style="buttontext">
+            <hyperlink target="EditSalesPolicyPriceRule" description="${productSalesPolicyId}">
+                <parameter param-name="productSalesPolicyId"/>
+            </hyperlink>
+        </field>
+        <field name="policyName" title="名称"><text /></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><text size="60"/></field>
+        <field name="mainRatio" title="主商品价格分摊百分比"><text size="20"/></field>
+        <field name="update" title="${uiLabelMap.CommonUpdate}" ><submit/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonEmptyHeader}" widget-style="buttontext">
+            <hyperlink target="RemoveSalesPolicy" description="${uiLabelMap.CommonDelete}" also-hidden="false" confirmation-message="do you delete" >
+                <parameter param-name="productSalesPolicyId"/>
+            </hyperlink>
+        </field>
+    </form>
+
+    <form name="CreateSalesPolicy" type="single" target="CreateProductSalesPolicy">
+   		<field name="policyName" title="名称"><text size="20"></text></field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><text size="80"></text></field>
+        <field name="mainRatio" title="主商品价格分摊百分比"><text size="20"></text></field>
+        <field name="submitButton" title="${uiLabelMap.CommonSubmit}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    <form name="ImportProductPriceList" target="ImportProductPriceList" 
+		type="upload" header-row-style="header-row" default-table-style="basic-table">
+		<field name="uploadFile" position="1" title="uploadFile">
+			<file></file>
+		</field>
+		<field name="uploadButton" position="1"  title="upload"
+			widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+    <form name="FindProductPriceList" type="single" target="EditProductPriceList"
+        header-row-style="header-row" default-table-style="basic-table">
+        <field name="productId" title="物料编码">
+        	<lookup target-form-name="LookupProduct"></lookup>
+        </field>
+        <field name="productName" title="物料名称">
+        	<text></text>
+        </field>
+        <field name="productSalesPolicyId" title="销售政策">
+            <drop-down allow-empty="true">
+                <entity-options description="${policyName}" entity-name="ProductSalesPolicy" key-field-name="productSalesPolicyId">
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="productPriceRuleId" title="调价规则">
+        	<text-find></text-find>
+        </field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit find"><submit/></field>
+    </form>
+
+    <form name="ListProductPriceLists" type="list" list-name="listIt" paginate-target="EditFeatureCategories" target="UpdateFeatureCategory"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="ProductFeatureCategory"/>
+                <field-map field-name="orderBy" value="productFeatureCategoryId"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="productFeatureCategoryId" title="${uiLabelMap.CommonId}" widget-style="buttontext">
+            <hyperlink target="EditFeatureCategoryFeatures" description="${productFeatureCategoryId}">
+                <parameter param-name="productFeatureCategoryId"/>
+            </hyperlink>
+        </field>
+        <field name="description" title="${uiLabelMap.CommonDescription}"><text/></field>
+        <field name="productPriceTypeId" title="${uiLabelMap.CommonProductPriceTypeId}"><text/></field>
+        <field name="update" title="${uiLabelMap.CommonUpdate}"><submit/></field>
+    </form>
+    
+    <form name="FindSalesPolicyPriceSule" type="single" target="CreateSalesPolicyPriceRule"
+        header-row-style="header-row" default-table-style="basic-table" >
+        <field name="productSalesPolicyId" ><hidden/></field>
+        <field name="productPriceRuleId" title="规则标识"><lookup target-form-name="LookupRuleName"/></field>
+        <field name="save" title="${uiLabelMap.CommonAdd}"><submit/></field>
+    </form>
+
+    <form name="ListSalesPolicyPriceSule" type="list" list-name="listIt" target="RemoveSalesPolicyPriceSule"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="findRuleList" result-map="result" result-map-list="listIt">
+            </service>
+        </actions>
+        <field name="productSalesPolicyId" ><hidden/></field>
+        <field name="productPriceRuleId" title="规则标识"><display/></field>
+        <field name="ruleName" title="规则名称"><display/></field>
+        <field name="description" title="规则描述"><display/></field>
+        <field name="productPriceTypeId" title="类型"><display-entity entity-name="ProductPriceType" description="${description}" /></field>
+        <field name="remove" title="${uiLabelMap.CommonRemove}"><submit/></field>
+    </form>
+    <form name="ViewSalesPolicyPackage" type="list" list-name="partyRoles" target="viewroles"
+        default-title-style="tableheadtext" default-widget-style="tabletext"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar"
+        default-tooltip-style="tabletext">
+        <field name="roleTypeId" title="${uiLabelMap.PartyRoleTypeId}"><hidden/></field>
+        <field name="lef1" title="左括号"><display/></field>
+        <field name="fieldName" title="属性"><display/></field>
+        <field name="operate" title="操作符号"><display/></field>
+        <field name="valu1" title="数值"><display/></field>
+        <field name="righ1" title="右括号"><display/></field>
+        <field name="relation" title="AND/OR"><display/></field>
+        <field name="remove" title="${uiLabelMap.CommonDelete}">
+            <hyperlink target="deleterole" description="${uiLabelMap.CommonDelete}">
+                <parameter param-name="partyId"/>
+                <parameter param-name="roleTypeId"/>
+            </hyperlink>
+        </field>
+    </form>
+    <form name="AddSalesPolicyPackage" type="single" title="Add a role to party" target="" 
+    	odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <field name="partyId"><hidden value="${parameters.partyId}"/></field>
+        <field name="left1" title="左括号" position="1"><text size="7" /></field>
+        <field name="fieldName" title="属性" position="2">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" entity-name="ProductFeatureCategory" key-field-name="productFeatureCategoryId">
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="operate" title="操作符" position="3">
+            <drop-down allow-empty="false" current="selected">
+                <entity-options entity-name="Enumeration" description="${description}" key-field-name="enumId">
+                    <entity-constraint name="enumTypeId" operator="equals" value="PROD_PRICE_COND"/>
+                </entity-options>
+            </drop-down>
+        </field>  
+        <field name="value1" title="值" position="4">
+            <drop-down allow-empty="true">
+                <entity-options description="${description}" entity-name="ProductFeatureCategory" key-field-name="productFeatureCategoryId">
+                </entity-options>
+            </drop-down>
+        </field>
+        <field name="righ1" title="右括号" position="5"><text size="7" /></field>
+        <field name="relation" title="AND/OR" position="6"><text size="7" /></field>
+    </form>
+    <form name="ListProductPriceRulePackage" type="list" list-name="listIt" paginate-target="EditSalesPolicyPackage" target=""
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="findBomList" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="productId" title="商品编码"><display/></field>
+        <field name="productName" title="商品名称"><display/></field>
+        <field name="brandName" title="品牌"><display/></field>
+        <field name="featureAll" title="特征"><display/></field>
+        <field name="categoryAll" title="分类"><display/></field>
+        <!-- <field name="productCategoryId">
+            <drop-down allow-empty="false">
+                <entity-options entity-name="ProductCategoryAndMember" description="${productCategoryId} [${categoryName}]" key-field-name="productCategoryId">
+                    <entity-constraint name="productId" env-name="productId"/>
+                    <entity-order-by field-name="sequenceNum"/>
+                </entity-options>
+            </drop-down>
+        </field>
+         <field name="productFeatureId">
+            <drop-down allow-empty="false">
+                <entity-options entity-name="ProductFeatureAndAppl" description="${description} [${productFeatureCategoryId}]" key-field-name="productFeatureId">
+                    <entity-constraint name="productId" env-name="productId"/>
+                    <entity-order-by field-name="sequenceNum"/>
+                    <entity-order-by field-name="defaultSequenceNum"/>
+                    <entity-order-by field-name="fromDate"/>
+                </entity-options>
+            </drop-down>
+        </field> -->
+    </form>
+    <form name="ListProductPriceRuleProduct" type="list" list-name="listIt" paginate-target="EditProductPriceRuleProduct" target=""
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="findBomList" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="productId" title="商品编码"><display/></field>
+        <field name="productName" title="商品名称"><display/></field>
+        <field name="brandName" title="品牌"><display/></field>
+        <field name="featureAll" title="特征"><display/></field>
+        <field name="categoryAll" title="分类"><display/></field>
+    </form>
+    <form name="ListProductPriceRuleStore" type="list" list-name="listIt" paginate-target="EditProductPriceRuleStore"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="findRuleStoreList" result-map="result" result-map-list="listIt">
+            	<field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="productStoreId" title="门店编码"><display/></field>
+        <field name="storeName" title="门店名称"><display/></field>
+        <field name="allAttribute" title="属性"><display/></field>
+        <!-- <field name="productStoreAttrTypeId" title="属性">
+            <drop-down allow-empty="false">
+                <entity-options entity-name="ProductStoreAttributeAndType" description="${attrValue} [${description}]" key-field-name="productStoreAttrTypeId">
+                    <entity-constraint name="productStoreId" env-name="productStoreId"/>
+                </entity-options>
+            </drop-down>
+        </field>  -->
+    </form>
+    
+    <form name="EditSalesPolicyPackageCond" type="list" target="updateProductPriceCond" title="" list-name="productPriceConds" 
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <field name="productPriceRuleId"><hidden/></field><!-- Users don't need this information there, the screen is already sufficiently complex! -->
+        <field name="productPriceCondSeqId"><hidden/></field><!-- Users don't need this information there, the screen is already sufficiently complex! -->
+        <field name="inputParamEnumId" title="${uiLabelMap.ProductInput}">
+            <drop-down allow-empty="false" current="selected">
+                <entity-options entity-name="Enumeration" description="${description}" key-field-name="enumId">
+                    <entity-constraint name="enumTypeId" operator="equals" value="PROD_PRICE_IN_PARAM"/>
+                </entity-options>
+            </drop-down>
+        </field>        
+        <field name="operatorEnumId" title="${uiLabelMap.ProductOperator}">
+            <drop-down allow-empty="false" current="selected">
+                <entity-options entity-name="Enumeration" description="${description}" key-field-name="enumId">
+                    <entity-constraint name="enumTypeId" operator="equals" value="PROD_PRICE_COND"/>
+                </entity-options>
+            </drop-down>
+        </field>        
+        <field name="condValueInput" title="${uiLabelMap.ProductValue}" entry-name="condValue"><text size="10"/></field>
+        <field name="condValue" title="${uiLabelMap.CommonEmptyHeader}">
+            <drop-down allow-empty="false" current="selected">
+                <list-options list-name="productPriceRulesCondValues" key-name="condValue"/>
+            </drop-down>
+        </field>
+        <field name="submitButton" title="${uiLabelMap.CommonUpdate}" widget-style="smallSubmit"><submit/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonEmptyHeader}" widget-style="buttontext" widget-area-style="align-text">
+            <hyperlink target="deleteProductPriceCond" description="${uiLabelMap.CommonRemove}">
+                <parameter param-name="productPriceRuleId" from-field="productPriceCond.productPriceRuleId"/>
+                <parameter param-name="productPriceCondSeqId" from-field="productPriceCond.productPriceCondSeqId"/>
+            </hyperlink>
+        </field>        
+    </form>
+    <form name="AddSalesPolicyPackageCond" type="list" target="createProductPriceCond" title="" list-name="productPriceCondAdd" 
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar" separate-columns="true">
+        <field name="productPriceRuleId"><hidden/></field><!-- Users don't need this information there, the screen is already sufficiently complex! -->
+        <field name="new" title="${uiLabelMap.CommonNew}"><display default-value="${uiLabelMap.ProductPriceRulesNewCond}"/></field>
+        <field name="inputParamEnumId" title="${uiLabelMap.ProductInput}">
+            <drop-down allow-empty="false">
+                <entity-options entity-name="Enumeration" description="${description}" key-field-name="enumId">
+                    <entity-constraint name="enumTypeId" operator="equals" value="PROD_PRICE_IN_PARAM"/>
+                </entity-options>
+            </drop-down>
+        </field>        
+        <field name="operatorEnumId" title="${uiLabelMap.ProductOperator}">
+            <drop-down allow-empty="false">
+                <entity-options entity-name="Enumeration" description="${description}" key-field-name="enumId">
+                    <entity-constraint name="enumTypeId" operator="equals" value="PROD_PRICE_COND"/>
+                </entity-options>
+            </drop-down>
+        </field>        
+        <field name="condValueInput" title="${uiLabelMap.ProductValue}"><text size="10"/></field>
+        <field name="condValue" title="${uiLabelMap.CommonEmptyHeader}">
+            <drop-down allow-empty="false">
+                <list-options list-name="productPriceRulesCondValues" key-name="condValue"/>                
+            </drop-down>
+        </field>
+        <field name="submitButton" title="${uiLabelMap.CommonAdd}" widget-style="smallSubmit"><submit/></field>        
+    </form>
+    
+    
+</forms>

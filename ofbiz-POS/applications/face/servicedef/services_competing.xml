@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+
+
+
+	<service name="createCompetinginfo" default-entity-name="Competing"
+		engine="java" location="org.ofbiz.competing.CompetingServices" invoke="createCompeting"
+		auth="true">
+		<description>Create a Competing</description>
+		<auto-attributes include="pk" mode="OUT" optional="false" />
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+
+
+	<service name="AddCompetingConditions" default-entity-name="CompetingDtl"
+		engine="simple" location="component://Face/script/CompetingServices.xml"
+		invoke="addCompeting" auth="true">
+		<description>AddCompeting Conditions</description>
+		<auto-attributes include="pk" mode="OUT" optional="true" />
+		<auto-attributes include="pk" mode="IN" optional="true" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+
+	<service name="findCompetingList" engine="java" auth="false"
+		location="org.ofbiz.competing.CompetingServices" invoke="findCompetingList">
+		<description>Set the Value options for selected Price Rule Condition Input</description>
+		<attribute name="docId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="lineNo" type="String" mode="IN" optional="true" />
+		<attribute name="docDate" type="Timestamp" mode="IN"
+			optional="true" />
+		<attribute name="endDate" type="Timestamp" mode="IN"
+			optional="true" />
+		<attribute name="startDate" type="Timestamp" mode="IN"
+			optional="true" />
+
+		<attribute name="inputFields" type="java.util.Map" mode="IN"
+			optional="true" />
+		<attribute name="entityName" type="String" mode="IN"
+			optional="true" />
+		<attribute name="orderBy" type="String" mode="IN" optional="true" />
+		<attribute name="viewIndex" type="Integer" mode="IN"
+			optional="true" />
+		<attribute name="viewSize" type="Integer" mode="IN"
+			optional="true" />
+		<attribute name="listIt" type="org.ofbiz.entity.util.EntityListIterator"
+			mode="OUT" optional="true" />
+		<attribute name="listSize" type="Integer" mode="OUT"
+			optional="true" />
+	</service>
+
+
+<!-- 时间查询 -->
+
+<service name="competFind" engine="java" auth="false"
+		location="org.ofbiz.competing.CompetingServices" invoke="competFind">
+		<description>Set the Value options for selected Price Rule Condition Input</description>
+		<attribute name="productStoreId" mode="IN" type="String" optional="true"></attribute>
+		<attribute name="docDate" type="Timestamp" mode="IN"
+			optional="true" />
+		<attribute name="inputFields" type="java.util.Map" mode="IN"
+			optional="true" />
+		<attribute name="entityName" type="String" mode="IN"
+			optional="true" />
+		<attribute name="orderBy" type="String" mode="IN" optional="true" />
+		<attribute name="viewIndex" type="Integer" mode="IN"
+			optional="true" />
+		<attribute name="viewSize" type="Integer" mode="IN"
+			optional="true" />
+		<attribute name="listIt" type="org.ofbiz.entity.util.EntityListIterator"
+			mode="OUT" optional="true" />
+		<attribute name="listSize" type="Integer" mode="OUT"
+			optional="true" />
+	</service>
+
+
+	<service name="updateCompetinginfo" default-entity-name="CompetingDtl"
+		engine="java" location="org.ofbiz.competing.CompetingServices" invoke="updateCompetinginfo"
+		auth="true">
+		<description>Create a Competing</description>
+		<auto-attributes include="pk" mode="OUT" optional="false" />
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+
+
+
+	<service name="deleteConditions" default-entity-name="CompetingDtl"
+		engine="simple" location="component://Face/script/CompetingServices.xml"
+		invoke="deleteConditions" auth="true">
+		<description>delete Competing</description>
+		<auto-attributes include="pk" mode="OUT" optional="true" />
+		<auto-attributes include="pk" mode="IN" optional="true" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+
+
+	<service name="updateCompetingsinfo" default-entity-name="Competing"
+		engine="java" location="org.ofbiz.competing.CompetingServices" invoke="updateCompetingsinfo"
+		auth="true">
+		<description>Create a Competing</description>
+		<attribute name="docId" mode="IN" type="String"></attribute>
+		<attribute name="lineNo" mode="IN" type="String"></attribute>
+		<attribute name="monitoringObject" mode="IN" type="String"></attribute>
+		<attribute name="brand" mode="IN" type="String"></attribute>
+		<attribute name="model" mode="IN" type="String"></attribute>
+		<attribute name="price" mode="IN" type="BigDecimal"></attribute>
+		<attribute name="suggestedPrice" mode="IN" type="BigDecimal"></attribute>
+		<attribute name="publicityPrice" mode="IN" type="BigDecimal"></attribute>
+		<attribute name="transactionPrice" mode="IN" type="BigDecimal"></attribute>
+		<attribute name="salesPolicy" mode="IN" type="BigDecimal"></attribute>
+		<attribute name="sourcesInfo" mode="IN" type="String"></attribute>
+		<attribute name="memo" mode="IN" type="String"></attribute>
+		<attribute name="reason" mode="IN" type="String"></attribute>
+		<attribute name="opinion" mode="IN" type="String"></attribute>
+	</service>
+
+	<service name="deleteCompeting" default-entity-name="CompetingDtl"
+		engine="java" location="org.ofbiz.competing.CompetingServices" invoke="deleteCompeting"
+		auth="true">
+		<description>Create a Competing</description>
+		<attribute name="docId" mode="IN" type="String"></attribute>
+		<attribute name="lineNo" mode="IN" type="String"></attribute>
+
+	</service>
+
+	<service name="deleteCompetingheader" default-entity-name="Competing"
+		engine="java" location="org.ofbiz.competing.CompetingServices" invoke="deleteCompetingheader"
+		auth="true">
+		<description>Create a Competing</description>
+		<attribute name="docId" mode="IN" type="String"></attribute>
+
+	</service>
+
+</services>

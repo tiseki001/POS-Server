@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+	<!-- 初始数据 -->
+	<!-- 表名   表字段="数据值" -->
+	<DocNo  id="2014-10-01" preOrderNo="1" preCollectionOrderNo="1"  backOrderNo="1" 
+	preRefundOrderNo="1" salesOrderNo="1" collectionOrderNo="1"
+	salesOutWhsOrderNo="1" returnOrderNo="1" refundOrderNo="1"
+	returnInWhsOrderNo="1" deliveryNo="1" 
+	receiveNo="1" inventoryNo="1" warehouseOutNo="1"
+    warehouseInNo="1" warehouseTransferNo="1"
+	warehouseReplenishmentNo="1" inventorynItemNo="1"
+	paymentInOrderNo="1" inventorynTransferNo="1"
+	lastUpdateDocDate="2014-01-01 00:00:000"  attrName1="1"
+	attrName2="1" attrName3="1" attrName4="1" attrName5="1" 
+	attrName6="1" attrName7="1" attrName8="1" attrName9="1"/>
+</entity-engine-xml>

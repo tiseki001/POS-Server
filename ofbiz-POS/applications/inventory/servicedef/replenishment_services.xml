@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Inventory Component Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+    <!-- 查询头 -->
+    <service name="findReplenishmentWeb" engine="java" export="true"
+            location="org.ofbiz.replenishment.webService.ReplenishmentWebService" invoke="findReplenishment">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+     <!-- 查询明细 -->
+    <service name="findReplenishmentItemWeb" engine="java" export="true"
+            location="org.ofbiz.replenishment.webService.ReplenishmentWebService" invoke="findReplenishmentItem">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 添加 -->
+    <service name="saveReplenishmentWeb" engine="java" export="true"
+            location="org.ofbiz.replenishment.webService.ReplenishmentWebService" invoke="saveReplenishment">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+     <!-- 申请-->
+    <service name="saveReplenishmentBeforWeb" engine="java" export="true"
+            location="org.ofbiz.replenishment.webService.ReplenishmentWebService" invoke="saveReplenishmentBefor">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+</services>

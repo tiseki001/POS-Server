@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20141222" releaseVersion="7.1.1">
+<TableDataMap>
+<TableData name="ReceiveAndDeliveryDetail" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="txtDocId"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="startDate"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="txtProductId"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="cboStore"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="endDate"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="userLoginId"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[select T1.*,T2.PRODUCT_NAME from 
+(
+select T3.MOVEMENT_TYPE_NAME,T2.DOC_DATE,T1.PRODUCT_ID,T5.STORE_NAME AS FROMSTORE, 
+T4.STORE_NAME as TOSTORE,T2.DOC_ID,SUM(T1.QUANTITY) AS INPUT,0 AS OUT
+from RECEIVE_ITEM t1
+INNER JOIN RECEIVE_DOC t2 on T1.DOC_ID=t2.doc_id
+LEFT JOIN MOVEMENT_TYPE T3 ON T3.MOVEMENT_TYPE_ID=T2.MOVEMENT_TYPE_ID
+LEFT JOIN PRODUCT_STORE T4 ON T4.PRODUCT_STORE_ID=T2.PRODUCT_STORE_ID
+LEFT JOIN PRODUCT_STORE T5 ON T5.PRODUCT_STORE_ID=T2.PRODUCT_STORE_ID_FROM
+where 1=1
+AND T4.PRIMARY_STORE_GROUP_ID='N'
+AND T2.DOC_STATUS='1'
+AND T2.PRODUCT_STORE_ID IN
+(
+	SELECT DISTINCT T2.PRODUCT_STORE_ID
+	FROM user_login T1
+	LEFT JOIN product_store_role T2 ON T1.PARTY_ID=T2.PARTY_ID
+	LEFT JOIN PRODUCT_STORE T3 ON T3.PRODUCT_STORE_ID=T2.PRODUCT_STORE_ID
+	WHERE 1=1
+	AND T1.USER_LOGIN_ID='${userLoginId}'
+)
+${if(len(startDate) == 0,"","and T2.DOC_DATE >= TO_DATE('" + startDate +"', 'yyyy-mm-dd,hh24:mi:ss')")}
+${if(len(endDate) == 0,"","and T2.DOC_DATE <= TO_DATE('" + endDate +"', 'yyyy-mm-dd,hh24:mi:ss')")}
+${if(len(cboStore) == 0,"","and T2.PRODUCT_STORE_ID = '" + cboStore + "'")}
+${if(len(txtDocId) == 0,"","and T1.DOC_ID = '" + txtDocId + "'")}
+${if(len(txtProductId) == 0,"","and T1.PRODUCT_ID = '" + txtProductId + "'")}
+GROUP BY T3.MOVEMENT_TYPE_NAME,T2.DOC_DATE,T1.PRODUCT_ID,T5.STORE_NAME, 
+T4.STORE_NAME,T2.DOC_ID
+UNION ALL
+select T3.MOVEMENT_TYPE_NAME,T2.DOC_DATE,t1.PRODUCT_ID,T4.STORE_NAME AS FROMSTORE,
+T5.STORE_NAME AS TOSTORE,T2.DOC_ID,0 AS INPUT,SUM(T1.QUANTITY) AS OUT
+from DELIVERY_ITEM t1
+INNER JOIN DELIVERY_DOC t2 on t1.doc_id=t2.doc_id 
+LEFT JOIN MOVEMENT_TYPE T3 ON T3.MOVEMENT_TYPE_ID=T2.MOVEMENT_TYPE_ID
+LEFT JOIN PRODUCT_STORE T4 ON T4.PRODUCT_STORE_ID=T2.PRODUCT_STORE_ID
+LEFT JOIN PRODUCT_STORE T5 ON T5.PRODUCT_STORE_ID=T2.PRODUCT_STORE_ID_TO
+where 1=1
+AND T4.PRIMARY_STORE_GROUP_ID='N'
+AND T2.DOC_STATUS='1'
+AND T2.PRODUCT_STORE_ID IN
+(
+	SELECT DISTINCT T2.PRODUCT_STORE_ID
+	FROM user_login T1
+	LEFT JOIN product_store_role T2 ON T1.PARTY_ID=T2.PARTY_ID
+	LEFT JOIN PRODUCT_STORE T3 ON T3.PRODUCT_STORE_ID=T2.PRODUCT_STORE_ID
+	WHERE 1=1
+	AND T1.USER_LOGIN_ID='${userLoginId}'
+)
+${if(len(startDate) == 0,"","and T2.DOC_DATE >= TO_DATE('" + startDate +"', 'yyyy-mm-dd,hh24:mi:ss')")}
+${if(len(endDate) == 0,"","and T2.DOC_DATE <= TO_DATE('" + endDate +"', 'yyyy-mm-dd,hh24:mi:ss')")}
+${if(len(cboStore) == 0,"","and T2.PRODUCT_STORE_ID = '" + cboStore + "'")}
+${if(len(txtDocId) == 0,"","and T1.DOC_ID = '" + txtDocId + "'")}
+${if(len(txtProductId) == 0,"","and T1.PRODUCT_ID = '" + txtProductId + "'")}
+GROUP BY T3.MOVEMENT_TYPE_NAME,T2.DOC_DATE,T1.PRODUCT_ID,T5.STORE_NAME, 
+T4.STORE_NAME,T2.DOC_ID
+)T1
+LEFT JOIN PRODUCT T2 ON T1.PRODUCT_ID=T2.PRODUCT_ID
+ORDER BY DOC_DATE]]></Query>
+</TableData>
+<TableData name="Store" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="userLoginId"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[SELECT DISTINCT T2.PRODUCT_STORE_ID,T3.STORE_NAME 
+FROM user_login T1
+LEFT JOIN product_store_role T2 ON T1.PARTY_ID=T2.PARTY_ID
+LEFT JOIN PRODUCT_STORE T3 ON T3.PRODUCT_STORE_ID=T2.PRODUCT_STORE_ID
+WHERE 1=1
+AND T1.USER_LOGIN_ID='${userLoginId}']]></Query>
+</TableData>
+</TableDataMap>
+<Report class="com.fr.report.worksheet.WorkSheet" name="ReceiveAndDeliveryDetail">
+<ReportPageAttr>
+<HR/>
+<FR/>
+<HC/>
+<FC/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[1676400,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[2743200,4305300,4114800,2628900,2514600,3429000,3924300,2743200,4343400,3810000,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="0" cs="9" s="0">
+<O>
+<![CDATA[出入库明细]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="1" s="1">
+<O>
+<![CDATA[商品编号]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="1" s="1">
+<O>
+<![CDATA[商品名称]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="1" s="1">
+<O>
+<![CDATA[入库数量]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="1" s="1">
+<O>
+<![CDATA[出库数量]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="1" s="1">
+<O>
+<![CDATA[单据类型]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="1" s="1">
+<O>
+<![CDATA[单号]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="1" s="1">
+<O>
+<![CDATA[时间]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="1" s="1">
+<O>
+<![CDATA[发出门店]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="1" s="1">
+<O>
+<![CDATA[接收门店]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="ReceiveAndDeliveryDetail" columnName="PRODUCT_ID"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="2" r="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="ReceiveAndDeliveryDetail" columnName="PRODUCT_NAME"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="3" r="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="ReceiveAndDeliveryDetail" columnName="INPUT"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="4" r="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="ReceiveAndDeliveryDetail" columnName="OUT"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="ReceiveAndDeliveryDetail" columnName="MOVEMENT_TYPE_NAME"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="ReceiveAndDeliveryDetail" columnName="DOC_ID"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="7" r="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="ReceiveAndDeliveryDetail" columnName="DOC_DATE"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="8" r="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="ReceiveAndDeliveryDetail" columnName="FROMSTORE"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="9" r="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="ReceiveAndDeliveryDetail" columnName="TOSTORE"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="1" r="3" cs="2" s="2">
+<O>
+<![CDATA[合计]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="3" s="2">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=SUM(D3)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="3" s="2">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=SUM(E3)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="3" cs="5" s="2">
+<PrivilegeControl/>
+<Expand/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting>
+<PaperSize width="46368000" height="64080000"/>
+<Margin top="986400" left="2743200" bottom="986400" right="2743200"/>
+</PaperSetting>
+</ReportSettings>
+<Header reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Footer>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+<ParameterUI class="com.fr.form.main.parameter.FormParameterUI">
+<Layout class="com.fr.form.ui.container.WParameterLayout">
+<WidgetName name="para"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<Margin top="1" left="1" bottom="1" right="1"/>
+<Border>
+<border style="0" color="-723724" type="0" borderStyle="0"/>
+<WidgetTitle>
+<O>
+<![CDATA[新建标题]]></O>
+<FRFont name="SimSun" style="0" size="72"/>
+<Position pos="0"/>
+</WidgetTitle>
+<Alpha alpha="1.0"/>
+</Border>
+<Background name="ColorBackground" color="-1118482"/>
+<LCAttr vgap="0" hgap="0" compInterval="0"/>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.TextEditor">
+<WidgetName name="txtDocId"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<TextAttr/>
+<widgetValue/>
+</InnerWidget>
+<BoundsAttr x="133" y="75" width="178" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.Label">
+<WidgetName name="lblDocId"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue>
+<O>
+<![CDATA[单号]]></O>
+</widgetValue>
+<LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
+<FRFont name="SimSun" style="0" size="72"/>
+<border style="0" color="-723724"/>
+</InnerWidget>
+<BoundsAttr x="53" y="75" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.Label">
+<WidgetName name="lblStartDate"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue>
+<O>
+<![CDATA[开始时间]]></O>
+</widgetValue>
+<LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
+<FRFont name="SimSun" style="0" size="72"/>
+<border style="0" color="-723724"/>
+</InnerWidget>
+<BoundsAttr x="53" y="29" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.DateEditor">
+<WidgetName name="startDate"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<allowBlank>
+<![CDATA[false]]></allowBlank>
+<DateAttr format="yyyy-MM-dd HH:mm:ss"/>
+<widgetValue>
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=TODAY()]]></Attributes>
+</O>
+</widgetValue>
+</InnerWidget>
+<BoundsAttr x="133" y="29" width="178" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.DateEditor">
+<WidgetName name="endDate"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<allowBlank>
+<![CDATA[false]]></allowBlank>
+<DateAttr format="yyyy-MM-dd HH:mm:ss"/>
+<widgetValue>
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=TODAY()+1]]></Attributes>
+</O>
+</widgetValue>
+</InnerWidget>
+<BoundsAttr x="391" y="29" width="178" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.Label">
+<WidgetName name="lblEndDate"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue>
+<O>
+<![CDATA[结束时间]]></O>
+</widgetValue>
+<LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
+<FRFont name="SimSun" style="0" size="72"/>
+<border style="0" color="-723724"/>
+</InnerWidget>
+<BoundsAttr x="311" y="29" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.Label">
+<WidgetName name="lblProductStore"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue>
+<O>
+<![CDATA[门店]]></O>
+</widgetValue>
+<LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
+<FRFont name="SimSun" style="0" size="72"/>
+<border style="0" color="-723724"/>
+</InnerWidget>
+<BoundsAttr x="569" y="29" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.ComboBox">
+<WidgetName name="cboStore"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<Dictionary class="com.fr.data.impl.TableDataDictionary">
+<FormulaDictAttr kiName="PRODUCT_STORE_ID" viName="STORE_NAME"/>
+<TableDataDictAttr>
+<TableData class="com.fr.data.impl.NameTableData">
+<Name>
+<![CDATA[Store]]></Name>
+</TableData>
+</TableDataDictAttr>
+</Dictionary>
+<widgetValue/>
+</InnerWidget>
+<BoundsAttr x="649" y="29" width="178" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.parameter.FormSubmitButton">
+<WidgetName name="btnSearch"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[查询]]></Text>
+<Hotkeys>
+<![CDATA[enter]]></Hotkeys>
+</InnerWidget>
+<BoundsAttr x="860" y="54" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.Label">
+<WidgetName name="lblProductId"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue>
+<O>
+<![CDATA[商品代码]]></O>
+</widgetValue>
+<LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
+<FRFont name="SimSun" style="0" size="72"/>
+<border style="0" color="-723724"/>
+</InnerWidget>
+<BoundsAttr x="311" y="75" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.TextEditor">
+<WidgetName name="txtProductId"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<TextAttr/>
+<widgetValue/>
+</InnerWidget>
+<BoundsAttr x="391" y="75" width="178" height="21"/>
+</Widget>
+<Sorted sorted="false"/>
+<Display display="true"/>
+<DelayDisplayContent delay="true"/>
+<Position position="0"/>
+<Design_Width design_width="960"/>
+<MobileWidgetList>
+<Widget widgetName="startDate"/>
+<Widget widgetName="endDate"/>
+<Widget widgetName="cboStore"/>
+<Widget widgetName="txtDocId"/>
+<Widget widgetName="txtProductId"/>
+</MobileWidgetList>
+<WidgetNameTagMap>
+<NameTag name="txtDocId" tag="单号"/>
+<NameTag name="startDate" tag="开始时间"/>
+<NameTag name="txtProductId" tag="商品代码"/>
+<NameTag name="cboStore" tag="门店"/>
+<NameTag name="endDate" tag="结束时间"/>
+</WidgetNameTagMap>
+</Layout>
+<DesignAttr width="960" height="128"/>
+</ParameterUI>
+</ReportParameterAttr>
+<StyleList>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="SimSun" style="1" size="128" foreground="-16776961"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<FRFont name="SimSun" style="0" size="72" foreground="-6737152"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+</StyleList>
+<DesignerVersion DesignerVersion="HBB"/>
+<PreviewType PreviewType="1"/>
+</WorkBook>

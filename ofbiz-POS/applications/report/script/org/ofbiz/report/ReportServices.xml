@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+	<!-- 相当于简单的dao层 -->
+	<!-- 查询的方法 -->
+	<simple-method method-name="findReport" short-description="Find all Report">
+		<field-to-list field="Report" list="reportList"/>
+        <set value="reportList" field="reportListName"/>
+        <field-to-result field="reportList"/>
+	</simple-method>
+	<!-- create || update -->
+	<simple-method method-name="createReport" short-description="Create Document Tree">
+	 	<if-empty field="parameters.reportId">
+		 	<make-value value-field="newEntity" entity-name="Report"/>
+	        <set field="newEntity.reportName" from-field="parameters.reportName"/>
+	        <set field="newEntity.reportType" from-field="parameters.reportType"/>
+	        <sequenced-id sequence-name="Report" field="newEntity.reportId"/>
+	        <create-value value-field="newEntity"/>
+	        <!-- create ReportRole -->
+	        <if-not-empty field="parameters.roleTypeId">
+	        	<iterate entry="roleTypeId" list="parameters.roleTypeId">
+		        	<make-value value-field="newEntity1" entity-name="ReportRole"/>
+		   			<set field="newEntity1.reportId" from-field="newEntity.reportId"/>
+		   			<set field="newEntity1.roleTypeId" from-field="roleTypeId"/>
+		   			<create-value value-field="newEntity1"/>
+	        	</iterate>
+	        	<!-- 只有单个角色的时候 -->
+	        	<set field="reportRoleMap.reportId" from-field="newEntity.reportId"/>
+	        	<find-by-and list="reportRoleList" map="reportRoleMap" entity-name="ReportRole"/>
+	        	<if-empty field="reportRoleList">
+	        		<make-value value-field="newEntity1" entity-name="ReportRole"/>
+		   			<set field="newEntity1.reportId" from-field="newEntity.reportId"/>
+		   			<set field="newEntity1.roleTypeId" from-field="parameters.roleTypeId"/>
+		   			<create-value value-field="newEntity1"/>
+	        	</if-empty>
+	        	
+	        	<else>
+	        		<add-error error-list-name="error">
+	        			<fail-message message="请选择角色"/>
+	        		</add-error>
+	        		<check-errors error-list-name="error"/>
+	        	</else>
+	        </if-not-empty>
+        	<else>
+        		<make-value entity-name="Report" value-field="lookupPKMap"/>
+		        <set-pk-fields map="parameters" value-field="lookupPKMap"/>
+		        <find-by-primary-key entity-name="Report" map="lookupPKMap" value-field="lookedUpValue"/>
+		        <set-nonpk-fields map="parameters" value-field="lookedUpValue"/>
+		        <store-value value-field="lookedUpValue"/>
+		         <!-- delete and create ReportRole -->
+		        <if-not-empty field="parameters.roleTypeId">
+		        	<find-by-and list="reportRoleList" map="lookupPKMap" entity-name="ReportRole"/>
+			        <remove-list list="reportRoleList"/>
+		        	<iterate entry="roleTypeId" list="parameters.roleTypeId">
+			        	<make-value value-field="newEntity1" entity-name="ReportRole"/>
+			   			<set field="newEntity1.reportId" from-field="parameters.reportId"/>
+			   			<set field="newEntity1.roleTypeId" from-field="roleTypeId"/>
+			   			<create-value value-field="newEntity1"/>
+		        	</iterate>
+		        	<!-- 只有单个角色的时候 -->
+		        	<set field="reportRoleMap.reportId" from-field="parameters.reportId"/>
+		        	<find-by-and list="reportRoleList" map="reportRoleMap" entity-name="ReportRole"/>
+		        	<if-empty field="reportRoleList">
+		        		<make-value value-field="newEntity1" entity-name="ReportRole"/>
+			   			<set field="newEntity1.reportId" from-field="parameters.reportId"/>
+			   			<set field="newEntity1.roleTypeId" from-field="parameters.roleTypeId"/>
+			   			<create-value value-field="newEntity1"/>
+		        	</if-empty>
+		        	
+		        	<else>
+		        		<add-error error-list-name="error">
+	        				<fail-message message="请选择角色"/>
+		        		</add-error>
+		        		<check-errors error-list-name="error"/>
+		        	</else>
+	       	 	</if-not-empty>
+        	</else>
+        </if-empty>
+    </simple-method>
+    <!-- delete -->
+	<simple-method method-name="deleteReport" short-description="Delete a MovementType">
+        <make-value entity-name="Report" value-field="lookupPKMap"/>
+        <set-pk-fields map="parameters" value-field="lookupPKMap"/>
+        <find-by-and list="reportRoleList" map="lookupPKMap" entity-name="ReportRole"/>
+        <remove-list list="reportRoleList"/>
+        <find-by-primary-key entity-name="Report" map="lookupPKMap" value-field="lookedUpValue"/>
+       	<remove-value value-field="lookedUpValue"/>
+	</simple-method>
+</simple-methods>

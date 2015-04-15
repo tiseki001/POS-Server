@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Inventory Component Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+    <!-- 模糊查询 -->
+	<service name="analyticalParameters" engine="java" export="true"
+            location="org.ofbiz.inventory.webService.InventoryItemWebService" invoke="analyticalParameters">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 精确查询 -->
+	<service name="findInventoryItemWeb" engine="java" export="true"
+            location="org.ofbiz.inventory.webService.InventoryItemWebService" invoke="findInventoryItem">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 添加InventorynTransfer -->
+	<service name="createInventorynTransfer" engine="java" export="true" default-entity-name="InventorynTransfer" 
+            location="org.ofbiz.inventory.webService.InventoryItemWebService" invoke="createInventorynTransfer">
+        <auto-attributes include="pk" mode="IN" optional="true"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+    </service>
+    <!-- 修改库存数 -->
+	<service name="updateInventorynItemToOnhead" engine="java" export="true" validate="false"
+            location="org.ofbiz.inventory.webService.InventoryItemWebService" invoke="updateInventorynItemToOnhead">
+        <attribute name="inventoryn" type="org.ofbiz.entity.GenericValue" mode="IN" optional="true"/> 
+    </service>
+    <!-- 修改库存承诺数-->
+	<service name="updateInventorynItemToPromise" engine="java" export="true" validate="false"
+            location="org.ofbiz.inventory.webService.InventoryItemWebService" invoke="updateInventorynItemToPromise">
+       <attribute name="inventoryn" type="org.ofbiz.entity.GenericValue" mode="IN" optional="true"/> 
+    </service>
+    <!-- 搜索帮助模糊查询 -->
+    <service name="findProductInventoryWeb" engine="java" export="true"
+            location="org.ofbiz.inventory.webService.InventoryItemWebService" invoke="findProductInventory">
+      	<attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 搜索帮助模糊查询2 不分仓库且不包括在途仓 -->
+    <service name="findProductInventoryGroupWeb" engine="java" export="true"
+            location="org.ofbiz.inventory.webService.InventoryItemWebService" invoke="findProductInventoryGroup">
+      	<attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+     <!-- 查询销售区域门店编码和名称 -->
+    <service name="findAreaStore" engine="java" export="true"
+            location="org.ofbiz.inventory.webService.InventoryItemWebService" invoke="findAreaStore">
+      	<attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+</services>

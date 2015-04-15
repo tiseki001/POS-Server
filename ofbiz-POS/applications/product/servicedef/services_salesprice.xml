@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Sales price Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+    <service name="createProductSalesPolicy" engine="java" 
+    		location="org.ofbiz.product.salesprice.SalesPriceServices" default-entity-name="ProductSalesPolicy" invoke="createProductSalesPolicy" >
+	    <description>create ProductSalesPolicy</description>
+	    <attribute name="productSalesPolicyId" type="String" mode="IN" optional="true"/>
+	    <attribute name="policyName" type="String" mode="IN" optional="true"/>
+	    <attribute name="description" type="String" mode="IN" optional="true"/>
+	    <attribute name="mainRatio" type="Long" mode="IN" optional="true"/>
+	    <auto-attributes include="pk" mode="OUT" optional="false"/>
+ 	</service>
+ 	<service name="createProductPriceRules" engine="java" 
+    		location="org.ofbiz.product.salesprice.SalesPriceServices" default-entity-name="ProductPriceRule" invoke="createProductPriceRules" >
+	    <description>create ProductSalesPolicy</description>
+	    <attribute name="productPriceRuleId" type="String" mode="IN" optional="true"/>
+	    <attribute name="productPriceTypeId" type="String" mode="IN" optional="true"/>
+	    <attribute name="baseTypeId" type="String" mode="IN" optional="true"/>
+	    <attribute name="ruleName" type="String" mode="IN" optional="true"/>
+	    <attribute name="description" type="String" mode="IN" optional="true"/>
+	    <attribute name="percent" type="String" mode="IN" optional="true"/>
+	    <attribute name="digit" type="String" mode="IN" optional="true"/>
+	    <attribute name="diff" type="String" mode="IN" optional="true"/>
+	    <auto-attributes include="pk" mode="OUT" optional="false"/>
+ 	</service>
+ 	<service name="createProductPriceTypeRule" engine="java" 
+    		location="org.ofbiz.product.salesprice.SalesPriceServices" invoke="createProductPriceTypeRule" >
+	    <description>create ProductPriceTypeFromRule</description>
+	    <attribute name="productPriceRuleId" type="String" mode="IN"/>
+	    <attribute name="ruleName" type="String" mode="IN" optional="true"/>
+ 	</service>
+ 	<service name="updateProductSalesPolicy" engine="java" 
+    		location="org.ofbiz.product.salesprice.SalesPriceServices" invoke="updateSalesPolicy" >
+	    <description>update SalesPolicy</description>
+	    <attribute name="productSalesPolicyId" type="String" mode="IN" optional="true"/>
+	    <attribute name="policyName" type="String" mode="IN" optional="true"/>
+	    <attribute name="description" type="String" mode="IN" optional="true"/>
+	    <attribute name="mainRatio" type="Long" mode="IN" optional="true"/>
+ 	</service>
+ 	<service name="removeSalesPrice" engine="java" 
+    		location="org.ofbiz.product.salesprice.SalesPriceServices"  invoke="removeSalesPrice" >
+	    <description>remove SalesPolicy</description>
+	    <attribute name="productPriceRuleId" type="String" mode="IN" optional="true"/>
+	    <attribute name="productSalesPolicyId" type="String" mode="IN" optional="true"/>
+ 	</service>
+ 	<service name="createSalesPolicyPriceRule" engine="java" 
+    		location="org.ofbiz.product.salesprice.SalesPriceServices"  invoke="createSalesPolicyPriceRule" >
+	    <description>create SalesPolicyPriceRule</description>
+	    <attribute name="productPriceRuleId" type="String" mode="IN" optional="true"/>
+	    <attribute name="productSalesPolicyId" type="String" mode="IN" optional="true"/>
+ 	</service>
+ 	<service name="removeSalesPolicyPriceSule" engine="java" 
+    		location="org.ofbiz.product.salesprice.SalesPriceServices"  invoke="deleteSalesPolicyPriceSule" >
+	    <description>create SalesPolicyPriceRule</description>
+	    <attribute name="productPriceRuleId" type="String" mode="IN" optional="true"/>
+	    <attribute name="productSalesPolicyId" type="String" mode="IN" optional="true"/>
+ 	</service>
+  	<service name="saveSalesPolicyPackage" engine="java" 
+    		location="org.ofbiz.product.salesprice.SalesPriceServices"  invoke="saveSalesPolicyPackage" >
+	    <description>create SalesPolicyPriceRule</description>
+	    <attribute name="productPriceRuleId" type="String" mode="IN" optional="true"/>
+	    <attribute name="productSalesPolicyId" type="String" mode="IN" optional="true"/>
+	    <attribute name="left1" type="String" mode="IN" optional="true"/>
+	    <attribute name="fieldName" type="String" mode="IN" optional="true"/>
+	    <attribute name="operate" type="String" mode="IN" optional="true"/>
+	    <attribute name="value1" type="String" mode="IN" optional="true"/>
+	    <attribute name="right1" type="String" mode="IN" optional="true"/>
+	    <attribute name="relation" type="String" mode="IN" optional="true"/>
+	    <attribute name="rowCount" type="String" mode="IN" optional="true"/>
+	    <attribute name="expreType" type="String" mode="IN" optional="true"/>
+	    <attribute name="rowTotal" type="String" mode="IN" optional="true"/>
+ 	</service>
+ 	<service name="saveProductPriceListStore" engine="java" 
+    		location="org.ofbiz.product.salesprice.SalesPriceServices"  invoke="saveProductPriceListStore" >
+	    <description>create SalesPolicyPriceRule</description>
+	    <attribute name="left1" type="String" mode="IN" optional="true"/>
+	    <attribute name="fieldName" type="String" mode="IN" optional="true"/>
+	    <attribute name="operate" type="String" mode="IN" optional="true"/>
+	    <attribute name="value1" type="String" mode="IN" optional="true"/>
+	    <attribute name="right1" type="String" mode="IN" optional="true"/>
+	    <attribute name="relation" type="String" mode="IN" optional="true"/>
+	    <attribute name="rowCount" type="String" mode="IN" optional="true"/>
+ 	</service>
+ 	<service name="getProductFeatureCategoryList" engine="java" auth="false"
+        location="org.ofbiz.product.salesprice.SalesPriceServices" invoke="getProductFeatureCategoryList">
+        <description>Set the Value options for selected Price Rule Condition Input</description>
+        <attribute name="fieldName" mode="IN" type="String" optional="true"/>
+        <attribute name="productFeatureCategoryList" mode="OUT" type="java.util.List" optional="true"/><!-- optional="true" because of quantity or other kind of fiels needing an input -->
+    </service> 
+    <service name="getProductPriceRuleStoreList" engine="java" auth="false"
+        location="org.ofbiz.product.salesprice.SalesPriceServices" invoke="getProductPriceRuleStoreList">
+        <description>Set the Value options for selected Price Rule Condition Input</description>
+        <attribute name="fieldName" mode="IN" type="String" optional="true"/>
+        <attribute name="productPriceRuleStoreList" mode="OUT" type="java.util.List" optional="true"/><!-- optional="true" because of quantity or other kind of fiels needing an input -->
+    </service> 
+    <service name="findBomList" engine="java" auth="false"
+        location="org.ofbiz.product.salesprice.SalesPriceServices" invoke="findBomList">
+        <description>Set the Value options for selected Price Rule Condition Input</description>
+        <attribute name="productPriceRuleId" type="String" mode="IN" optional="true"/>
+	    <attribute name="productSalesPolicyId" type="String" mode="IN" optional="true"/>
+        <attribute name="inputFields" type="java.util.Map" mode="IN" optional="true"/>
+        <attribute name="noConditionFind" type="String" mode="IN" optional="true"><!-- find with no condition (empty entityConditionList) only done when this is Y --></attribute>
+        <attribute name="viewIndex" type="Integer" mode="IN" optional="true"/>
+        <attribute name="viewSize" type="Integer" mode="IN" optional="true"/>
+        <attribute name="listIt" type="org.ofbiz.entity.util.EntityListIterator" mode="OUT" optional="true"/>
+        <attribute name="listSize" type="Integer" mode="OUT" optional="true"/>
+    </service> 
+    <service name="findRuleStoreList" engine="java" auth="false"
+        location="org.ofbiz.product.salesprice.SalesPriceServices" invoke="findStoreList">
+        <description>Set the Value options for selected Price Rule Condition Input</description>
+        <attribute name="productPriceRuleId" type="String" mode="IN" optional="true"/>
+        <attribute name="inputFields" type="java.util.Map" mode="IN" optional="true"/>
+        <attribute name="noConditionFind" type="String" mode="IN" optional="true"><!-- find with no condition (empty entityConditionList) only done when this is Y --></attribute>
+        <attribute name="viewIndex" type="Integer" mode="IN" optional="true"/>
+        <attribute name="viewSize" type="Integer" mode="IN" optional="true"/>
+        <attribute name="listIt" type="org.ofbiz.entity.util.EntityListIterator" mode="OUT" optional="true"/>
+        <attribute name="listSize" type="Integer" mode="OUT" optional="true"/>
+    </service> 
+    <service name="findRuleList" engine="java" auth="false"
+        location="org.ofbiz.product.salesprice.SalesPriceServices" invoke="findRuleList">
+        <description>Set the Value options for selected Price Rule Condition Input</description>
+        <attribute name="productSalesPolicyId" type="String" mode="IN" optional="true"/>
+        <attribute name="listIt" type="java.util.List" mode="OUT" optional="true"/>
+    </service> 
+    <service name="updateProductPriceList" engine="java"
+    	location="org.ofbiz.product.salesprice.SalesPriceServices" invoke="updateProductPriceList">
+    	<attribute name="productId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="productSalesPolicyId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="productPriceRuleId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="productPriceTypeId" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="price" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="isManual" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="_rowCount" mode="IN" type="String" optional="true"></attribute>
+    	<attribute name="flag" mode="IN" type="String" optional="true"></attribute>
+    </service>
+    <!-- upload  -->
+	<service name="ImportProductPriceList" engine="java" auth="true" 
+		location="org.ofbiz.product.salesprice.SalesPriceServices" invoke="ImportProductPriceList"  transaction-timeout="1800">
+	    <description>Upload Service</description>
+	    <attribute name="uploadFile" type="java.nio.ByteBuffer" mode="IN" optional="false"/>
+	    <attribute name="_uploadFile_contentType" type="String" mode="IN" optional="true"/>
+	    <attribute name="_uploadFile_fileName" type="String" mode="IN" optional="false"/>
+	</service>
+    <service name="getProductPriceRules" engine="java" auth="false"
+        location="org.ofbiz.product.salesprice.SalesPriceServices" invoke="getProductPriceRules" export="true">
+        <description>Set the Value options for selected Price Rule Condition Input</description>
+        <attribute name="partyId" mode="IN" type="String"/>
+        <attribute name="ProductPriceRuleList" mode="OUT" type="java.util.List" optional="true"/><!-- optional="true" because of quantity or other kind of fiels needing an input -->
+    </service> 
+    <service name="getProductSalesPolicys" engine="java" auth="false"
+        location="org.ofbiz.product.salesprice.SalesPriceServices" invoke="getProductSalesPolicys" export="true">
+        <description>Set the Value options for selected Price Rule Condition Input</description>
+        <attribute name="partyId" mode="IN" type="String"/>
+        <attribute name="ProductSalesPolicyList" mode="OUT" type="java.util.List" optional="true"/><!-- optional="true" because of quantity or other kind of fiels needing an input -->
+    </service> 
+    
+    <!-- eecas setProductPriceRuleStoreList -->
+    <service name="setProductPriceRuleStoreList" engine="java" export="true"
+            location="org.ofbiz.product.salesprice.SalesPriceServices" invoke="setProductPriceRuleStoreList">
+       <attribute name="productStore" type="org.ofbiz.entity.GenericValue" mode="IN" optional="true"/> 
+    </service>
+  
+</services>

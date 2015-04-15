@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<title>Entity of an Open For Business Project Component</title>
+	<description>None</description>
+	<version>1.0</version>
+	<entity entity-name="InventorynItem" package-name="org.ofbiz.inventory.inventoryItem"
+		title="Inventorynitem Entity">
+		<field name="inventoryItemId" type="d-id"></field>
+		<field name="inventoryItemType" type="name"></field>
+		<field name="onhand" type="numeric"></field>
+		<field name="promise" type="numeric"></field>
+		<field name="unitCost" type="name"></field>
+		<field name="baseEntryId" type="d-id"></field>
+		<field name="baseEntryType" type="name"></field>
+		<!-- 外键 -->
+		<field name="productStoreId" type="id"></field>
+		<field name="productId" type="id"></field>
+		<field name="partyId" type="id"></field>
+		<field name="facilityId" type="id"></field>
+		<!-- 设置主键 -->
+		<prim-key field="inventoryItemId" />
+		<index name="productStoreId" >
+			<index-field name="productStoreId"/>
+		</index>
+		<index name="productId" >
+			<index-field name="productId"/>
+		</index>
+		<index name="facilityId" >
+			<index-field name="facilityId"/>
+		</index>
+		<index name="partyId" >
+			<index-field name="partyId"/>
+		</index>
+		<!--  配置外键关系 
+		<relation type="one" rel-entity-name="Product">
+			<key-map field-name="productId" />
+		</relation>
+		<relation type="one" rel-entity-name="Party">
+			<key-map field-name="partyId" />
+		</relation>
+		<relation type="one" rel-entity-name="Facility">
+			<key-map field-name="facilityId" />
+		</relation>
+		<relation type="one" rel-entity-name="ProductStore">
+			<key-map field-name="productStoreId" />
+		</relation>-->
+	</entity>
+	<!-- 配置视图 -->
+	<view-entity entity-name="ProductAndInventorynItem" package-name="org.ofbiz.inventory.inventoryItem">
+		<member-entity entity-alias="II" entity-name="InventorynItem" />
+		<member-entity entity-alias="PR" entity-name="Product" />
+		<member-entity entity-alias="GI" entity-name="GoodIdentification" />
+		<member-entity entity-alias="FA" entity-name="Facility" />
+		<alias entity-alias="PR" name="productId" />
+		<alias entity-alias="PR" name="productName" />
+		<alias entity-alias="PR" name="isSequence" />
+		<alias entity-alias="PR" name="config" />
+		<alias entity-alias="II" name="onhand" />
+		<alias entity-alias="II" name="promise" />
+		<alias entity-alias="II" name="productStoreId" />
+		<alias entity-alias="II" name="facilityId" />
+		<alias entity-alias="GI" name="idValue" />
+		<alias entity-alias="FA" name="facilityName" />
+		<view-link entity-alias="II" rel-entity-alias="PR" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="PR" rel-entity-alias="GI" rel-optional="true">
+			<key-map field-name="productId"/>
+		</view-link>
+		<view-link entity-alias="II" rel-entity-alias="FA" rel-optional="true">
+			<key-map field-name="facilityId"/>
+		</view-link>
+	</view-entity>
+	<view-entity entity-name="ProductAndIIAndIsSeq" package-name="org.ofbiz.inventory.inventoryItem">
+		<member-entity entity-alias="II" entity-name="InventorynItem" />
+		<member-entity entity-alias="PR" entity-name="Product" />
+		<member-entity entity-alias="FA" entity-name="Facility" />
+		<member-entity entity-alias="GI" entity-name="GoodIdentification" />
+		<member-entity entity-alias="PRSE" entity-name="ProductSequence" />
+		<alias entity-alias="PR" name="productId" />
+		<alias entity-alias="PR" name="productName" />
+		<alias entity-alias="PR" name="isSequence" />
+		<alias entity-alias="PR" name="config" />
+		<alias entity-alias="II" name="onhand" />
+		<alias entity-alias="II" name="productStoreId" />
+		<alias entity-alias="II" name="promise" />
+		<alias entity-alias="GI" name="idValue" />
+		<alias entity-alias="FA" name="facilityName" />
+		<alias entity-alias="PRSE" name="sequenceId" />
+		<alias entity-alias="PRSE" name="isOccupied" />
+		<alias entity-alias="PRSE" name="facilityId" />
+		<view-link entity-alias="PRSE" rel-entity-alias="II" rel-optional="true">
+			<key-map field-name="productId" />
+			<key-map field-name="facilityId" />
+		</view-link>
+		<view-link entity-alias="PRSE" rel-entity-alias="PR" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="PRSE" rel-entity-alias="GI" rel-optional="true">
+			<key-map field-name="productId"/>
+		</view-link>
+		<view-link entity-alias="PRSE" rel-entity-alias="FA" rel-optional="true">
+			<key-map field-name="facilityId"/>
+		</view-link>
+	</view-entity>
+	
+	
+	<view-entity entity-name="ProductAndInventorynItemGroup" package-name="org.ofbiz.inventory.inventoryItem">
+		<member-entity entity-alias="II" entity-name="InventorynItem" />
+		<member-entity entity-alias="PR" entity-name="Product" />
+		<member-entity entity-alias="GI" entity-name="GoodIdentification" />
+		<member-entity entity-alias="FA" entity-name="Facility" />
+		<alias entity-alias="PR" name="productId" group-by="true"/>
+		<alias entity-alias="PR" name="productName" group-by="true"/>
+		<alias entity-alias="PR" name="isSequence" group-by="true"/>
+		<alias entity-alias="PR" name="config" group-by="true"/>
+		<alias entity-alias="II" name="onhand"  function="sum"/>
+		<alias entity-alias="II" name="productStoreId" group-by="true"/>
+		<alias entity-alias="GI" name="idValue" group-by="true"/>
+		<view-link entity-alias="II" rel-entity-alias="PR" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="II" rel-entity-alias="FA" >
+			<key-map field-name="facilityId"/>
+			<entity-condition>
+				<condition-list combine="and">
+				<condition-expr entity-alias="FA" field-name="facilityTypeId" operator="not-equals" value="T-WAREHOUSE" />
+				<condition-expr entity-alias="II" field-name="facilityId" operator="not-equals" value="NULL" />
+				</condition-list>
+			</entity-condition>
+		</view-link>
+		<view-link entity-alias="PR" rel-entity-alias="GI" rel-optional="true">
+			<key-map field-name="productId"/>
+		</view-link>
+	</view-entity>
+	
+	
+
+	
+	
+	<view-entity entity-name="InventorynItemAndProductAndSeqAndMOve"
+		package-name="org.ofbiz.inventory.inventoryItem">
+		<member-entity entity-alias="PRO" entity-name="Product" />
+		<member-entity entity-alias="FA" entity-name="Facility" />
+		<member-entity entity-alias="PSF" entity-name="ProductStoreFacility" />
+		<member-entity entity-alias="II" entity-name="InventorynItem" />
+		<member-entity entity-alias="MT" entity-name="MovementType" />
+		<member-entity entity-alias="PRSE" entity-name="ProductSequence" />
+		
+		<member-entity entity-alias="GI" entity-name="GoodIdentification" />
+
+		<alias-all entity-alias="II"></alias-all>
+
+		<alias entity-alias="PRO" name="productId" />
+		<alias entity-alias="PRO" name="productName" />
+		<alias entity-alias="PRO" name="productTypeId" />
+		<alias entity-alias="PRO" name="isSequence" />
+
+		<alias entity-alias="FA" name="faciId" field="facilityId" />
+		<alias entity-alias="FA" name="facilityName" />
+		<alias entity-alias="FA" name="parentFacilityId" />
+		<alias entity-alias="FA" name="facilityTypeId" />
+		
+		<alias entity-alias="PSF" name="proStoId" field="productStoreId" />
+		<alias entity-alias="PSF" name="facId" field="facilityId" />
+
+		<alias entity-alias="GI" name="giproductId" field="productId" />
+		<alias entity-alias="GI" name="idValue" />
+
+		<alias entity-alias="MT" name="movementTypeId" />
+		
+		<alias entity-alias="PRSE" name="proId" field="productId"/>
+		<alias entity-alias="PRSE" name="sequenceId" />
+		<alias entity-alias="PRSE" name="prseFacId" field="facilityId"/>
+		<alias entity-alias="PRSE" name="isOccupied"/>
+		
+		<view-link entity-alias="II" rel-entity-alias="PRO" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="II" rel-entity-alias="FA" rel-optional="true">
+			<key-map field-name="facilityId" />
+		</view-link>
+		<view-link entity-alias="FA" rel-entity-alias="PSF" rel-optional="true">
+			<key-map field-name="facilityId" />
+		</view-link>
+		<view-link entity-alias="FA" rel-entity-alias="MT" rel-optional="false">
+			<key-map field-name="facilityTypeId" rel-field-name="fromfacilityTypeId"/>
+		</view-link>
+		<view-link entity-alias="PRO" rel-entity-alias="GI" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="PRO" rel-entity-alias="PRSE" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+	</view-entity>
+	
+	<view-entity entity-name="InventorynItemAndProductAndMOve"
+		package-name="org.ofbiz.inventory.inventoryItem">
+		<member-entity entity-alias="PRO" entity-name="Product" />
+		<member-entity entity-alias="FA" entity-name="Facility" />
+		<member-entity entity-alias="PSF" entity-name="ProductStoreFacility" />
+		<member-entity entity-alias="II" entity-name="InventorynItem" />
+		<member-entity entity-alias="MT" entity-name="MovementType" />
+		
+		<member-entity entity-alias="GI" entity-name="GoodIdentification" />
+
+		<alias-all entity-alias="II"></alias-all>
+
+		<alias entity-alias="PRO" name="productId" />
+		<alias entity-alias="PRO" name="productName" />
+		<alias entity-alias="PRO" name="productTypeId" />
+		<alias entity-alias="PRO" name="isSequence" />
+		<alias entity-alias="PRO" name="requireInventory" />
+		<alias entity-alias="FA" name="faciId" field="facilityId" />
+		<alias entity-alias="FA" name="facilityName" />
+		<alias entity-alias="FA" name="parentFacilityId" />
+		<alias entity-alias="FA" name="facilityTypeId" />
+		
+		<alias entity-alias="PSF" name="proStoId" field="productStoreId" />
+		<alias entity-alias="PSF" name="facId" field="facilityId" />
+
+		<alias entity-alias="GI" name="giproductId" field="productId" />
+		<alias entity-alias="GI" name="idValue" />
+		
+		<alias entity-alias="MT" name="movementTypeId" />
+		
+		<view-link entity-alias="PRO" rel-entity-alias="II" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="II" rel-entity-alias="FA" rel-optional="true">
+			<key-map field-name="facilityId" />
+		</view-link>
+		<view-link entity-alias="FA" rel-entity-alias="PSF" rel-optional="true">
+			<key-map field-name="facilityId" />
+		</view-link>
+		<view-link entity-alias="FA" rel-entity-alias="MT" rel-optional="true">
+			<key-map field-name="facilityTypeId" rel-field-name="fromfacilityTypeId"/>
+		</view-link>
+		<view-link entity-alias="PRO" rel-entity-alias="GI" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		
+	</view-entity>
+	<view-entity entity-name="InventorynItemAndProduct"
+		package-name="org.ofbiz.inventory.inventoryItem" title="InventoryItem,Facility and Product View Entity">
+		<member-entity entity-alias="PS" entity-name="ProductStore" />
+		<member-entity entity-alias="PRO" entity-name="Product" />
+		<member-entity entity-alias="FA" entity-name="Facility" />
+		<member-entity entity-alias="FAT" entity-name="FacilityType" />
+		<member-entity entity-alias="PSF" entity-name="ProductStoreFacility" />
+		<member-entity entity-alias="II" entity-name="InventorynItem" />
+		<member-entity entity-alias="GI" entity-name="GoodIdentification" />
+
+		<alias-all entity-alias="II"/>
+
+		<alias entity-alias="PS" name="proStoId" field="productStoreId" />
+		<alias entity-alias="PS" name="storeName" />
+
+		<alias entity-alias="PRO" name="productId" />
+		<alias entity-alias="PRO" name="productName" />
+		<alias entity-alias="PRO" name="productTypeId" />
+		<alias entity-alias="PRO" name="isSequence" />
+
+		<alias entity-alias="FA" name="faciId" field="facilityId" />
+		<alias entity-alias="FA" name="facilityName" />
+		<alias entity-alias="FA" name="parentFacilityId" />
+		<alias entity-alias="FA" name="facilityTypeId" />
+
+		<alias entity-alias="FAT" name="facTypeId" field="facilityTypeId" />
+		<alias entity-alias="FAT" name="description" />
+
+		<alias entity-alias="PSF" name="proStoId" field="productStoreId" />
+		<alias entity-alias="PSF" name="facId" field="facilityId" />
+
+		<alias entity-alias="GI" name="giproductId" field="productId" />
+		<alias entity-alias="GI" name="idValue" />
+		<view-link entity-alias="PRO" rel-entity-alias="II"
+			rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="II" rel-entity-alias="FA"
+			rel-optional="true">
+			<key-map field-name="facilityId" />
+		</view-link>
+		<view-link entity-alias="II" rel-entity-alias="PS"
+			rel-optional="true">
+			<key-map field-name="productStoreId" />
+		</view-link>
+		<view-link entity-alias="FA" rel-entity-alias="FAT"
+			rel-optional="true">
+			<key-map field-name="facilityTypeId" />
+		</view-link>
+		<view-link entity-alias="FA" rel-entity-alias="PSF"
+			rel-optional="true">
+			<key-map field-name="facilityId" />
+		</view-link>
+		<view-link entity-alias="PRO" rel-entity-alias="GI"
+			rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+	</view-entity>
+	<view-entity entity-name="InventorynItemAndProductAndSeq"
+		package-name="org.ofbiz.inventory.inventoryItem">
+		<member-entity entity-alias="PRO" entity-name="Product" />
+		<member-entity entity-alias="FA" entity-name="Facility" />
+		<member-entity entity-alias="PSF" entity-name="ProductStoreFacility" />
+		<member-entity entity-alias="II" entity-name="InventorynItem" />
+		<member-entity entity-alias="GI" entity-name="GoodIdentification" />
+		<member-entity entity-alias="PRSE" entity-name="ProductSequence" />
+		<member-entity entity-alias="PS" entity-name="ProductStore" />
+
+		<alias-all entity-alias="II"></alias-all>
+
+		<alias entity-alias="PRO" name="productId" />
+		<alias entity-alias="PRO" name="productName" />
+		<alias entity-alias="PRO" name="productTypeId" />
+		<alias entity-alias="PRO" name="isSequence" />
+
+		<alias entity-alias="FA" name="faciId" field="facilityId" />
+		<alias entity-alias="FA" name="facilityName" />
+		<alias entity-alias="FA" name="parentFacilityId" />
+		<alias entity-alias="FA" name="facilityTypeId" />
+		
+		<alias entity-alias="PS" name="productStoreId" />
+		<alias entity-alias="PS" name="storeName" />
+		
+		<alias entity-alias="PSF" name="proStoId" field="productStoreId" />
+		<alias entity-alias="PSF" name="facId" field="facilityId" />
+
+		<alias entity-alias="GI" name="giproductId" field="productId" />
+		<alias entity-alias="GI" name="idValue" />
+
+		<alias entity-alias="PRSE" name="proId" field="productId"/>
+		<alias entity-alias="PRSE" name="sequenceId" />
+		<alias entity-alias="PRSE" name="prseFacId" field="facilityId"/>
+		<alias entity-alias="PRSE" name="isOccupied"/>
+		
+		<view-link entity-alias="II" rel-entity-alias="PRO" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="II" rel-entity-alias="PS" rel-optional="true">
+			<key-map field-name="productStoreId" />
+		</view-link>
+		<view-link entity-alias="II" rel-entity-alias="FA" rel-optional="true">
+			<key-map field-name="facilityId" />
+		</view-link>
+		<view-link entity-alias="FA" rel-entity-alias="PSF" rel-optional="true">
+			<key-map field-name="productStoreId" />
+		</view-link>
+		<view-link entity-alias="PRO" rel-entity-alias="PRSE" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="PRO" rel-entity-alias="GI" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+	</view-entity>
+
+
+	<entity entity-name="InventorynTransfer" package-name="org.ofbiz.inventory.inventoryItem"
+		title="InventorynTransfer Entity">
+		<field name="inventoryTransferId" type="d-id"></field>
+		<field name="statusId" type="name"></field>
+		<field name="updateUserId" type="name"></field>
+		<field name="updateDate" type="date-time"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="onhand" type="numeric"></field>
+		<field name="promise" type="numeric"></field>
+		<!-- 外键 -->
+		<field name="productStoreId" type="id"></field>
+		<field name="inventoryTransferTypeId" type="id"></field>
+		<field name="sequenceId" type="id"></field>
+		<field name="movementTypeId" type="id"></field>
+		<field name="partyId" type="name"></field>
+		<field name="inventoryItemId" type="d-id"></field>
+		<field name="facilityId" type="id"></field>
+		<field name="productId" type="id"></field>
+		<field name="isSync" type="indicator" ></field>
+		<!-- 设置主键 -->
+		<prim-key field="inventoryTransferId" />
+		<index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+		<!--  配置外键关系  
+		<relation type="one" rel-entity-name="InventorynTransferType">
+			<key-map field-name="inventoryTransferTypeId" />
+		</relation>
+		<relation type="one" rel-entity-name="SequenceAttrbute">
+			<key-map field-name="sequenceId" />
+		</relation>
+		<relation type="one" rel-entity-name="MovementType">
+			<key-map field-name="movementTypeId" />
+		</relation>
+		<relation type="one" rel-entity-name="Party">
+			<key-map field-name="partyId" />
+		</relation>
+		<relation type="one" rel-entity-name="InventorynItem">
+			<key-map field-name="inventoryItemId" />
+		</relation>
+		<relation type="one" rel-entity-name="Facility">
+			<key-map field-name="facilityId" />
+		</relation>
+		<relation type="one" rel-entity-name="Product">
+			<key-map field-name="productId" />
+		</relation>-->
+	</entity>
+	<!-- 故障类型 -->
+	<entity entity-name="FaultType" package-name="org.ofbiz.inventory.inventoryItem">
+		<field name="faultTypeId" type="id-ne"></field>
+		<field name="memo" type="name"></field>
+		<prim-key field="faultTypeId" />
+	</entity>
+	<view-entity entity-name="InventorynItemAndProductStoreView"
+		package-name="org.ofbiz.inventory.inventoryItem" title="InventoryItem,Facility and Product View Entity">
+		<member-entity entity-alias="PS" entity-name="ProductStore" />
+		<member-entity entity-alias="PRO" entity-name="Product" />
+		<member-entity entity-alias="FA" entity-name="Facility" />
+		<member-entity entity-alias="FAT" entity-name="FacilityType" />
+		<member-entity entity-alias="PSF" entity-name="ProductStoreFacility" />
+		<member-entity entity-alias="II" entity-name="InventorynItem" />
+		<member-entity entity-alias="PF" entity-name="ProductFeature" />
+		<member-entity entity-alias="PFA" entity-name="ProductFeatureAppl" />
+		<member-entity entity-alias="T2" entity-name="ProductFeatureApplT2" />
+		<member-entity entity-alias="T3" entity-name="ProductFeatureApplT3" />
+		<member-entity entity-alias="T4" entity-name="ProductFeatureApplT4" />
+		<member-entity entity-alias="PSA" entity-name="ProductStoreAttribute" />
+		<alias-all entity-alias="II"/>
+		
+		<alias entity-alias="PF" name="pfdescription" field="description"/>
+
+		<alias entity-alias="PS" name="proStoId" field="productStoreId" />
+		<alias entity-alias="PS" name="storeName" />
+		
+		<alias entity-alias="PRO" name="productId" />
+		<alias entity-alias="PRO" name="productName" />
+		<alias entity-alias="PRO" name="productTypeId" />
+		<alias entity-alias="PRO" name="isSequence" />
+
+		<alias entity-alias="FA" name="faciId" field="facilityId" />
+		<alias entity-alias="FA" name="facilityName" />
+		<alias entity-alias="FA" name="parentFacilityId" />
+		<alias entity-alias="FA" name="facilityTypeId" />
+
+		<alias entity-alias="FAT" name="facTypeId" field="facilityTypeId" />
+		<alias entity-alias="FAT" name="description" />
+
+		<alias entity-alias="PSF" name="proStoId" field="productStoreId" />
+		<alias entity-alias="PSF" name="facId" field="facilityId" />
+        
+        <alias entity-alias="T2" name="productFeatureId" />
+        <alias entity-alias="T3" name="productFeatureId" />
+        <alias entity-alias="T4" name="productFeatureId" />
+        
+        <alias entity-alias="PSA" name="area" field="attrValue"/>
+        
+		<view-link entity-alias="PRO" rel-entity-alias="T2" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="PRO" rel-entity-alias="T3" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="PRO" rel-entity-alias="T4" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+
+		<view-link entity-alias="PRO" rel-entity-alias="II" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="II" rel-entity-alias="FA">
+			<key-map field-name="facilityId" />
+		</view-link>
+		<view-link entity-alias="II" rel-entity-alias="PS">
+			<key-map field-name="productStoreId" />
+		</view-link>
+		<view-link entity-alias="II" rel-entity-alias="PSA">
+			<key-map field-name="productStoreId" />
+		</view-link>
+		<view-link entity-alias="FA" rel-entity-alias="FAT">
+			<key-map field-name="facilityTypeId" />
+		</view-link>
+		<view-link entity-alias="FA" rel-entity-alias="PSF">
+			<key-map field-name="facilityId" />
+		</view-link>				
+		<view-link entity-alias="PRO" rel-entity-alias="PFA">
+			<key-map field-name="productId" />			
+		</view-link>
+		<view-link entity-alias="PFA" rel-entity-alias="PF">
+			<key-map field-name="productFeatureId" />
+		</view-link>
+		
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="II" field-name="onhand" operator="greater" value="0" />
+			    <condition-expr entity-alias="PF" field-name="productFeatureTypeId" operator="equals" value="MODELS" />
+			    <condition-expr entity-alias="PSA" field-name="productStoreAttrTypeId" operator="equals" value="SMALLAREA" />
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+	
+	<view-entity entity-name="ProductFeatureApplT2"
+		package-name="org.ofbiz.inventory.inventoryItem" title="ProductFeatureAppl View Entity">
+		<member-entity entity-alias="P1" entity-name="ProductFeatureAppl" />
+		<member-entity entity-alias="P2" entity-name="ProductFeature" />
+		<alias entity-alias="P1" name="productId" />
+		<alias entity-alias="P1" name="productFeatureId" />
+		<alias entity-alias="P2" name="productFeatureTypeId" />
+		<view-link entity-alias="P1" rel-entity-alias="P2" rel-optional="true">
+			<key-map field-name="productFeatureId" />
+		</view-link>
+		<entity-condition>
+			<condition-expr entity-alias="P2" field-name="productFeatureTypeId" operator="equals" value="FIRST_CLASS"/>
+		</entity-condition>
+	</view-entity>
+	
+	<view-entity entity-name="ProductFeatureApplT3"
+		package-name="org.ofbiz.inventory.inventoryItem" title="ProductFeatureAppl View Entity">
+		<member-entity entity-alias="P1" entity-name="ProductFeatureAppl" />
+		<member-entity entity-alias="P2" entity-name="ProductFeature" />
+		<alias entity-alias="P1" name="productId" />
+		<alias entity-alias="P2" name="productFeatureTypeId" />
+		<alias entity-alias="P1" name="productFeatureId" />
+		<view-link entity-alias="P1" rel-entity-alias="P2" rel-optional="true">
+			<key-map field-name="productFeatureId" />
+		</view-link>
+		<entity-condition>
+			<condition-expr entity-alias="P2" field-name="productFeatureTypeId" operator="equals" value="SECOND_CLASS"/>
+		</entity-condition>
+	</view-entity>
+	
+	<view-entity entity-name="ProductFeatureApplT4"
+		package-name="org.ofbiz.inventory.inventoryItem" title="ProductFeatureAppl View Entity">
+		<member-entity entity-alias="P1" entity-name="ProductFeatureAppl" />
+		<member-entity entity-alias="P2" entity-name="ProductFeature" />
+		<alias entity-alias="P1" name="productId" />
+		<alias entity-alias="P1" name="productFeatureId" />
+		<alias entity-alias="P2" name="productFeatureTypeId" />
+		<view-link entity-alias="P1" rel-entity-alias="P2" rel-optional="true">
+			<key-map field-name="productFeatureId" />
+		</view-link>
+		<entity-condition>
+			<condition-expr entity-alias="P2" field-name="productFeatureTypeId" operator="equals" value="BRANDS"/>
+		</entity-condition>
+	</view-entity>
+	
+	<view-entity entity-name="StoreAreaAndAttribute"
+		package-name="org.ofbiz.inventory.inventoryItem" title="StoreAreaAndAttribute View Entity">
+		<member-entity entity-alias="SAI" entity-name="StoreAreaInventory" />
+		<member-entity entity-alias="PSA" entity-name="ProductStoreAttribute" />
+		<member-entity entity-alias="PS" entity-name="ProductStore" />
+		<alias entity-alias="PSA" name="productStoreId" />
+		<alias entity-alias="PS" name="storeName" />
+		<view-link entity-alias="SAI" rel-entity-alias="PSA">
+			<key-map field-name="area" rel-field-name="attrValue" />
+		</view-link>
+		<view-link entity-alias="PSA" rel-entity-alias="PS">
+			<key-map field-name="productStoreId" />
+		</view-link>
+		<entity-condition>
+			<condition-list>
+				<condition-expr entity-alias="SAI" field-name="enable" operator="equals" value="Y"/>
+				<condition-expr entity-alias="SAI" field-name="isDelete" operator="equals" value="N"/>
+				<condition-expr entity-alias="PSA" field-name="productStoreAttrTypeId" operator="equals" value="SMALLAREA"/>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+	
+	
+</entitymodel>
+

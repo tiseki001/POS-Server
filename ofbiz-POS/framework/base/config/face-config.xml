@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<face-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/face-config.xsd">
+
+    <!-- this jndi-server has no parameters so the factory will use the default
+        InitialContext constructor which gets these values from the jndi.properties file -->
+   
+
+    <face-node name="ebs-store-attr"
+            model="EBS_INTERFACE"
+            event="STORE_EBS_POS"
+            xml-root="CUX_INTEGRATION_PUB-24GET_STORE"
+            xml-item="CUX_INTEGRATION_PUB-24GET_STORE_ITEM"
+            ebs-url="http://168.168.175.14:8020/webservices/rest/HPOS_MASTER_DATA/get_stores/"
+			user-name="HPOS_INTERFACE"
+			password="123456"/>
+			
+	<face-node name="ebs-payment-method"
+            model="EBS_INTERFACE"
+            event="PAYMENT_EBS_POS"
+            xml-root="CUX_INT_RECEIPT_METHOD_PUB-24GE"
+            xml-item="CUX_INT_RECEIPT_METHOD_PUB-24GE_ITEM"
+            ebs-url="http://168.168.175.14:8020/webservices/rest/CUX_RECEIPT_METHOD_NAME/get_receipt_method/"
+			user-name="HPOS_INTERFACE"
+			password="123456"/>	
+			
+	<face-node name="ebs-price-type"
+            model="EBS_INTERFACE"
+            event="PRICE_EBS_POS"
+            xml-root="CUX_INTEGRATION_PRICELIST_P-241"
+            xml-item="CUX_INTEGRATION_PRICELIST_P-241_ITEM"
+            ebs-url="http://168.168.175.14:8020/webservices/rest/CUX_GET_PRICELIST/get_price_list/"
+			user-name="HPOS_INTERFACE"
+			password="123456"/>
+			
+	<face-node name="ebs-product"
+            model="EBS_INTERFACE"
+            event="PRODUCT_EBS_POS"
+            xml-root="CUX_INTEGRATION_ITEM_PUB3-24GET"
+            xml-item="CUX_INTEGRATION_ITEM_PUB3-24GET_ITEM"
+            ebs-url="http://168.168.175.14:8020/webservices/rest/HPOS_ITEM_MASTER_DATA/get_items/"
+			user-name="HPOS_INTERFACE"
+			password="123456"/>	
+	<face-node name="ebs-feature"
+            model="EBS_INTERFACE"
+            event="FEATURE_EBS_POS"
+            xml-root="CUX_INTEGRATION_ITEM_PUB3-24GET"
+            xml-item="CUX_INTEGRATION_ITEM_PUB3-24GET_ITEM"
+            ebs-url="http://168.168.175.14:8020/webservices/rest/HPOS_ITEM_MASTER_DATA/get_features/"
+			user-name="HPOS_INTERFACE"
+			password="123456"/>	
+	<face-node name="ebs-product-feature"
+            model="EBS_INTERFACE"
+            event="PRODUCTFEATURE_EBS_POS"
+            xml-root="CUX_INTEGRATION_ITEM_PUB3-24GET"
+            xml-item="CUX_INTEGRATION_ITEM_PUB3-24GET_ITEM"
+            ebs-url="http://168.168.175.14:8020/webservices/rest/HPOS_ITEM_MASTER_DATA/get_item_features/"
+			user-name="HPOS_INTERFACE"
+			password="123456"/>	
+			
+	<!-- 调拨指令 -->
+	<face-node name="ebs-delivery-command"
+            model="EBS_INTERFACE"
+            event="DELIVERY_EBS_POS"
+            xml-root="GET_TXN_CMD_LINE"
+            xml-item="TXNS"
+            ebs-url="http://168.168.175.14:8020/webservices/rest/HPOS_INV_TXN_DATA/get_txn_cmd_line/"
+			user-name="HPOS_INTERFACE"
+			password="123456"/>
+			
+	<!-- 杂出指令 -->
+	<face-node name="ebs-outDelivery-command"
+            model="EBS_INTERFACE"
+            event="OUTDELIVERY_EBS_POS"
+            xml-root="GET_MISC_OUT_LINE"
+            xml-item="TXNS"
+            ebs-url="http://168.168.175.14:8020/webservices/rest/HPOS_MISC_TRX_DATA/get_misc_out_line/"
+			user-name="HPOS_INTERFACE"
+			password="123456"/>
+
+	<!-- 杂入指令 -->
+	<face-node name="ebs-receive-command"
+            model="EBS_INTERFACE"
+            event="RECEIVE_EBS_POS"
+            xml-root="GET_MISC_IN_LINE"
+            xml-item="TXNS"
+            ebs-url="http://168.168.175.14:8020/webservices/rest/HPOS_MISC_TRX_DATA/get_misc_in_line/"
+			user-name="HPOS_INTERFACE"
+			password="123456"/>
+			
+	<!-- 门店要货单下载 -->
+	<face-node name="ebs-replenishment-item"
+            model="EBS_INTERFACE"
+            event="REPLENISHMENTITEM_EBS_POS"
+            xml-root="CUX_I_INV_REQ_ITEM_PUB-24GET_RE"
+            xml-item="CUX_I_INV_REQ_ITEM_PUB-24GET_RE_ITEM"
+            ebs-url="http://168.168.175.14:8020/webservices/rest/HPOS_REQ_ITEM_DATA/get_req_item/"
+			user-name="HPOS_INTERFACE"
+			password="123456"/>
+			
+	<face-node name="ebs-accept"
+            model="EBS_INTERFACE"
+            event="ACCEPT_EBS_POS"
+            xml-root="CUX_INTEGRATION_ITEM_PUB3-24GET"
+            xml-item="CUX_INTEGRATION_ITEM_PUB3-24GET_ITEM"
+            ebs-url="http://168.168.175.14:8022/webservices/rest/HPOS_BIZ_ACCEPTANCE_DATA/"
+			user-name="HPOS_INTERFACE"
+			password="123456"/>	
+			
+	<face-node name="ebs-operation-business"
+            model="EBS_INTERFACE"
+            event="OPERATION_EBS_POS"
+            xml-root="GET_TXN_CMD_LINE"
+            xml-item="TXNS"
+            ebs-url="http://168.168.175.14:8022/webservices/rest/HPOS_BIZ_POLICY_DATA/"
+			user-name="HPOS_INTERFACE"
+			password="123456"/>
+   
+</face-config>

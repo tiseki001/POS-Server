@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<title>Entity of an Open For Business Project Component</title>
+	<description>None</description>
+	<version>1.0</version>
+	<entity entity-name="Replenishment" package-name="org.ofbiz.inventory.replenishment"
+		title="Replenishment Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="extSystemNo" type="name"></field>
+		<field name="extDocNo" type="name"></field>
+		<field name="docDate" type="date-time"></field>
+		<field name="updateDate" type="date-time"></field>
+		<field name="postingDate" type="date-time"></field>
+		<field name="docStatus" type="name"></field>
+		<field name="status" type="name"></field>
+		<field name="memo" type="name"></field>
+		<field name="userId" type="name"></field>
+		<field name="updateUserId" type="name"></field>
+		<field name="isSync" type="name"></field>
+		<field name="partyId" type="id"></field>
+		<field name="printNum" type="numeric"></field>
+		<field name="productStoreId" type="id"></field>
+		<field name="saleDay" type="numeric"></field>
+		<field name="receiveDate" type="date-time"></field>
+		<field name="approveDate" type="date-time"></field>
+		<!-- 备用列 -->
+		<field name="attrName1" type="name"></field>
+		<field name="attrName2" type="name"></field>
+		<field name="attrName3" type="name"></field>
+		<field name="attrName4" type="name"></field>
+		<field name="attrName5" type="name"></field>
+		<field name="attrName6" type="name"></field>
+		<field name="attrName7" type="name"></field>
+		<field name="attrName8" type="name"></field>
+		<field name="attrName9" type="name"></field>
+		<field name="attrName10" type="name"></field>
+		<prim-key field="docId" />
+		<index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+	</entity>
+	<view-entity entity-name="ReplenishmentAndPerson" package-name="org.ofbiz.inventory.replenishment">
+		<member-entity entity-alias="RE" entity-name="Replenishment" />
+		<member-entity entity-alias="PE" entity-name="Person" />
+		<member-entity entity-alias="PE1" entity-name="Person" />
+		<alias-all entity-alias="RE" />
+		<alias entity-alias="PE" name="firstName" />
+		<alias entity-alias="PE" name="middleName" />
+		<alias entity-alias="PE" name="lastName" />
+		<alias entity-alias="PE1" name="updatefirstName" field="firstName" />
+		<alias entity-alias="PE1" name="updatemiddleName" field="middleName" />
+		<alias entity-alias="PE1" name="updatelastName" field="lastName" />
+		<view-link entity-alias="RE" rel-entity-alias="PE" rel-optional="true">
+			<key-map field-name="userId" rel-field-name="partyId"/>
+		</view-link>
+		<view-link entity-alias="RE" rel-entity-alias="PE1" rel-optional="true">
+			<key-map field-name="updateUserId" rel-field-name="partyId"/>
+		</view-link>
+	</view-entity>
+	<entity entity-name="ReplenishmentItem" package-name="org.ofbiz.inventory.replenishment"
+		title="ReplenishmentItem Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="baseLineNo" type="numeric"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="memo" type="name"></field>
+		<field name="isSequence" type="name"></field>
+		<field name="idValue" type="name"></field>
+		<field name="productId" type="id"></field>
+		<field name="facilityId" type="id"></field>
+		<field name="erpMemo" type="description"></field>
+		<!-- 补用列    -->
+		<field name="availableQuantity" type="numeric"></field><!-- 可用库存数 -->
+		<field name="receiveQuantity" type="numeric"></field><!-- 待收货数 -->
+		<field name="saftyQuantity" type="numeric"></field><!-- 安全库存(销售数) -->
+		<field name="preQuantity" type="numeric"></field><!-- 预订数 -->
+		<field name="quantity" type="numeric"></field><!-- 补货数 -->
+		<field name="promise" type="numeric"></field><!-- 承诺数-->
+		<field name="onhand" type="numeric"></field><!-- 库存数 -->
+		<!-- 备用列 -->
+		<field name="attrName1" type="name"></field>
+		<field name="attrName2" type="name"></field>
+		<field name="attrName3" type="name"></field>
+		<field name="attrName4" type="name"></field>
+		<field name="attrName5" type="name"></field>
+		<field name="attrName6" type="name"></field>
+		<field name="attrName7" type="name"></field>
+		<field name="attrName8" type="name"></field>
+		<field name="attrName9" type="name"></field>
+		<field name="attrName10" type="name"></field>
+		<prim-key field="docId" />
+		<prim-key field="lineNo" />
+	</entity>
+	<view-entity entity-name="ReplenishmentItemAndProduct" package-name="org.ofbiz.inventory.replenishment">
+		<member-entity entity-alias="RI" entity-name="ReplenishmentItem" />
+		<member-entity entity-alias="PR" entity-name="Product" />
+		<alias-all entity-alias="RI" />
+		<alias entity-alias="PR" name="productName" />
+		<view-link entity-alias="RI" rel-entity-alias="PR" rel-optional="true">
+			<key-map field-name="productId"/>
+		</view-link>
+	</view-entity>
+	<!--  补货单申请 根据参数查询相关表信息   库存，商品，销售-->
+	<view-entity entity-name="ReplenishmentAndOther" package-name="org.ofbiz.inventory.replenishment">
+		<member-entity entity-alias="II" entity-name="InventorynItem" />
+		<member-entity entity-alias="PR" entity-name="Product" />
+		<member-entity entity-alias="OU" entity-name="Outstanding" />
+		<member-entity entity-alias="SC" entity-name="Weidmuller" />
+		<member-entity entity-alias="FA" entity-name="Facility" />
+		
+		<alias entity-alias="PR" name="productId" group-by="true"/>
+		<alias entity-alias="PR" name="productName"/>
+		<alias entity-alias="II" name="productStoreId"/>
+		<!-- 库存数 -->
+		<alias entity-alias="II" name="onhand" field="onhand" function="sum" />
+		<!-- 占用数 -->
+		<alias entity-alias="II" name="promise" field="promise" function="sum"/>
+		<!-- 安全库存 -->
+		<alias entity-alias="SC" name="saftyQuantity" field="warehouseQuantity" />
+		<!-- 未收数 -->
+		<alias entity-alias="OU" name="receiveQuantity" field="outstanding"/>
+		<!-- 未清数 
+		<alias entity-alias="SC" name="preQuantity" field="weidmuller"/>-->
+		<!-- 预订数 -->
+		<alias entity-alias="SC" name="preQuantity" field="quantity"/> 
+		<!-- 需配数量 -->
+		<alias name="quantity">
+			<complex-alias operator="+">
+				<complex-alias operator="-">
+					<complex-alias-field entity-alias="SC" field="warehouseQuantity" default-value="0" function="sum"/>
+					<complex-alias-field entity-alias="II" field="onhand" default-value="0" function="sum"/>
+					<complex-alias-field entity-alias="OU" field="outstanding" default-value="0" function="sum"/>
+				</complex-alias>
+				<complex-alias-field entity-alias="SC" field="quantity" default-value="0" function="sum" />
+				<complex-alias-field entity-alias="II" field="promise" default-value="0" function="sum"/>
+			</complex-alias>
+		</alias>
+		<!-- 待定
+		 <entity-condition> 
+	     		<order-by field-name="sequenceId" /> 
+		</entity-condition> -->
+		<view-link entity-alias="II" rel-entity-alias="PR" rel-optional="true">
+			<key-map field-name="productId"/>
+		</view-link>
+		<view-link entity-alias="II" rel-entity-alias="SC" rel-optional="true">
+			<key-map field-name="productId"/>
+			<key-map field-name="productStoreId" rel-field-name="deliveryStoreId"/>
+		</view-link>
+		<view-link entity-alias="II" rel-entity-alias="OU" rel-optional="true">
+			<key-map field-name="productId"/>
+			<key-map field-name="productStoreId"/>
+		</view-link>
+		<view-link entity-alias="II" rel-entity-alias="FA" rel-optional="true">
+			<key-map field-name="facilityId"/>
+		</view-link>
+	</view-entity>
+	<!-- 未清数 -->
+	<view-entity entity-name="Weidmuller" package-name="org.ofbiz.inventory.replenishment">
+		<member-entity entity-alias="SOD" entity-name="SaleOrderDtl" />
+		<member-entity entity-alias="SOH" entity-name="SaleOrderHeader" />
+		<member-entity entity-alias="POD" entity-name="PreOrderDtl" />
+		<member-entity entity-alias="POH" entity-name="PreOrderHeader" />
+		<alias entity-alias="POD" name="quantity" function="sum"/>
+		<alias entity-alias="SOD" name="warehouseQuantity" function="sum"/>
+		<alias entity-alias="SOD" name="productId" group-by="true"/>
+		<alias entity-alias="SOH" name="storeId"/>
+		<alias entity-alias="SOH" name="docId"/>
+		<alias entity-alias="SOH" name="docStatus"/>
+		<alias entity-alias="SOH" name="deliveryStoreId"/>
+		<alias entity-alias="SOH" name="lastUpdateDocDate" />
+		<!--<alias entity-alias="SOD" name="weidmuller">
+			<complex-alias operator="-">
+				<complex-alias-field entity-alias="SOD" field="quantity" default-value="0" function="sum"/>
+				<complex-alias-field entity-alias="SOD" field="warehouseQuantity" default-value="0" function="sum"/>
+			</complex-alias>
+		</alias>
+		-->
+		<view-link entity-alias="SOD" rel-entity-alias="SOH" rel-optional="true">
+			<key-map field-name="docId"/>
+		</view-link>
+		<view-link entity-alias="SOH" rel-entity-alias="POH" rel-optional="true">
+			<key-map field-name="docId" rel-field-name="baseEntry"/>
+		</view-link>
+		<view-link entity-alias="SOD" rel-entity-alias="POD" rel-optional="true">
+			<key-map field-name="lineNoBaseEntry" rel-field-name="lineNoBaseEntry"/>
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="SOH" field-name="docStatus" operator="in" value="1,2,3" />
+				<!--<condition-expr entity-alias="SOH" field-name="lastUpdateDocDate"/>-->
+			</condition-list>				
+		</entity-condition>
+	</view-entity>
+	<!-- 未收数 -->
+	<view-entity entity-name="Outstanding" package-name="org.ofbiz.inventory.replenishment">
+		<member-entity entity-alias="RI" entity-name="ReceiveItemcommand" />
+		<member-entity entity-alias="RC" entity-name="ReceiveCommand" />
+		<alias entity-alias="RI" name="productId" group-by="true"/>
+		<alias entity-alias="RC" name="productStoreId"/>
+		<alias entity-alias="RC" name="docStatus"/>
+		<alias entity-alias="RI" name="outstanding">
+			<complex-alias operator="-">
+				<complex-alias-field entity-alias="RI" field="quantity" default-value="0" function="sum"/>
+				<complex-alias-field entity-alias="RI" field="receiveQuantity" default-value="0" function="sum"/>
+			</complex-alias>
+		</alias>
+		<view-link entity-alias="RI" rel-entity-alias="RC" rel-optional="true">
+			<key-map field-name="docId"/>
+		</view-link>
+		<entity-condition>
+				<condition-list combine="and">
+					<condition-expr entity-alias="RC" field-name="docStatus" operator="in" value="1,2,3" />
+				</condition-list>				
+			</entity-condition>
+	</view-entity>
+	
+	
+	
+	
+	
+	<view-entity entity-name="InventorynItemSum" package-name="org.ofbiz.inventory.replenishment">
+		<member-entity entity-alias="INI" entity-name="InventorynItem" />
+		<member-entity entity-alias="PR" entity-name="Product" />
+		<member-entity entity-alias="FA" entity-name="Facility" />
+		<alias entity-alias="INI" name="productId" field="productId" group-by="true" />
+		<alias entity-alias="PR" name="productName" group-by="true"/>
+		<!-- 库存数 -->
+		<alias entity-alias="INI" name="onhand" field="onhand" function="sum" />
+		<!-- 占用数 -->
+		<alias entity-alias="INI" name="promise" field="promise" function="sum"/>
+		
+		<view-link entity-alias="INI" rel-entity-alias="PR">
+			<key-map field-name="productId"/>
+		</view-link>
+		<view-link entity-alias="INI" rel-entity-alias="FA">
+			<key-map field-name="facilityId"/>
+		</view-link>
+		<entity-condition>
+				<condition-list combine="or">
+					<condition-expr entity-alias="INI" field-name="onhand" operator="greater" value="0" />					
+					<condition-expr entity-alias="INI" field-name="promise" operator="greater" value="0" />										
+				</condition-list>				
+		</entity-condition>
+	</view-entity>
+	
+	<view-entity entity-name="SaleOrderDtlAndReturn" package-name="org.ofbiz.inventory.replenishment">
+		<member-entity entity-alias="SOD" entity-name="SaleOrderDtl" />
+		<member-entity entity-alias="SOH" entity-name="SaleOrderHeader" />
+		<member-entity entity-alias="ROH" entity-name="ReturnOrderHeader" />
+		
+		<alias entity-alias="SOD" name="productId" field="productId" />
+		<alias entity-alias="SOD" name="productName" />
+		<alias entity-alias="SOD" name="docId" />
+		<alias entity-alias="SOH" name="lastUpdateDocDate" />
+		<alias entity-alias="SOH" name="deliveryStoreId" />
+		<alias entity-alias="ROH" name="baseEntry" field="docId"/>
+		<alias entity-alias="SOD" name="warehouseQuantity" field="warehouseQuantity" />	
+		<view-link entity-alias="SOD" rel-entity-alias="SOH">
+			<key-map field-name="docId"/>
+		</view-link>			
+		<view-link entity-alias="SOD" rel-entity-alias="ROH" rel-optional="true">
+			<key-map field-name="docId" rel-field-name="baseEntry"/>
+			<entity-condition>
+				<condition-list combine="and">
+					<condition-expr entity-alias="ROH" field-name="movementTypeId" operator="equals" value="TC" />					
+				</condition-list>				
+			</entity-condition>
+		</view-link>
+	</view-entity>
+	
+	<view-entity entity-name="SaleOrderDtlSum" package-name="org.ofbiz.inventory.replenishment">
+		<member-entity entity-alias="SOD" entity-name="SaleOrderDtlAndReturn" />				
+		<alias entity-alias="SOD" name="productId" field="productId" group-by="true"/>
+		<alias entity-alias="SOD" name="productName" group-by="true"/>		
+		<alias entity-alias="SOD" name="warehouseQuantity" field="warehouseQuantity" function="sum"/>	
+		<entity-condition>
+				<condition-list combine="and">
+					<condition-expr entity-alias="SOD" field-name="baseEntry"/>					
+				</condition-list>				
+		</entity-condition>
+	</view-entity>
+	
+	<view-entity entity-name="PreOrderDtlSum" package-name="org.ofbiz.inventory.replenishment">
+		<member-entity entity-alias="POD" entity-name="PreOrderDtl" />	
+		<member-entity entity-alias="POH" entity-name="PreOrderHeader" />				
+		<alias entity-alias="POD" name="productId" field="productId" group-by="true"/>
+		<alias entity-alias="POD" name="productName" group-by="true"/>		
+		
+		
+		<alias entity-alias="POD" name="quantity">
+			<complex-alias operator="-">
+				<complex-alias-field entity-alias="POD" field="quantity" default-value="0" function="sum"/>
+				<complex-alias-field entity-alias="POD" field="saleQuantity" default-value="0" function="sum"/>
+				<complex-alias-field entity-alias="POD" field="backQuantity" default-value="0" function="sum"/>
+			</complex-alias>
+		</alias>
+		<view-link entity-alias="POD" rel-entity-alias="POH">
+			<key-map field-name="docId"/>
+		</view-link>	
+		<entity-condition>
+				<condition-list combine="and">
+					<condition-expr entity-alias="POH" field-name="docStatus" operator="in" value="1,2,3" />			
+				</condition-list>				
+		</entity-condition>
+	</view-entity>
+	
+	
+	<view-entity entity-name="ReceiveItemcommandSum" package-name="org.ofbiz.inventory.replenishment">
+		<member-entity entity-alias="POD" entity-name="ReceiveItemcommand" />	
+		<member-entity entity-alias="POH" entity-name="ReceiveCommand" />
+		<member-entity entity-alias="PR" entity-name="Product" />	
+		<member-entity entity-alias="FA" entity-name="Facility" />			
+		<alias entity-alias="POD" name="productId" field="productId" group-by="true"/>
+		<alias entity-alias="PR" name="productName" group-by="true"/>		
+		
+		
+		<alias entity-alias="POD" name="quantity">
+			<complex-alias operator="-">
+				<complex-alias-field entity-alias="POD" field="quantity" default-value="0" function="sum"/>
+				<complex-alias-field entity-alias="POD" field="receiveQuantity" default-value="0" function="sum"/>
+			</complex-alias>
+		</alias>	
+		<view-link entity-alias="POD" rel-entity-alias="POH">
+			<key-map field-name="docId"/>
+		</view-link>
+		<view-link entity-alias="POD" rel-entity-alias="PR">
+			<key-map field-name="productId"/>
+		</view-link>
+		<view-link entity-alias="POD" rel-entity-alias="FA">
+			<key-map field-name="facilityId"/>
+		</view-link>		
+		<entity-condition>
+				<condition-list combine="and">
+					<condition-expr entity-alias="POH" field-name="docStatus" operator="in" value="1,2,3" />			
+	
+				</condition-list>
+								
+		</entity-condition>
+	</view-entity>
+</entitymodel>

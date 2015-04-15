@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<title>Entity of an Open For Business Project Component</title>
+	<description>None</description>
+	<version>1.0</version>
+
+	<!-- 查询会员信息 -->
+	<view-entity entity-name="PartyAndPersonAndContact" package-name="org.ofbiz.party"
+		title="Party,Person,PS And PCMP View Entity">
+		<member-entity entity-alias="PE" entity-name="Person" /><!-- 人员-->
+		<member-entity entity-alias="PT" entity-name="Party" /><!-- 会员-->
+		
+		<member-entity entity-alias="PCF" entity-name="PartyClassification" /><!-- 会员等级-->
+		<member-entity entity-alias="PCG" entity-name="PartyClassificationGroup" /><!-- 等级类型-->
+		
+		<member-entity entity-alias="PSR" entity-name="ProductStoreRole" /><!-- 店铺权限-->
+		<member-entity entity-alias="PS" entity-name="ProductStore" /><!-- 店铺-->
+		<!-- start 通信方式 -->
+		<member-entity entity-alias="PCMP" entity-name="PartyContactMechPurpose" /><!-- 通讯方式中间表-->
+		<member-entity entity-alias="PCMP1" entity-name="PartyContactMechPurpose" /><!-- 通讯方式中间表-->
+		<member-entity entity-alias="PCMP2" entity-name="PartyContactMechPurpose" /><!-- 通讯方式中间表-->
+		<member-entity entity-alias="PCMP3" entity-name="PartyContactMechPurpose" /><!-- 通讯方式中间表-->
+		<member-entity entity-alias="PCMP4" entity-name="PartyContactMechPurpose" /><!-- 通讯方式中间表-->
+		<member-entity entity-alias="CM" entity-name="ContactMech" /><!-- 详细地址-->
+		<member-entity entity-alias="PA" entity-name="PostalAddress" /><!-- 详细地址-->
+		<member-entity entity-alias="TN" entity-name="TelecomNumber" /><!-- 家庭电话-->
+		<member-entity entity-alias="TN1" entity-name="TelecomNumber" /><!-- 工作电话-->
+		<member-entity entity-alias="TN2" entity-name="TelecomNumber" /><!-- 传真-->
+		<!-- 人员信息 -->
+		<alias entity-alias="PE" name="firstName"/>
+		<alias entity-alias="PE" name="middleName"/>
+		<alias entity-alias="PE" name="lastName"/>
+		<alias entity-alias="PE" name="gender"/><!-- 性别 -->
+		<alias entity-alias="PE" name="phoneMobile"/>
+		<alias entity-alias="PE" name="birthDate"/>
+		<!-- 积分 -->
+		<alias entity-alias="PE" name="integral"/>
+		<alias entity-alias="PE" name="totalIntegral"/>
+		<!-- 身份证号 -->
+		<alias entity-alias="PE" name="socialSecurityNumber"/>
+		<!-- 卡号 -->
+		<alias entity-alias="PE" name="cardId"/>
+		<!-- 创建日期 -->
+		<alias entity-alias="PT" name="partyId"/>
+		<alias entity-alias="PT" name="createdDate"/>
+		<!-- 店面名称 -->
+		<alias entity-alias="PS" name="productStoreId"/>
+		<alias entity-alias="PS" name="storeName"/>
+		<!-- 会员卡类别 -->
+		<alias entity-alias="PCG" name="partyClassificationGroupId"/>
+		<alias entity-alias="PCG" name="description"/>
+		<!-- 详细地址 -->
+		<alias entity-alias="PA" name="address1"/>
+		<!-- 电话 -->
+		<alias entity-alias="TN" name="phoneHome" field="contactNumber"/>
+		<alias entity-alias="TN1" name="phoneWork" field="contactNumber"/>
+		<alias entity-alias="TN2" name="faxNumber" field="contactNumber"/>
+		<!-- 电子邮件 -->
+		<alias entity-alias="CM" name="email" field="infoString"/>
+		
+		<view-link entity-alias="PE" rel-entity-alias="PT" rel-optional="true">
+			<key-map field-name="partyId"/>
+		</view-link>
+		
+		<view-link entity-alias="PE" rel-entity-alias="PCF" rel-optional="true">
+			<key-map field-name="partyId"/>
+		</view-link>
+		<view-link entity-alias="PCF" rel-entity-alias="PCG" rel-optional="true">
+			<key-map field-name="partyClassificationGroupId"/>
+		</view-link>
+		
+		<view-link entity-alias="PE" rel-entity-alias="PSR" rel-optional="true">
+			<key-map field-name="partyId"/>
+		</view-link>
+		<view-link entity-alias="PSR" rel-entity-alias="PS" rel-optional="true">
+			<key-map field-name="productStoreId"/>
+		</view-link>
+		
+		<view-link entity-alias="PE" rel-entity-alias="PCMP" rel-optional="true">
+			<key-map field-name="partyId"/>
+			<entity-condition>
+				<condition-list combine="and">
+					<condition-expr entity-alias="PCMP" field-name="contactMechPurposeTypeId" operator="equals" value="PRIMARY_EMAIL"/>
+				</condition-list>
+			</entity-condition>
+		</view-link>
+		<view-link entity-alias="PCMP" rel-entity-alias="CM" rel-optional="true">
+			<key-map field-name="contactMechId"/>
+		</view-link>
+		
+		<view-link entity-alias="PE" rel-entity-alias="PCMP1" rel-optional="true">
+			<key-map field-name="partyId"/>
+			<entity-condition>
+				<condition-list combine="and">
+					<condition-expr entity-alias="PCMP1" field-name="contactMechPurposeTypeId" operator="equals" value="PRIMARY_LOCATION"/>
+				</condition-list>
+			</entity-condition>
+		</view-link>
+		<view-link entity-alias="PCMP1" rel-entity-alias="PA" rel-optional="true">
+			<key-map field-name="contactMechId"/>
+		</view-link>
+		<view-link entity-alias="PE" rel-entity-alias="PCMP2" rel-optional="true">
+			<key-map field-name="partyId"/>
+			<entity-condition>
+				<condition-list combine="and">
+					<condition-expr entity-alias="PCMP2" field-name="contactMechPurposeTypeId" operator="equals" value="PHONE_HOME"/>
+				</condition-list>
+			</entity-condition>
+		</view-link>
+		<view-link entity-alias="PCMP2" rel-entity-alias="TN" rel-optional="true">
+			<key-map field-name="contactMechId"/>
+		</view-link>
+		<view-link entity-alias="PE" rel-entity-alias="PCMP3" rel-optional="true">
+			<key-map field-name="partyId"/>
+			<entity-condition>
+				<condition-list combine="and">
+					<condition-expr entity-alias="PCMP3" field-name="contactMechPurposeTypeId" operator="equals" value="PHONE_WORK"/>
+				</condition-list>
+			</entity-condition>
+		</view-link>
+		<view-link entity-alias="PCMP3" rel-entity-alias="TN1" rel-optional="true">
+			<key-map field-name="contactMechId"/>
+		</view-link>
+		<view-link entity-alias="PE" rel-entity-alias="PCMP4" rel-optional="true">
+			<key-map field-name="partyId"/>
+			<entity-condition>
+				<condition-list combine="and">
+					<condition-expr entity-alias="PCMP4" field-name="contactMechPurposeTypeId" operator="equals" value="FAX_NUMBER"/>
+				</condition-list>
+			</entity-condition>
+		</view-link>
+		<view-link entity-alias="PCMP4" rel-entity-alias="TN2" rel-optional="true">
+			<key-map field-name="contactMechId"/>
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="PSR" field-name="roleTypeId" operator="equals" value="CUSTOMER"/>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+	
+	<view-entity entity-name="PersonAndProductStore" package-name="org.ofbiz.person">
+		<member-entity entity-alias="PE" entity-name="Person" />
+		<member-entity entity-alias="PSR" entity-name="ProductStoreRole" />
+		<!--<alias entity-alias="PSR" name="productStoreId" />-->
+		<alias entity-alias="PE" name="partyId" />
+		<alias entity-alias="PE" name="lastName" />
+		<alias entity-alias="PE" name="middleName" />
+		<alias entity-alias="PE" name="firstName" />
+		<view-link entity-alias="PSR" rel-entity-alias="PE" rel-optional="true">
+			<key-map field-name="partyId" />
+		</view-link>
+	</view-entity>
+</entitymodel>
+

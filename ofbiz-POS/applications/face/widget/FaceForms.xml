@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+	<!-- logMgr -->
+	<form name="FindLog" target="logMgr" title="" type="single"
+		header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind">
+			<hidden value="Y" />
+		</field>
+		<field name="recordId" title="${uiLabelMap.RecordId}">
+			<text-find ignore-case="true" />
+		</field>
+
+		<field name="model" title="${uiLabelMap.Model}">
+			<text-find ignore-case="true" />
+		</field>
+		<field name="event" title="${uiLabelMap.Event}">
+			<text-find ignore-case="true" />
+		</field>
+		<field name="resultInfo" title="${uiLabelMap.ResultInfo}">
+			<text-find ignore-case="true" />
+		</field>
+		<field name="createdStamp"  title="${uiLabelMap.CommonTime}">
+			<date-find type="timestamp"/>
+		</field>
+		<field name="result" title="${uiLabelMap.Result}">
+			<drop-down allow-empty="true">
+				<option key="Y" description="${uiLabelMap.CommonY}" />
+				<option key="N" description="${uiLabelMap.CommonN}" />
+			</drop-down>
+		</field>
+		<field name="state" title="${uiLabelMap.State}">
+			<drop-down allow-empty="true">
+				<option key="Y" description="${uiLabelMap.CommonY}" />
+				<option key="N" description="${uiLabelMap.CommonN}" />
+			</drop-down>
+		</field>
+		<field name="searchButton" title="${uiLabelMap.CommonSearch}"
+			widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+	<form name="ListLog" target="" title="" list-name="listIt" type="list"
+		paginate-target="logMgr" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="parameters.noConditionFind" value="Y" />
+			<service service-name="performFind" result-map="result"
+				result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="parameters" />
+				<field-map field-name="entityName" value="ErpFaceLog" />
+				<field-map field-name="orderBy"  value="-createdStamp" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+		</actions>
+		<field name="model" sort-field="true" title="${uiLabelMap.Model}">
+			<display />
+		</field>
+		<field name="event" sort-field="true" title="${uiLabelMap.Event}">
+			<display />
+		</field>
+		<field name="recordId" sort-field="true" title="${uiLabelMap.RecordId}">
+			<display />
+		</field>
+		<field name="result" sort-field="true" title="${uiLabelMap.Result}">
+			<display />
+		</field>
+		<field name="state" sort-field="true" title="${uiLabelMap.State}">
+			<display />
+		</field>
+		<field name="resultInfo" sort-field="true" title="${uiLabelMap.ResultInfo}">
+			<display />
+		</field>
+		<field name="createdStamp" sort-field="true" title="${uiLabelMap.CommonTime}">
+			<display />
+		</field>
+	</form>
+	<!-- StorageMappingMgr -->
+	<form name="FindStorageMapping" target="storageMappingMgr" title=""
+		type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind">
+			<hidden value="Y" />
+		</field>
+		<field name="facilityId" title="${uiLabelMap.FacilityId}">
+			<drop-down allow-empty="true">
+				<entity-options description="${facilityName}#${facilityId}"
+					entity-name="Facility" key-field-name="facilityId">
+					<entity-order-by field-name="facilityName" />
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="erpFacilityId" title="${uiLabelMap.ERPFacilityId}">
+			<text-find ignore-case="true" />
+		</field>
+		<field name="financeTypeId" title="${uiLabelMap.FinanceTypeId}">
+			<drop-down allow-empty="true">
+				<entity-options description="${description}"
+					entity-name="FinanceType" key-field-name="financeTypeId">
+					<entity-order-by field-name="description" />
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="searchButton" title="${uiLabelMap.CommonSearch}"
+			widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+	<form name="ListStorageMapping" target="" title="" list-name="listIt"
+		type="list" paginate-target="storageMappingMgr" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<!-- 无条件查找 -->
+			<set field="parameters.noConditionFind" value="Y" />
+			<service service-name="performFind" result-map="result"
+				result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="parameters" />
+				<field-map field-name="entityName" value="ErpFacilityMap" />
+				<field-map field-name="orderBy" from-field="parameters.sortField" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+		</actions>
+		<!-- <field name="facilityId" sort-field="true" title="${uiLabelMap.FacilityId}"> 
+			<display /> </field> -->
+		<field name="facilityId" sort-field="true" title="${uiLabelMap.FacilityId}">
+			<display-entity entity-name="Facility" description="${facilityName}">
+				<sub-hyperlink target="/facility/control/EditFacility"
+					target-type="inter-app" link-style="buttontext" description="[${facilityId}]">
+					<parameter param-name="facilityId" />
+				</sub-hyperlink>
+			</display-entity>
+		</field>
+		<field name="erpFacilityId" sort-field="true"
+			title="${uiLabelMap.ERPFacilityId}">
+			<display />
+		</field>
+		<field name="financeTypeId" sort-field="true"
+			title="${uiLabelMap.ERPOperatorsId}">
+			<display-entity entity-name="FinanceType" description="${description}" />
+		</field>
+		<field name="financeTypeId" sort-field="true"
+			title="${uiLabelMap.FinanceTypeId}">
+			<display />
+		</field>
+		<field name="updateLink" title="${uiLabelMap.CommonEdit}"
+			widget-style="buttontext">
+			<hyperlink target="editStorageMapping" description="${uiLabelMap.CommonEdit}">
+				<parameter param-name="facilityId" />
+				<parameter param-name="financeTypeId" />
+			</hyperlink>
+		</field>
+		<field name="deleteLink" title="${uiLabelMap.CommonDelete}"
+			widget-style="buttontext">
+			<hyperlink target="removeStorageMapping" description="${uiLabelMap.CommonDelete}"
+				also-hidden="false">
+				<parameter param-name="facilityId" />
+				<parameter param-name="financeTypeId" />
+			</hyperlink>
+		</field>
+	</form>
+	<form name="editStorageMapping" type="single" target="updateStorageMapping"
+		title="" default-map-name="entity" default-entity-name="ErpFacilityMap">
+
+		<!-- 根据仓库Id查询出仓库信息 -->
+		<actions>
+			<entity-one entity-name="Facility" value-field="currentFacility"
+				auto-field-map="false">
+				<field-map field-name="facilityId" from-field="entity.facilityId" />
+			</entity-one>
+			<entity-one entity-name="FinanceType" value-field="currentFinanceType"
+				auto-field-map="false">
+				<field-map field-name="financeTypeId" from-field="entity.financeTypeId" />
+			</entity-one>
+		</actions>
+		<alt-target use-when="entity==null" target="createStorageMapping" />
+		<auto-fields-service service-name="updateStorageMapping" />
+		<!-- <field use-when="entity!=null" name="facilityId"
+			tooltip="${uiLabelMap.CommonNotModifRecreat}">
+			<display description="${currentFacility.facilityName}#${entity.facilityId}" />
+		</field> -->
+		<field use-when="entity!=null" name="financeTypeId"
+			tooltip="${uiLabelMap.CommonNotModifRecreat}">
+			<display description="${currentFinanceType.description}" />
+		</field>
+		<field name="erpFacilityId" required-field="true" widget-style="required" />
+		<field name="submitButton" use-when="entity!=null" title="${uiLabelMap.CommonUpdate}">
+			<submit button-type="button" />
+		</field>
+
+		<!-- 添加仓库映射form 元素 -->
+		<field name="facilityId" use-when="entity==null" required-field="true"
+			widget-style="required">
+			<lookup target-form-name="LookupFacility"></lookup>
+			<!-- <drop-down allow-empty="true">
+				<entity-options entity-name="Facility"
+					description="${facilityName}#${facilityId}" key-field-name="facilityId">
+					<entity-order-by field-name="facilityName" />
+				</entity-options>
+			</drop-down> -->
+		</field>
+		<field name="financeTypeId" use-when="entity==null"
+			required-field="true" widget-style="required">
+			<drop-down allow-empty="true">
+				<entity-options description="${description}"
+					entity-name="FinanceType" key-field-name="financeTypeId">
+					<entity-order-by field-name="description" />
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="submitButton" use-when="entity==null" title="${uiLabelMap.CommonCreate}">
+			<submit button-type="button" />
+		</field>
+	</form>
+	<!-- salesPolicyMgr -->
+	<form name="FindSalesPolicy" target="salesPolicyMgr" title=""
+		type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="noConditionFind">
+			<hidden value="Y" />
+		</field>
+		<field name="productSalesPolicyId" title="${uiLabelMap.ProductSalesPolicyId}">
+			<drop-down allow-empty="true">
+				<entity-options description="${description}"
+					entity-name="ProductSalesPolicy" key-field-name="productSalesPolicyId">
+					<entity-order-by field-name="description" />
+				</entity-options>
+			</drop-down>
+		</field>
+
+		<field name="erpPolicyId" title="${uiLabelMap.ERPPolicyId}">
+			<drop-down allow-empty="true">
+				<entity-options description="${erpPolicyName}"
+					entity-name="ErpPolicy" key-field-name="erpPolicyId">
+					<entity-order-by field-name="erpPolicyName" />
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="erpOperatorsId" title="${uiLabelMap.ERPOperatorsId}">
+			<drop-down allow-empty="true">
+				<entity-options description="${erpOperatorsName}"
+					entity-name="ErpOperators" key-field-name="erpOperatorsId">
+					<entity-order-by field-name="erpOperatorsName" />
+				</entity-options>
+			</drop-down>
+		</field>
+
+
+		<field name="searchButton" title="${uiLabelMap.CommonSearch}"
+			widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+	<form name="ListSalesPolicy" target="" title="" list-name="listIt"
+		type="list" paginate-target="salesPolicyMgr" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="parameters.noConditionFind" value="Y" />
+			<service service-name="performFind" result-map="result"
+				result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="parameters" />
+				<field-map field-name="entityName" value="ErpPolicyRelation" />
+				<field-map field-name="orderBy" from-field="parameters.sortField" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+		</actions>
+		<field name="productSalesPolicyId" sort-field="true"
+			title="${uiLabelMap.ProductSalesPolicyId}">
+			<display-entity entity-name="ProductSalesPolicy"
+				description="${description}">
+				<sub-hyperlink target="/catalog/control/EditSalesPolicy"
+					target-type="inter-app" link-style="buttontext" description="[${productSalesPolicyId}]">
+					<parameter param-name="productSalesPolicyId" />
+				</sub-hyperlink>
+			</display-entity>
+		</field>
+		<field name="erpPolicyId" sort-field="true" title="${uiLabelMap.ERPPolicyId}">
+			<display-entity entity-name="ErpPolicy" description="${erpPolicyName}" />
+		</field>
+		<field name="erpOperatorsId" sort-field="true"
+			title="${uiLabelMap.ERPOperatorsId}">
+			<display-entity entity-name="ErpOperators"
+				description="${erpOperatorsName}" />
+		</field>
+		<field name="editLink" title="${uiLabelMap.CommonEdit}"
+			widget-style="buttontext">
+			<hyperlink target="editSalesPolicy" description="${uiLabelMap.CommonEdit}">
+				<parameter param-name="productSalesPolicyId" />
+			</hyperlink>
+		</field>
+		<field name="deleteLink" title="${uiLabelMap.CommonDelete}"
+			widget-style="buttontext">
+			<hyperlink target="deleteSalesPolicy" description="${uiLabelMap.CommonDelete}"
+				also-hidden="false">
+				<parameter param-name="productSalesPolicyId" />
+			</hyperlink>
+		</field>
+	</form>
+	<form name="editSalesPolicy" type="single" target="updateSalesPolicy"
+		title="" default-map-name="entity" default-entity-name="ErpPolicyRelation">
+
+		<!-- 创建销售政策 target -->
+		<alt-target use-when="entity==null" target="createSalesPolicy" />
+		<field name="productSalesPolicyId" use-when="entity==null"
+			title="${uiLabelMap.ProductSalesPolicyId}">
+			<drop-down allow-empty="true">
+				<entity-options description="${description}"
+					entity-name="ProductSalesPolicy" key-field-name="productSalesPolicyId">
+					<entity-order-by field-name="description" />
+				</entity-options>
+			</drop-down>
+		</field>
+		<field use-when="entity!=null" name="productSalesPolicyId"
+			tooltip="${uiLabelMap.CommonNotModifRecreat}">
+			<display-entity entity-name="ProductSalesPolicy" description="${description}" />
+		</field>
+		<field name="erpPolicyId" title="${uiLabelMap.ERPPolicyId}">
+			<drop-down allow-empty="true">
+				<entity-options description="${erpPolicyName}"
+					entity-name="ErpPolicy" key-field-name="erpPolicyId">
+					<entity-order-by field-name="erpPolicyName" />
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="erpOperatorsId" title="${uiLabelMap.ERPOperatorsId}">
+			<drop-down allow-empty="true">
+				<entity-options description="${erpOperatorsName}"
+					entity-name="ErpOperators" key-field-name="erpOperatorsId">
+					<entity-order-by field-name="erpOperatorsName" />
+				</entity-options>
+			</drop-down>
+		</field>
+
+		<field name="submitButton" use-when="entity==null" title="${uiLabelMap.CommonCreate}">
+			<submit button-type="button" />
+		</field>
+		<field name="submitButton" use-when="entity!=null" title="${uiLabelMap.CommonUpdate}">
+			<submit button-type="button" />
+		</field>
+	</form>
+	<!-- operators -->
+	<form name="EditOperators" type="single" target="UpdateOperators"
+		title="" default-map-name="entity" default-entity-name="ErpOperatorsBusiness">
+
+		<!-- create target -->
+		<alt-target use-when="entity==null" target="CreateOperators" />
+		
+		<field name="storeId" title="门店编码" id-name="storeId"><lookup target-form-name="LookupProductStore"></lookup></field>
+		<field name="sequenceId" title="串号"><text/></field>
+		<field name="accessNumber" title="接入号" required-field="true" widget-style="required"><text/></field>
+		<field name="productSalesPolicyId" title="销售类型"
+			event="onChange" id-name="changeId"
+				action="setOptBusiness('getOperatorList', 'productSalesPolicyId', 'changeId', 'targetId', 'operatorList', 'storeId');">
+			<drop-down allow-empty="true">
+				<entity-options description="${policyName}"
+					entity-name="ProductSalesPolicy" key-field-name="productSalesPolicyId">
+					<entity-order-by field-name="productSalesPolicyId"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="erpOptSetValueId" title="套餐值" required-field="true" widget-style="required" id-name="targetId">
+			<drop-down allow-empty="true" >
+				<entity-options description="${erpOptSetValueName}"
+					entity-name="ErpPolicySetValueRelationView" key-field-name="erpOptSetValueId">
+					<entity-constraint name="productSalesPolicyId" value="${entity.productSalesPolicyId}"/>
+					<entity-constraint name="productStoreId" value="${entity.storeId}"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="identityCard" title="身份证"><text/></field>
+		<field name="openingDate" title="开户日期" required-field="true" widget-style="required"><date-time/></field>
+		<field name="openLocation" title="开户">
+			<drop-down allow-empty="true">
+				<option key="S" description="门店" />
+				<option key="C" description="总部" />
+			</drop-down>
+		</field>
+		<field name="memo" title="备注"><text/></field>
+		<field name="keyDate" title="开户日期" use-when="entity==null" ><hidden value="1999/10/11"/></field>
+		<field name="keyDate" title="开户日期" use-when="entity!=null" ><display/></field>
+		<field name="isChecked" title="check" ><display default-value="N"></display> </field>
+		<!-- <field name="isChecked" title="check" ><check > <option key="Y" description=" "/></check> </field> -->
+		
+		<field name="submitButton" use-when="entity==null" title="${uiLabelMap.CommonCreate}">
+			<submit button-type="button" />
+		</field>
+		<field name="submitButton" use-when="entity!=null" title="${uiLabelMap.CommonUpdate}">
+			<submit button-type="button" />
+		</field>
+	</form>
+	<form name="FindOperators" target="FindOperators" title=""
+		type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="openingDate" title="单据日期开始于"><date-time type="timestamp"/> </field>
+		<field name="openingDateEnd" title="结束于"><date-time type="timestamp"/> </field>
+		<field name="isChecked" title="${uiLabelMap.ERPCheck}">
+			<check ><option key="Y" description=" "/></check>
+		</field>
+		<field name="searchButton" title="${uiLabelMap.CommonSearch}"
+			widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+	<form name="UploadOperators" target="UploadOperators" 
+		type="upload" header-row-style="header-row" default-table-style="basic-table">
+		<field name="target" position="1"><hidden value="operator"/> </field>
+		<field name="uploadFile" position="1" title="uploadFile">
+			<file></file>
+		</field>
+		<field name="uploadButton" position="1"  title="upload"
+			widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+	<form name="ListOperators" target="" title="" list-name="listIt"
+		type="list" paginate-target="FindOperators" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="findOperatorsList" result-map="result" result-map-list="listIt">
+            	<field-map field-name="inputFields" from-field="parameters"/>
+            	<field-map field-name="entityName" value="ErpOperatorsBusiness"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+		</actions>
+		<field name="storeId" sort-field="true" title="门店编号"><display /></field>
+		<field name="sequenceId" sort-field="true" title="串号"><display /></field>
+		<field name="accessNumber" sort-field="true" title="接入号"><display /></field>
+		<field name="productSalesPolicyId" title="销售类型">
+			<display-entity entity-name="ProductSalesPolicy" key-field-name="productSalesPolicyId" description="${policyName}"/>
+		</field>
+		<field name="erpOptSetValueId" title="套餐值">
+			<display-entity entity-name="ErpOptSetValue" description="${erpOptSetValueName}" />
+		</field>
+		<field name="identityCard" sort-field="true" title="身份证"><display /></field>
+		<field name="keyDate" sort-field="true" title="开户日期"><display /></field>
+		<field name="openLocation" title="开户" use-when="&quot;${openLocation}&quot;.equals(&quot;S&quot;)">
+			<display description="门店" />
+		</field>
+		<field name="openLocation" title="开户" use-when="&quot;${openLocation}&quot;.equals(&quot;C&quot;)">
+			<display description="总部" />
+		</field>
+		<field name="memo" title="备注"><display /></field>
+        <field name="isChecked" use-when="&quot;${isChecked}&quot;.equals(&quot;Y&quot;)" title="check">
+       		<display description="Y"/>
+        </field>
+        <field name="isChecked" use-when="&quot;${isChecked}&quot;.equals(&quot;N&quot;)" title="check">
+       		<display description="N"/>
+        </field>
+		<field name="editLink" title="${uiLabelMap.CommonEdit}"
+			widget-style="buttontext">
+			<hyperlink target="EditOperators" description="${uiLabelMap.CommonEdit}">
+				<parameter param-name="accessNumber" />
+				<parameter param-name="keyDate" />
+				<parameter param-name="erpOptSetValueId" />
+			</hyperlink>
+		</field>
+	</form>
+	<!-- check -->
+	<form name="UploadCheck" target="UploadCheck" 
+		type="upload" header-row-style="header-row" default-table-style="basic-table">
+		<field name="target" position="1"><hidden value="check"/> </field>
+		<field name="uploadFile" position="1" title="uploadFile">
+			<file></file>
+		</field>
+		<field name="uploadButton" position="1"  title="upload"
+			widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+	<form name="EditCheck" type="single" target="UpdateCheck"
+		title="" default-map-name="entity" default-entity-name="ErpOptBusinessCheck">
+
+		<!-- create target -->
+		<alt-target use-when="entity==null" target="CreateCheck" />
+		
+		<field name="storeId" title="门店编码" id-name="storeId"><lookup target-form-name="LookupProductStore"></lookup></field>
+		<field name="storeId" title="门店编码" use-when="&quot;${entity.isChecked}&quot;.equals(&quot;Y&quot;)"  id-name="storeId"><display/></field>
+		<field name="accessNumber" title="接入号" required-field="true" widget-style="required"><text/></field>
+		<field name="accessNumber" title="接入号" use-when="&quot;${entity.isChecked}&quot;.equals(&quot;Y&quot;)"><display/></field>
+		<field name="productSalesPolicyId" title="销售类型"
+				 event="onChange" id-name="changeId"
+				action="setOptBusiness('getOperatorList', 'productSalesPolicyId', 'changeId', 'targetId', 'operatorList', 'storeId');">
+			<drop-down allow-empty="true">
+				<entity-options description="${policyName}"
+					entity-name="ProductSalesPolicy" key-field-name="productSalesPolicyId">
+					<entity-order-by field-name="productSalesPolicyId"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="productSalesPolicyId" title="销售类型" use-when="&quot;${entity.isChecked}&quot;.equals(&quot;Y&quot;)">
+			<display-entity entity-name="ProductSalesPolicy" key-field-name="productSalesPolicyId" description="${policyName}"/>
+		</field>
+		<field name="erpOptSetValueId" title="套餐值" required-field="true" widget-style="required" id-name="targetId">
+			<drop-down allow-empty="true" >
+				<entity-options description="${erpOptSetValueName}"
+					entity-name="ErpPolicySetValueRelationView" key-field-name="erpOptSetValueId">
+					<entity-constraint name="productSalesPolicyId" value="${entity.productSalesPolicyId}"/>
+					<entity-constraint name="productStoreId" value="${entity.storeId}"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="erpOptSetValueId" title="套餐值" use-when="&quot;${entity.isChecked}&quot;.equals(&quot;Y&quot;)">
+			<display-entity entity-name="ErpOptSetValue" key-field-name="erpOptSetValueId" description="${erpOptSetValueName}"/>
+		</field>
+		<field name="identityCard" title="身份证"><text/></field>
+		<field name="identityCard" title="身份证" use-when="&quot;${entity.isChecked}&quot;.equals(&quot;Y&quot;)"><display/></field>
+		<field name="openingDate" title="开户日期" required-field="true" widget-style="required"><date-time/></field>
+		<field name="openingDate" title="开户日期" use-when="&quot;${entity.isChecked}&quot;.equals(&quot;Y&quot;)"><display/></field>
+		<field name="openLocation" title="开户">
+			<drop-down allow-empty="true">
+				<option key="S" description="门店"/>
+				<option key="C" description="总部"/>
+			</drop-down>
+		</field>
+		<field name="openLocation" title="开户" use-when="&quot;${entity.openLocation}&quot;.equals(&quot;S&quot;) &amp;&amp; &quot;${entity.isChecked}&quot;.equals(&quot;Y&quot;)">
+			<display description="门店"/>
+		</field>
+		<field name="openLocation" title="开户" use-when="&quot;${entity.openLocation}&quot;.equals(&quot;C&quot;) &amp;&amp; &quot;${entity.isChecked}&quot;.equals(&quot;Y&quot;)">
+			<display description="总部"/>
+		</field>
+		<field name="memo" title="备注" ><text/></field>
+		<field name="memo" title="备注" use-when="&quot;${entity.isChecked}&quot;.equals(&quot;Y&quot;)"><display/></field>
+		<field name="keyDate" title="开户日期" use-when="entity==null" ><hidden value="1999/10/11"/></field>
+		<field name="keyDate" title="开户日期" use-when="entity!=null" ><display/></field>
+		<field name="isChecked" title="check" ><display default-value="N"></display> </field>
+		<!--  <field name="isChecked" title="check" ><check > <option key="Y" description=" "/></check> </field>
+		<field name="isChecked" title="check" use-when="&quot;${entity.isChecked}&quot;.equals(&quot;Y&quot;)"><display default-value="Y"/></field>-->
+		
+		<field name="submitButton" use-when="entity==null" title="${uiLabelMap.CommonCreate}">
+			<submit button-type="button" />
+		</field>
+		<field name="submitButton" use-when="entity!=null" title="${uiLabelMap.CommonUpdate}">
+			<submit button-type="button" />
+		</field>
+	</form>
+	<form name="FindCheck" target="FindCheck" title=""
+		type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="storeId" title="门店编码"><lookup target-form-name="LookupProductStore"></lookup></field>
+		<field name="openingDate" title="开户日期"><date-find type="date" /></field>
+		<field name="isChecked" title="${uiLabelMap.ERPCheck}">
+			<check ><option key="Y" description=" "/></check>
+		</field>
+		<field name="searchButton" title="${uiLabelMap.CommonSearch}"
+			widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+	<form name="ListCheck" target="" title="" list-name="listIt"
+		type="list" paginate-target="FindCheck" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="parameters.noConditionFind" value="Y" />
+			<service service-name="performFind" result-map="result"
+				result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="parameters" />
+				<field-map field-name="entityName" value="ErpOptBusinessCheck" />
+				<field-map field-name="orderBy" from-field="parameters.sortField" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+		</actions>
+		<field name="storeId" sort-field="true" title="门店编号"><display /></field>
+		<field name="accessNumber" sort-field="true" title="接入号"><display /></field>
+		<field name="productSalesPolicyId" title="销售类型">
+			<display-entity entity-name="ProductSalesPolicy" description="${policyName}" key-field-name="productSalesPolicyId" />
+		</field>
+		<field name="erpOptSetValueId" title="套餐值">
+			<display-entity entity-name="ErpOptSetValue" description="${erpOptSetValueName}" />
+		</field>
+		<field name="identityCard" sort-field="true" title="身份证"><display /></field>
+		<field name="keyDate" sort-field="true" title="开户日期"><display /></field>
+		<field name="openLocation" title="开户" use-when="&quot;${openLocation}&quot;.equals(&quot;S&quot;)">
+			<display description="门店" />
+		</field>
+		<field name="openLocation" title="开户" use-when="&quot;${openLocation}&quot;.equals(&quot;C&quot;)">
+			<display description="总部" />
+		</field>
+		<field name="memo" title="备注"><display /></field>
+        <field name="isChecked" use-when="&quot;${isChecked}&quot;.equals(&quot;Y&quot;)" title="check">
+       		<display description="Y"/>
+        </field>
+        <field name="isChecked" use-when="&quot;${isChecked}&quot;.equals(&quot;N&quot;)" title="check">
+       		<display description="N"/>
+        </field>
+		<field name="editLink" title="${uiLabelMap.CommonEdit}"
+			widget-style="buttontext">
+			<hyperlink target="EditCheck" description="${uiLabelMap.CommonEdit}">
+				<parameter param-name="accessNumber" />
+				<parameter param-name="keyDate" />
+				<parameter param-name="erpOptSetValueId" />
+			</hyperlink>
+		</field>
+	</form>
+	<!-- EditSalesOptBusiness -->
+	<form name="EditSalesOptBusiness" type="single" target="UpdateSalesOptBusiness"
+		title="" default-map-name="entity" default-entity-name="ErpSalesOptBusiness" >
+		
+		<field name="storeId" title="门店编码"><display></display> </field>
+		<field name="docId" title="销售单据号"><display></display> </field>
+		<field name="lineNo" title="lineNo"><display></display> </field>
+		<field name="docDate" title="单据日期"><display></display> </field>
+		<field name="productId" title="商品名称"><display></display> </field>
+		<field name="productName" title="商品名称"><display></display> </field>
+		<field name="sequenceId" title="串号"><display></display> </field>
+		<field name="productSalesPolicyId" title="销售类型" id-name="changeId">
+			<display-entity entity-name="ProductSalesPolicy" description="${policyName}"></display-entity>
+		</field>
+		<field name="erpOptSetValueId" title="套餐值" required-field="true" widget-style="required" id-name="targetId">
+			<drop-down >
+				<entity-options description="${erpOptSetValueName}"
+					entity-name="ErpPolicySetValueRelationView" key-field-name="erpOptSetValueId">
+					<entity-constraint name="productSalesPolicyId" value="${entity.productSalesPolicyId}"/>
+					<entity-constraint name="productStoreId" value="${entity.storeId}"/>
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="accessNumber" title="接入号" required-field="true" widget-style="required"><text/></field>
+		<field name="identityCard" title="身份证"><text/></field>
+		<field name="openingDate" title="开户日期" required-field="true" widget-style="required"><date-time/></field>
+		<field name="openLocation" title="开户" required-field="true" widget-style="required">
+			<drop-down allow-empty="true">
+				<option key="S" description="门店" />
+				<option key="C" description="总部" />
+			</drop-down>
+		</field>
+		<field name="memo" title="备注"><text/></field>
+		<field name="keyDate" title="开户日期" ><display/></field>
+		<field name="isChecked" title="check" ><display default-value="N"></display> </field>
+		<!-- <field name="isChecked" title="check" ><check > <option key="Y" description=" "/></check> </field> -->
+		
+		<field name="submitButton" use-when="entity!=null" title="${uiLabelMap.CommonUpdate}">
+			<submit button-type="button" />
+		</field>
+	</form>
+	<form name="FindSalesOptBusiness" target="FindSalesOptBusiness" title=""
+		type="single" header-row-style="header-row" default-table-style="basic-table">
+		<field name="openingDate" title="单据日期开始于"><date-time type="timestamp"/> </field>
+		<field name="openingDateEnd" title="结束于"><date-time type="timestamp"/> </field>
+		<field name="isChecked" title="${uiLabelMap.ERPCheck}">
+			<check ><option key="Y" description=" "/></check>
+		</field>
+		<field name="searchButton" title="${uiLabelMap.CommonSearch}"
+			widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+	<form name="ListSalesOptBusiness" target="" title="" list-name="listIt"
+		type="list" paginate-target="FindSalesOptBusiness" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="findOperatorsList" result-map="result" result-map-list="listIt">
+            	<field-map field-name="inputFields" from-field="parameters"/>
+            	<field-map field-name="entityName" value="ErpSalesOptBusiness"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+		</actions>
+		<field name="storeId" sort-field="true" title="门店编号"><display /></field>
+		<field name="docId" ><hidden /></field>
+		<field name="docId" sort-field="true" title="销售单据号"><display /></field>
+		<field name="docDate" sort-field="true" title="单据日期"><display /></field>
+		<field name="productName" sort-field="true" title="商品名称">
+			<display/>
+		</field>
+		<field name="sequenceId" sort-field="true" title="串号"><display /></field>
+		<field name="productSalesPolicyId" title="销售类型">
+			<display-entity entity-name="ProductSalesPolicy" description="${policyName}" key-field-name="productSalesPolicyId" />
+		</field>
+		<field name="erpOptSetValueId" title="套餐值">
+			<display-entity entity-name="ErpOptSetValue" description="${erpOptSetValueName}" />
+		</field>
+		<field name="accessNumber" sort-field="true" title="接入号"><display /></field>
+		<field name="identityCard" sort-field="true" title="身份证"><display /></field>
+		<field name="keyDate" sort-field="true" title="开户日期"><display /></field>
+		<field name="openLocation" title="开户" use-when="&quot;${openLocation}&quot;.equals(&quot;S&quot;)">
+			<display description="门店" />
+		</field>
+		<field name="openLocation" title="开户" use-when="&quot;${openLocation}&quot;.equals(&quot;C&quot;)">
+			<display description="总部" />
+		</field>
+		<field name="memo" title="备注"><display /></field>
+        <field name="isChecked" use-when="&quot;${isChecked}&quot;.equals(&quot;Y&quot;)" title="check">
+       		<display description="Y"/>
+        </field>
+        <field name="isChecked" use-when="&quot;${isChecked}&quot;.equals(&quot;N&quot;)" title="check">
+       		<display description="N"/>
+        </field>
+		<field name="editLink" title="${uiLabelMap.CommonEdit}"
+			widget-style="buttontext">
+			<hyperlink target="EditSalesOptBusiness" description="${uiLabelMap.CommonEdit}">
+				<parameter param-name="docId" />
+				<parameter param-name="lineNo" />
+			</hyperlink>
+		</field>
+	</form>
+</forms>

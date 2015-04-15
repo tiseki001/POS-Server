@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+        
+	 <form name="createMenuPosC" type="single" title="Add a new MenuPosC" target="createMenuPosC"  list-name="parentMenuPosCList">
+       	<field name="meunId" ><display/></field>
+        <field name="parentMeunId">
+            <drop-down allow-empty="true">
+                <list-options list-name="parentMenuPosCList" key-name="meunId" description="${meunName}"/>
+            </drop-down>
+        </field>
+        <field name="meunName" title="菜单名称" required-field="true"><text/></field>
+        <field name="meunlevel" title="菜单等级" ><text/></field>
+        <field name="meunsort" title="排序值" ><text/></field>
+        <field name="meunPic" ><text/></field>
+        <field name="meunShortcuts" ><text/></field>
+        <field name="meunDll" ><text/></field>
+        <field name="meunClass" ><text/></field>
+        <field name="meunMethod" ><text/></field>
+        <field name="save" title="${uiLabelMap.CommonSave}"><submit/></field>
+    </form>
+    <form name="FindMenuPosCList" type="single" target="FindMenuPosC"
+        header-row-style="header-row" default-table-style="basic-table hover-bar">
+        <field name="meunId" title="${uiLabelMap.CommonId}"><text-find size="20" maxlength="255"></text-find></field>
+        <field name="meunName" title="名称"><text-find size="25"></text-find></field>
+        <field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit find"><submit/></field>
+    </form>
+	<form name="ListMenuPosC" type="list" list-name="listIt" paginate-target="FindMenuPosC" target="addMenuPosC"
+        default-title-style="tableheadtext" default-widget-style="tabletext"
+        odd-row-style="alternate-row" default-table-style="basic-table hover-bar"
+        default-tooltip-style="tabletext">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="MenuPosC"/>
+                <field-map field-name="orderBy" value="meunsort"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="meunId" title="菜单标识"><display/></field>
+        <field name="meunName" title="菜单名称"><display/></field>
+        <field name="parentMeunId"><display-entity entity-name="MenuPosC" key-field-name="meunId" description="${meunName}"/></field>
+        <field name="meunlevel" title="菜单等级"><display/></field>
+        <field name="meunsort" title="排序值"><display/></field>
+        <field name="meunPic" ><hidden/></field>
+        <field name="meunShortcuts" ><hidden/></field>
+        <field name="meunDll" ><hidden/></field>
+        <field name="meunClass" ><hidden/></field>
+        <field name="meunMethod" ><hidden/></field>
+        <field name="detail" title="${uiLabelMap.CommonDetail}" ><submit/></field>
+        <field name="deleteLink" title="${uiLabelMap.CommonEmptyHeader}" widget-style="buttontext">
+            <hyperlink target="deleteMenuPosC" description="${uiLabelMap.CommonDelete}" also-hidden="false" confirmation-message="do you delete" >
+                <parameter param-name="meunId"/>
+            </hyperlink>
+        </field>
+    </form>
+   
+	
+</forms>

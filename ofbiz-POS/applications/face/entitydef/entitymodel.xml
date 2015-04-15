@@ -1,0 +1,1392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contribuErpIFIncomingPaymentLinetor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<!-- ========================================================= -->
+	<!-- ======================== Defaults ======================= -->
+	<!-- ========================================================= -->
+	<title>Entity of an Open For Business Project Component</title>
+	<description>None</description>
+	<version>1.0</version>
+
+	<!-- ========================================================= -->
+	<!-- ======================== Data Model ===================== -->
+	<!-- The modules in this file are as follows: -->
+	<!-- ========================================================= -->
+	<!-- org.ofbiz.query -->
+	<!--org.ofbiz.competing -->
+	<!-- ========================================================= -->
+
+	<!-- 遵照指令完全执行的入库单Header -->
+	<view-entity entity-name="ErpIFGoodsReceiptByCommandHeader"
+		package-name="org.ofbiz.face" title="GoodsReceiptByCommandHeader View">
+		<member-entity entity-alias="Header" entity-name="ReceiveDoc" />
+		<member-entity entity-alias="Command" entity-name="ReceiveCommand" />
+		<alias entity-alias="Header" name="entityID" field="docId" />
+		<alias entity-alias="Command" name="baseEntry" />
+		<alias entity-alias="Command" name="extDocNo" />
+		<alias entity-alias="Header" name="movementTypeId" />
+		<alias entity-alias="Header" name="docDate" />
+		<alias entity-alias="Header" name="productStoreId" />
+		<alias entity-alias="Header" name="memo" />
+		<alias entity-alias="Header" name="partyId" />
+		<alias entity-alias="Header" name="lastUpdatedStamp" />
+
+		<view-link entity-alias="Header" rel-entity-alias="Command">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Header" field-name="docStatus"
+					operator="equals" value="1" />
+				<!-- <condition-expr entity-alias="Command" field-name="status" operator="equals" 
+					value="2" /> -->
+				<condition-list combine="or">
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="IO" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="IG" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="IY" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="IZ" />
+				</condition-list>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+	<!-- 遵照指令完全执行的入库单Line -->
+	<view-entity entity-name="ErpIFGoodsReceiptByCommandLine"
+		package-name="org.ofbiz.face" title="GoodsReceiptByCommandLine View">
+		<member-entity entity-alias="Header" entity-name="ReceiveDoc" />
+		<member-entity entity-alias="Details" entity-name="ReceiveItem" />
+		<member-entity entity-alias="Command" entity-name="ReceiveCommand" />
+		<member-entity entity-alias="Itemcommand" entity-name="ReceiveItemcommand" />
+		<alias entity-alias="Details" name="entityID" field="docId" />
+		<alias entity-alias="Command" name="baseEntry" />
+		<alias entity-alias="Itemcommand" name="baseLineNo" field="lineNo" />
+		<alias entity-alias="Itemcommand" name="lineNo" field="baseLineNo" />
+		<alias entity-alias="Details" name="productId" />
+		<alias entity-alias="Details" name="sequenceId" />
+		<alias entity-alias="Details" name="quantity" />
+		<alias entity-alias="Details" name="facilityId" />
+		<alias entity-alias="Details" name="memo" />
+		<alias entity-alias="Details" name="lastUpdatedStamp" />
+		<view-link entity-alias="Details" rel-entity-alias="Header">
+			<key-map field-name="docId" />
+		</view-link>
+		<view-link entity-alias="Header" rel-entity-alias="Command">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+		<view-link entity-alias="Details" rel-entity-alias="Itemcommand">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+			<key-map field-name="baseLineNo" rel-field-name="lineNo" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Header" field-name="docStatus"
+					operator="equals" value="1" />
+				<!-- <condition-expr entity-alias="Command" field-name="status" operator="equals" 
+					value="2" /> -->
+				<condition-list combine="or">
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="IO" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="IG" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="IY" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="IZ" />
+				</condition-list>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+	<!-- 遵照指令完全执行的出库单Header -->
+	<view-entity entity-name="ErpIFGoodsIssueByCommandHeader"
+		package-name="org.ofbiz.face" title="GoodsIssueByCommandHeader View">
+		<member-entity entity-alias="Header" entity-name="DeliveryDoc" />
+		<member-entity entity-alias="Command" entity-name="DeliveryCommand" />
+		<alias entity-alias="Header" name="entityID" field="docId" />
+		<alias entity-alias="Command" name="baseEntry" />
+		<alias entity-alias="Command" name="extDocNo" />
+		<alias entity-alias="Header" name="movementTypeId" />
+		<alias entity-alias="Header" name="docDate" />
+		<alias entity-alias="Header" name="productStoreId" />
+		<alias entity-alias="Header" name="lastUpdatedStamp" />
+		<alias entity-alias="Header" name="memo" />
+		<alias entity-alias="Header" name="partyId" />
+
+		<view-link entity-alias="Header" rel-entity-alias="Command">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Header" field-name="docStatus"
+					operator="equals" value="1" />
+				<!-- <condition-expr entity-alias="Command" field-name="status" operator="equals" 
+					value="2" /> -->
+				<condition-list combine="or">
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="OO" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="OG" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="OY" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="OZ" />
+				</condition-list>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+	<!-- 遵照指令完全执行的出库单Line -->
+	<view-entity entity-name="ErpIFGoodsIssueByCommandLine"
+		package-name="org.ofbiz.face" title="GoodsIssueByCommandLine View">
+		<member-entity entity-alias="Header" entity-name="DeliveryDoc" />
+		<member-entity entity-alias="Details" entity-name="DeliveryItem" />
+		<member-entity entity-alias="Command" entity-name="DeliveryCommand" />
+		<member-entity entity-alias="Itemcommand" entity-name="DeliveryItemcommand" />
+		<alias entity-alias="Details" name="entityID" field="docId" />
+		<alias entity-alias="Command" name="baseEntry" />
+		<alias entity-alias="Itemcommand" name="baseLineNo" field="lineNo" />
+		<alias entity-alias="Itemcommand" name="lineNo" field="baseLineNo" />
+		<alias entity-alias="Details" name="productId" />
+		<alias entity-alias="Details" name="sequenceId" />
+		<alias entity-alias="Details" name="quantity" />
+		<alias entity-alias="Details" name="facilityId" />
+		<alias entity-alias="Details" name="memo" />
+		<alias entity-alias="Details" name="lastUpdatedStamp" />
+		<view-link entity-alias="Details" rel-entity-alias="Header">
+			<key-map field-name="docId" />
+		</view-link>
+		<view-link entity-alias="Header" rel-entity-alias="Command">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+		<view-link entity-alias="Details" rel-entity-alias="Itemcommand">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+			<key-map field-name="baseLineNo" rel-field-name="lineNo" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Header" field-name="docStatus"
+					operator="equals" value="1" />
+				<!-- <condition-expr entity-alias="Command" field-name="status" operator="equals" 
+					value="2" /> -->
+				<condition-list combine="or">
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="OO" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="OG" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="OY" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="OZ" />
+				</condition-list>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+	<!-- 已清的销售订单Header -->
+	<view-entity entity-name="ErpIFSalesOrderHeader"
+		package-name="org.ofbiz.face" title="SalesOrderHeader View">
+		<member-entity entity-alias="Header" entity-name="SaleOrderHeader" />
+		<alias entity-alias="Header" name="entityID" field="docId" />
+		<alias entity-alias="Header" name="orderType" field="docId" />
+		<alias entity-alias="Header" name="extDocNo" />
+		<alias entity-alias="Header" name="baseEntry" />
+		<alias entity-alias="Header" name="createDocDate" />
+		<alias entity-alias="Header" name="storeId" />
+		<alias entity-alias="Header" name="rebateAmount" />
+		<alias entity-alias="Header" name="deliveryStoreId" />
+		<alias entity-alias="Header" name="Address" field="logisticsAddress" />
+		<alias entity-alias="Header" name="collectionStoreId" />
+		<alias entity-alias="Header" name="memo" />
+		<alias entity-alias="Header" name="lastUpdatedStamp" />
+		<alias entity-alias="Header" name="partyId" />
+
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Header" field-name="warehouseStatus"
+					operator="equals" value="2" />
+				<condition-list combine="or">
+					<condition-expr entity-alias="Header" field-name="docStatus"
+						operator="equals" value="1" />
+					<condition-expr entity-alias="Header" field-name="docStatus"
+						operator="equals" value="3" />
+				</condition-list>
+				<condition-list combine="or">
+					<condition-expr entity-alias="Header" field-name="fundStatus"
+						operator="equals" value="2" />
+					<condition-expr entity-alias="Header" field-name="deliveryStoreId"
+						operator="equals" value="99999999" />
+				</condition-list>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+	<!-- 已清的退货订单Header -->
+	<view-entity entity-name="ErpIFReturnOrderHeader"
+		package-name="org.ofbiz.face" title="ReturnOrderHeader View">
+		<member-entity entity-alias="Header" entity-name="ReturnOrderHeader" />
+		<alias entity-alias="Header" name="entityID" field="docId" />
+		<alias entity-alias="Header" name="orderType" field="docId" />
+		<alias entity-alias="Header" name="extDocNo" />
+		<alias entity-alias="Header" name="baseEntry" />
+		<alias entity-alias="Header" name="createDocDate" />
+		<alias entity-alias="Header" name="storeId" />
+		<alias entity-alias="Header" name="rebateAmount" />
+		<alias entity-alias="Header" name="deliveryStoreId" field="receiveStoreId" />
+		<alias entity-alias="Header" name="Address" field="attrName1" />
+		<alias entity-alias="Header" name="collectionStoreId" field="refundStoreId" />
+		<alias entity-alias="Header" name="memo" />
+		<alias entity-alias="Header" name="lastUpdatedStamp" />
+		<alias entity-alias="Header" name="partyId" />
+
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Header" field-name="docStatus"
+					operator="equals" value="1" />
+				<condition-expr entity-alias="Header" field-name="refundStatus"
+					operator="equals" value="2" />
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+	<!-- 销售收款单Line -->
+	<view-entity entity-name="ErpIFIncomingPaymentLine"
+		package-name="org.ofbiz.face" title="IncomingPaymentLine View">
+		<member-entity entity-alias="Header" entity-name="SaleOrderHeader" />
+		<member-entity entity-alias="Details" entity-name="CollectionOrderDtl" />
+		<member-entity entity-alias="Payment" entity-name="CollectionOrderHeader" />
+		<alias entity-alias="Payment" name="entityID" field="baseEntry" />
+		<alias entity-alias="Payment" name="storeId" />
+		<alias entity-alias="Payment" name="createDocDate" />
+		<alias entity-alias="Payment" name="postingDate" />
+		<alias entity-alias="Details" name="docId" />
+		<alias entity-alias="Details" name="lineNo" />
+		<alias entity-alias="Details" name="type" />
+		<alias entity-alias="Details" name="amount" />
+		<alias entity-alias="Details" name="code" />
+		<alias entity-alias="Details" name="serialNo" />
+		<alias entity-alias="Details" name="extNo" />
+		<alias entity-alias="Details" name="memo" />
+		<alias entity-alias="Details" name="lastUpdatedStamp" />
+		<view-link entity-alias="Details" rel-entity-alias="Payment">
+			<key-map field-name="docId" />
+		</view-link>
+		<view-link entity-alias="Payment" rel-entity-alias="Header">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Header" field-name="warehouseStatus"
+					operator="equals" value="2" />
+				<condition-expr entity-alias="Details" field-name="style"
+					operator="equals" value="1" />
+				<condition-list combine="or">
+					<condition-expr entity-alias="Header" field-name="docStatus"
+						operator="equals" value="1" />
+					<condition-expr entity-alias="Header" field-name="docStatus"
+						operator="equals" value="3" />
+				</condition-list>
+				<condition-list combine="or">
+					<condition-expr entity-alias="Header" field-name="fundStatus"
+						operator="equals" value="2" />
+					<condition-expr entity-alias="Header" field-name="deliveryStoreId"
+						operator="equals" value="99999999" />
+				</condition-list>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+	<!-- 退货退款单Line -->
+	<view-entity entity-name="ErpIFOutgoingPaymentLine"
+		package-name="org.ofbiz.face" title="OutgoingPaymentLine View">
+		<member-entity entity-alias="Header" entity-name="ReturnOrderHeader" />
+		<member-entity entity-alias="Details" entity-name="RefundOrderDtl" />
+		<member-entity entity-alias="Payment" entity-name="RefundOrderHeader" />
+		<alias entity-alias="Payment" name="entityID" field="baseEntry" />
+		<alias entity-alias="Payment" name="storeId" />
+		<alias entity-alias="Payment" name="createDocDate" />
+		<alias entity-alias="Payment" name="postingDate" />
+		<alias entity-alias="Details" name="docId" />
+		<alias entity-alias="Details" name="lineNo" />
+		<alias entity-alias="Details" name="type" />
+		<alias entity-alias="Details" name="amount" />
+		<alias entity-alias="Details" name="code" />
+		<alias entity-alias="Details" name="serialNo" />
+		<alias entity-alias="Details" name="extNo" />
+		<alias entity-alias="Details" name="memo" />
+		<alias entity-alias="Details" name="lastUpdatedStamp" />
+		<view-link entity-alias="Details" rel-entity-alias="Payment">
+			<key-map field-name="docId" />
+		</view-link>
+		<view-link entity-alias="Payment" rel-entity-alias="Header">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Header" field-name="docStatus"
+					operator="equals" value="1" />
+				<condition-expr entity-alias="Header" field-name="refundStatus"
+					operator="equals" value="2" />
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+	<!-- 销售出库单Line -->
+	<view-entity entity-name="ErpIFDeliveryLine" package-name="org.ofbiz.face"
+		title="DeliveryLine View">
+		<member-entity entity-alias="Header" entity-name="SaleOrderHeader" />
+		<member-entity entity-alias="SoDetails" entity-name="SaleOrderDtl" />
+		<member-entity entity-alias="Delivery" entity-name="DeliveryDoc" />
+		<member-entity entity-alias="Details" entity-name="DeliveryItem" />
+		<member-entity entity-alias="PayDetails" entity-name="ErpIFIncomingPaymentLine" />
+		<member-entity entity-alias="EP" entity-name="ErpPolicyRelation" />
+		<member-entity entity-alias="PSP" entity-name="ProductSalesPolicy" />
+		<alias entity-alias="Delivery" name="entityID" field="baseEntry" />
+		<alias entity-alias="Delivery" name="productStoreId" />
+		<alias entity-alias="Delivery" name="postingDate" />
+		<alias entity-alias="Delivery" name="docId" />
+		<alias entity-alias="Details" name="lineNo" />
+		<alias entity-alias="Details" name="productId" />
+		<alias entity-alias="Details" name="sequenceId" />
+		<alias entity-alias="Details" name="quantity" />
+		<alias entity-alias="SoDetails" name="unitPrice">
+			<complex-alias operator="/">
+				<complex-alias-field entity-alias="SoDetails"
+					field="rebateAmount" />
+				<complex-alias-field entity-alias="Details"
+					field="quantity" />
+			</complex-alias>
+		</alias>
+		<alias entity-alias="Details" name="facilityId" />
+		<alias entity-alias="Details" name="memo" />
+		<alias entity-alias="Details" name="lastUpdatedStamp" />
+		<alias entity-alias="SoDetails" name="rebatePrice" />
+		<alias entity-alias="SoDetails" name="rebateAmount" />
+		<alias entity-alias="SoDetails" name="productSalesPolicyId" />
+		<alias entity-alias="EP" name="erpPolicyId" />
+		<alias entity-alias="EP" name="erpOperatorsId" />
+		<alias entity-alias="PSP" name="policyName" />
+		<alias entity-alias="PayDetails" name="amount" />
+		<view-link entity-alias="SoDetails" rel-entity-alias="Details">
+			<key-map field-name="docId" rel-field-name="baseEntry" />
+			<key-map field-name="lineNo" rel-field-name="baseLineNo" />
+		</view-link>
+		<view-link entity-alias="Details" rel-entity-alias="Delivery">
+			<key-map field-name="docId" rel-field-name="docId" />
+		</view-link>
+		<view-link entity-alias="Delivery" rel-entity-alias="Header">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+		<view-link entity-alias="Details" rel-entity-alias="PayDetails"
+			rel-optional="true">
+			<key-map field-name="baseEntry" rel-field-name="entityID" />
+			<key-map field-name="sequenceId" rel-field-name="serialNo" />
+			<entity-condition>
+				<condition-list combine="or">
+					<condition-expr entity-alias="PayDetails"
+						field-name="type" operator="equals" value="06" />
+					<condition-expr entity-alias="PayDetails"
+						field-name="type" operator="equals" value="07" />
+					<condition-expr entity-alias="PayDetails"
+						field-name="type" operator="equals" value="08" />
+					<condition-expr entity-alias="PayDetails"
+						field-name="type" operator="equals" value="09" />
+					<condition-expr entity-alias="PayDetails"
+						field-name="type" operator="equals" value="18" />
+					<condition-expr entity-alias="PayDetails"
+						field-name="type" operator="equals" value="" />
+				</condition-list>
+			</entity-condition>
+		</view-link>
+		<view-link entity-alias="SoDetails" rel-entity-alias="EP"
+			rel-optional="true">
+			<key-map field-name="productSalesPolicyId" rel-field-name="productSalesPolicyId" />
+		</view-link>
+		<view-link entity-alias="SoDetails" rel-entity-alias="PSP"
+			rel-optional="true">
+			<key-map field-name="productSalesPolicyId" rel-field-name="productSalesPolicyId" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Header" field-name="warehouseStatus"
+					operator="equals" value="2" />
+				<condition-list combine="or">
+					<condition-expr entity-alias="Header" field-name="docStatus"
+						operator="equals" value="1" />
+					<condition-expr entity-alias="Header" field-name="docStatus"
+						operator="equals" value="3" />
+				</condition-list>
+				<condition-list combine="or">
+					<condition-expr entity-alias="Header" field-name="fundStatus"
+						operator="equals" value="2" />
+					<condition-expr entity-alias="Header" field-name="deliveryStoreId"
+						operator="equals" value="99999999" />
+				</condition-list>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+	<!-- 退货入库单Line -->
+	<view-entity entity-name="ErpIFRetrnGoodsReceiptLine"
+		package-name="org.ofbiz.face" title="RetrnGoodsReceiptLine View">
+		<member-entity entity-alias="Header" entity-name="ReturnOrderHeader" />
+		<member-entity entity-alias="ReDetails" entity-name="ReturnOrderDtl" />
+		<member-entity entity-alias="SoDetails" entity-name="SaleOrderDtl" />
+		<member-entity entity-alias="Receive" entity-name="ReceiveDoc" />
+		<member-entity entity-alias="Details" entity-name="ReceiveItem" />
+		<member-entity entity-alias="PayDetails" entity-name="ErpIFOutgoingPaymentLine" />
+		<member-entity entity-alias="EP" entity-name="ErpPolicyRelation" />
+		<member-entity entity-alias="PSP" entity-name="ProductSalesPolicy" />
+		<alias entity-alias="Receive" name="entityID" field="baseEntry" />
+		<alias entity-alias="Receive" name="productStoreId" />
+		<alias entity-alias="Receive" name="postingDate" />
+		<alias entity-alias="Receive" name="docId" />
+		<alias entity-alias="Details" name="lineNo" />
+		<alias entity-alias="Details" name="productId" />
+		<alias entity-alias="Details" name="sequenceId" />
+		<alias entity-alias="Details" name="quantity" />
+		<alias entity-alias="Details" name="lastUpdatedStamp" />
+		<alias entity-alias="ReDetails" name="unitPrice">
+			<complex-alias operator="/">
+				<complex-alias-field entity-alias="ReDetails"
+					field="rebateAmount" />
+				<complex-alias-field entity-alias="Details"
+					field="quantity" />
+			</complex-alias>
+		</alias>
+		<alias entity-alias="ReDetails" name="rebatePrice" />
+		<alias entity-alias="ReDetails" name="rebateAmount" />
+		<alias entity-alias="ReDetails" name="isMainProduct" />
+		<alias entity-alias="SoDetails" name="saleAmount" field="rebateAmount" />
+		<alias entity-alias="ReDetails" name="depreciation">
+			<complex-alias operator="-">
+				<complex-alias-field entity-alias="SoDetails"
+					field="rebateAmount" default-value="0" />
+				<complex-alias-field entity-alias="ReDetails"
+					field="rebateAmount" default-value="0" />
+			</complex-alias>
+		</alias>
+		<alias entity-alias="ReDetails" name="productSalesPolicyId" />
+		<alias entity-alias="EP" name="erpPolicyId" />
+		<alias entity-alias="EP" name="erpOperatorsId" />
+		<alias entity-alias="PSP" name="policyName" />
+		<alias entity-alias="Details" name="facilityId" />
+		<alias entity-alias="Details" name="memo" />
+		<alias entity-alias="PayDetails" name="amount" />
+		<view-link entity-alias="Details" rel-entity-alias="ReDetails">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+			<key-map field-name="baseLineNo" rel-field-name="lineNo" />
+		</view-link>
+		<view-link entity-alias="ReDetails" rel-entity-alias="SoDetails"
+			rel-optional="true">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+			<key-map field-name="lineNoBaseEntry" rel-field-name="lineNo" />
+		</view-link>
+		<view-link entity-alias="Details" rel-entity-alias="Receive">
+			<key-map field-name="docId" rel-field-name="docId" />
+		</view-link>
+		<view-link entity-alias="Receive" rel-entity-alias="Header">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+		<view-link entity-alias="Details" rel-entity-alias="PayDetails"
+			rel-optional="true">
+			<key-map field-name="baseEntry" rel-field-name="entityID" />
+			<key-map field-name="sequenceId" rel-field-name="serialNo" />
+			<entity-condition>
+				<condition-list combine="or">
+					<condition-expr entity-alias="PayDetails"
+						field-name="type" operator="equals" value="06" />
+					<condition-expr entity-alias="PayDetails"
+						field-name="type" operator="equals" value="07" />
+					<condition-expr entity-alias="PayDetails"
+						field-name="type" operator="equals" value="08" />
+					<condition-expr entity-alias="PayDetails"
+						field-name="type" operator="equals" value="09" />
+					<condition-expr entity-alias="PayDetails"
+						field-name="type" operator="equals" value="18" />
+					<condition-expr entity-alias="PayDetails"
+						field-name="type" operator="equals" value="" />
+				</condition-list>
+			</entity-condition>
+		</view-link>
+		<view-link entity-alias="ReDetails" rel-entity-alias="EP"
+			rel-optional="true">
+			<key-map field-name="productSalesPolicyId" rel-field-name="productSalesPolicyId" />
+		</view-link>
+		<view-link entity-alias="SoDetails" rel-entity-alias="PSP"
+			rel-optional="true">
+			<key-map field-name="productSalesPolicyId" rel-field-name="productSalesPolicyId" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Header" field-name="docStatus"
+					operator="equals" value="1" />
+				<condition-expr entity-alias="Header" field-name="refundStatus"
+					operator="equals" value="2" />
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+
+	<!-- ERP接口log -->
+	<entity entity-name="ErpFaceLog" package-name="org.ofbiz.face.log"
+		title="ERP face log">
+		<field name="logId" type="id"></field>
+		<!-- 接口类型i -->
+		<field name="model" type="name"></field>
+		<!-- 接口名i -->
+		<field name="event" type="name"></field>
+		<!-- 字段IDi -->
+		<field name="recordId" type="name"></field>
+		<!-- 执行结果i：Y成功N失败 -->
+		<field name="result" type="indicator"></field>
+		<!-- 状态i：Y有效N无效 -->
+		<field name="state" type="indicator"></field>
+		<!-- 消息 -->
+		<field name="resultInfo" type="long-description"></field>
+		<prim-key field="logId" />
+	</entity>
+	<!-- ERP仓库Mapping -->
+	<entity entity-name="ErpFacilityMap" package-name="org.ofbiz.face"
+		title="ERP Facility map">
+		<!-- 仓库ID -->
+		<field name="facilityId" type="id"></field>
+		<!-- ERP仓库ID -->
+		<field name="erpFacilityId" type="name"></field>
+		<!-- 财务类型 -->
+		<field name="financeTypeId" type="id"></field>
+
+		<prim-key field="facilityId" />
+		<prim-key field="financeTypeId" />
+
+
+		<relation type="one" fk-name="ERP_FAC_TYPE_FINA"
+			rel-entity-name="FinanceType">
+			<key-map field-name="financeTypeId" />
+		</relation>
+		<relation type="one" fk-name="ERP_FAC_TYPE_FACI"
+			rel-entity-name="Facility">
+			<key-map field-name="facilityId" />
+		</relation>
+	</entity>
+	<!-- 财务类型 -->
+	<entity entity-name="FinanceType" package-name="org.ofbiz.product"
+		title="Finance Type">
+		<field name="financeTypeId" type="id"></field>
+		<field name="description" type="name"></field>
+		<prim-key field="financeTypeId" />
+	</entity>
+
+	<!-- 接口同步时间 -->
+	<entity entity-name="FaceSyncTime" package-name="org.ofbiz.face"
+		title="Finance Type">
+		<field name="model" type="id"></field>
+		<field name="event" type="name"></field>
+		<field name="lastTime" type="date-time"></field>
+		<prim-key field="model" />
+		<prim-key field="event" />
+	</entity>
+
+	<!-- ERP运营商 -->
+	<entity entity-name="ErpOperators" package-name="org.ofbiz.face"
+		title="Erp Operators">
+		<field name="erpOperatorsId" type="id"></field>
+		<field name="erpOperatorsName" type="name"></field>
+		<prim-key field="erpOperatorsId" />
+	</entity>
+
+	<!-- ERP销售-运营商业务 -->
+	<entity entity-name="ErpSalesOptBusiness" package-name="org.ofbiz.face"
+		title="Erp Sales Operators Business">
+		<field name="storeId" type="id"></field>
+		<field name="docId" type="d-id"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="docDate" type="date-time"></field>
+		<field name="productId" type="id"></field>
+		<field name="productName" type="name"></field>
+		<field name="sequenceId" type="id"></field>
+		<field name="accessNumber" type="id"></field>
+		<field name="productSalesPolicyId" type="id"></field>
+		<field name="erpOptSetValueId" type="id"></field>
+		<field name="identityCard" type="name"></field>
+		<field name="openingDate" type="date-time"></field>
+		<field name="keyDate" type="id"></field>
+		<field name="openLocation" type="indicator"></field>
+		<field name="memo" type="description"></field>
+		<field name="isChecked" type="indicator"></field>
+
+		<prim-key field="docId" />
+		<prim-key field="lineNo" />
+
+		<relation type="one" fk-name="ERP_SOB_PID" rel-entity-name="ErpOptSetValue">
+			<key-map field-name="erpOptSetValueId" />
+		</relation>
+	</entity>
+	<!-- 销售视图 -->
+	<view-entity entity-name="SaleOrderHeaderAndDtl"
+		package-name="org.ofbiz.face" title="Erp Operators Business View">
+		<member-entity entity-alias="SOH" entity-name="SaleOrderHeader" />
+		<member-entity entity-alias="SOD" entity-name="SaleOrderDtl" />
+		<alias entity-alias="SOH" name="storeId" />
+		<alias entity-alias="SOH" name="postingDate" />
+		<alias entity-alias="SOD" name="docId" />
+		<alias entity-alias="SOD" name="lineNo" />
+		<alias entity-alias="SOD" name="productId" />
+		<alias entity-alias="SOD" name="productName" />
+		<alias entity-alias="SOD" name="serialNo" />
+		<alias entity-alias="SOD" name="isMainProduct" />
+		<alias entity-alias="SOD" name="productSalesPolicyId" />
+		<alias entity-alias="SOD" name="lastUpdatedStamp" />
+		<view-link entity-alias="SOH" rel-entity-alias="SOD">
+			<key-map field-name="docId" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="SOH" field-name="docStatus"
+					operator="equals" value="1" />
+				<condition-expr entity-alias="SOH" field-name="warehouseStatus"
+					operator="equals" value="2" />
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+	<!-- ERP运营商业务 -->
+	<entity entity-name="ErpOperatorsBusiness" package-name="org.ofbiz.face"
+		title="Erp Operators Business">
+		<field name="storeId" type="id"></field>
+		<field name="sequenceId" type="id"></field>
+		<field name="accessNumber" type="id"></field>
+		<field name="productSalesPolicyId" type="id"></field>
+		<field name="erpOptSetValueId" type="id"></field>
+		<field name="identityCard" type="name"></field>
+		<field name="openingDate" type="date-time"></field>
+		<field name="keyDate" type="id"></field>
+		<field name="openLocation" type="indicator"></field>
+		<field name="memo" type="description"></field>
+		<field name="isChecked" type="indicator"></field>
+
+		<prim-key field="accessNumber" />
+		<prim-key field="erpOptSetValueId" />
+		<prim-key field="keyDate" />
+
+		<relation type="one" fk-name="ERP_OPTB_PID" rel-entity-name="ErpOptSetValue">
+			<key-map field-name="erpOptSetValueId" />
+		</relation>
+	</entity>
+
+	<!-- ERP运营商业务出口 -->
+	<view-entity entity-name="ErpIFOptBusiness" package-name="org.ofbiz.face"
+		title="Erp Operators Business View">
+		<member-entity entity-alias="Opt" entity-name="ErpOperatorsBusiness" />
+		<member-entity entity-alias="Relation" entity-name="ErpOptSetValueRelation" />
+		<alias entity-alias="Opt" name="storeId" />
+		<alias entity-alias="Relation" name="erpOperatorsId" />
+		<alias entity-alias="Opt" name="productSalesPolicyId" />
+		<alias entity-alias="Opt" name="erpOptSetValueId" />
+		<alias entity-alias="Opt" name="sequenceId" />
+		<alias entity-alias="Opt" name="accessNumber" />
+		<alias entity-alias="Opt" name="openingDate" />
+		<alias entity-alias="Opt" name="openLocation" />
+		<alias entity-alias="Opt" name="isChecked" />
+		<alias entity-alias="Opt" name="memo" />
+		<alias entity-alias="Opt" name="lastUpdatedStamp" />
+		<view-link entity-alias="Opt" rel-entity-alias="Relation">
+			<key-map field-name="erpOptSetValueId" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="or">
+				<condition-expr entity-alias="Opt" field-name="isChecked"
+					operator="equals" value="Y" />
+				<condition-expr entity-alias="Relation" field-name="erpOperatorsId"
+					operator="equals" value="T" />
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+	<!-- ERP销售-运营商业务出口 -->
+	<view-entity entity-name="ErpIFSalesOptBnss" package-name="org.ofbiz.face"
+		title="Erp Sales Operators Business View">
+		<member-entity entity-alias="Opt" entity-name="ErpSalesOptBusiness" />
+		<member-entity entity-alias="Relation" entity-name="ErpOptSetValueRelation" />
+		<alias entity-alias="Opt" name="storeId" />
+		<alias entity-alias="Relation" name="erpOperatorsId" />
+		<alias entity-alias="Opt" name="productSalesPolicyId" />
+		<alias entity-alias="Opt" name="erpOptSetValueId" />
+		<alias entity-alias="Opt" name="sequenceId" />
+		<alias entity-alias="Opt" name="accessNumber" />
+		<alias entity-alias="Opt" name="openingDate" />
+		<alias entity-alias="Opt" name="openLocation" />
+		<alias entity-alias="Opt" name="isChecked" />
+		<alias entity-alias="Opt" name="memo" />
+		<alias entity-alias="Opt" name="lastUpdatedStamp" />
+		<view-link entity-alias="Opt" rel-entity-alias="Relation">
+			<key-map field-name="erpOptSetValueId" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="or">
+				<condition-expr entity-alias="Opt" field-name="isChecked"
+					operator="equals" value="Y" />
+				<condition-list combine="and">
+					<condition-expr entity-alias="Relation" field-name="erpOperatorsId"
+						operator="equals" value="T" />
+					<condition-expr entity-alias="Opt" field-name="erpOptSetValueId"
+						operator="not-equals" />
+					<condition-expr entity-alias="Opt" field-name="accessNumber"
+						operator="not-equals" />
+					<condition-expr entity-alias="Opt" field-name="openingDate"
+						operator="not-equals" />
+				</condition-list>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+	<!-- ERP运营商业务 校验 -->
+	<entity entity-name="ErpOptBusinessCheck" package-name="org.ofbiz.face"
+		title="Erp Operators Business Check">
+		<field name="storeId" type="id"></field>
+		<field name="accessNumber" type="id"></field>
+		<field name="productSalesPolicyId" type="id"></field>
+		<field name="erpOptSetValueId" type="id"></field>
+		<field name="identityCard" type="name"></field>
+		<field name="openingDate" type="date-time"></field>
+		<field name="keyDate" type="id"></field>
+		<field name="openLocation" type="indicator"></field>
+		<field name="memo" type="description"></field>
+		<field name="isChecked" type="indicator"></field>
+
+		<prim-key field="accessNumber" />
+		<prim-key field="erpOptSetValueId" />
+		<prim-key field="keyDate" />
+
+		<relation type="one" fk-name="ERP_OBCHECK_PID"
+			rel-entity-name="ErpOptSetValue">
+			<key-map field-name="erpOptSetValueId" />
+		</relation>
+	</entity>
+
+	<!-- ERP运营商套餐值 -->
+	<entity entity-name="ErpOptSetValue" package-name="org.ofbiz.face"
+		title="Erp Operator Set Value">
+		<field name="erpOptSetValueId" type="id"></field>
+		<field name="erpOptSetValueName" type="name"></field>
+		<field name="attrValue" type="name"></field>
+		<prim-key field="erpOptSetValueId" />
+	</entity>
+
+	<!-- ERP销售政策和运营商套餐值关系 -->
+	<entity entity-name="ErpOptSetValueRelation" package-name="org.ofbiz.face"
+		title="Erp Operator Set Value Relation">
+		<field name="erpOptSetValueId" type="id"></field>
+		<field name="erpPolicyId" type="id"></field>
+		<field name="erpOperatorsId" type="id"></field>
+		<prim-key field="erpOptSetValueId" />
+		<relation type="one" fk-name="ERP_OSV_R_PID" rel-entity-name="ErpOptSetValue">
+			<key-map field-name="erpOptSetValueId" />
+		</relation>
+		<relation type="one" fk-name="ERP_OSV_R_ERPID"
+			rel-entity-name="ErpPolicy">
+			<key-map field-name="erpPolicyId" />
+		</relation>
+		<relation type="one" fk-name="ERP_OSV_R_OID" rel-entity-name="ErpOperators">
+			<key-map field-name="erpOperatorsId" />
+		</relation>
+	</entity>
+
+	<!-- 运营商套餐值和销售政策关系 -->
+	<entity entity-name="ErpPolicySetValueRelation" package-name="org.ofbiz.face"
+		title="Erp Policy and SetValue Relation">
+		<field name="productSalesPolicyId" type="id"></field>
+		<field name="erpOptSetValueId" type="id"></field>
+		<prim-key field="productSalesPolicyId" />
+		<prim-key field="erpOptSetValueId" />
+		<relation type="one" fk-name="ERP_POLICY_SV_R_PID"
+			rel-entity-name="ProductSalesPolicy">
+			<key-map field-name="productSalesPolicyId" />
+		</relation>
+		<relation type="one" fk-name="ERP_POLICY_SV_R_SID"
+			rel-entity-name="ErpOptSetValue">
+			<key-map field-name="erpOptSetValueId" />
+		</relation>
+	</entity>
+
+	<view-entity entity-name="ErpPolicySetValueRelationView"
+		package-name="org.ofbiz.face">
+		<member-entity entity-alias="EO" entity-name="ErpOptSetValue" />
+		<member-entity entity-alias="EV" entity-name="ErpPolicySetValueRelation" />
+		<member-entity entity-alias="PSA" entity-name="ProductStoreAttribute" />
+		<alias entity-alias="EO" name="erpOptSetValueId" />
+		<alias entity-alias="EO" name="erpOptSetValueName" field="erpOptSetValueName" />
+		<alias entity-alias="EV" name="productSalesPolicyId" />
+		<alias entity-alias="PSA" name="productStoreId" />
+		<view-link entity-alias="EO" rel-entity-alias="EV"
+			rel-optional="true">
+			<key-map field-name="erpOptSetValueId" />
+		</view-link>
+		<view-link entity-alias="EO" rel-entity-alias="PSA">
+			<key-map field-name="attrValue" />
+		</view-link>
+	</view-entity>
+
+	<view-entity entity-name="ErpOptSetValueRelationView"
+		package-name="org.ofbiz.face">
+		<member-entity entity-alias="EO" entity-name="ErpOptSetValue" />
+		<member-entity entity-alias="EV" entity-name="ErpOptSetValueRelation" />
+		<alias entity-alias="EV" name="erpOptSetValueId" />
+		<alias entity-alias="EV" name="erpPolicyId" />
+		<alias entity-alias="EO" name="erpOptSetValueName" field="erpOptSetValueName" />
+		<view-link entity-alias="EO" rel-entity-alias="EV"
+			rel-optional="true">
+			<key-map field-name="erpOptSetValueId" rel-field-name="erpOptSetValueId" />
+		</view-link>
+	</view-entity>
+
+	<view-entity entity-name="ErpPolicyRelationView"
+		package-name="org.ofbiz.face">
+		<member-entity entity-alias="EO" entity-name="ErpOptSetValue" />
+		<member-entity entity-alias="EV" entity-name="ErpOptSetValueRelation" />
+		<member-entity entity-alias="EPR" entity-name="ErpPolicyRelation" />
+		<alias entity-alias="EV" name="erpOptSetValueId" />
+		<alias entity-alias="EV" name="erpPolicyId" />
+		<alias entity-alias="EO" name="erpOptSetValueName" field="erpOptSetValueName" />
+		<alias entity-alias="EPR" name="productSalesPolicyId" />
+		<view-link entity-alias="EO" rel-entity-alias="EV"
+			rel-optional="true">
+			<key-map field-name="erpOptSetValueId" rel-field-name="erpOptSetValueId" />
+		</view-link>
+		<view-link entity-alias="EV" rel-entity-alias="EPR">
+			<key-map field-name="erpPolicyId" rel-field-name="erpPolicyId" />
+		</view-link>
+	</view-entity>
+
+	<!-- ERP销售政策 -->
+	<entity entity-name="ErpPolicy" package-name="org.ofbiz.face"
+		title="Erp Policy">
+		<field name="erpPolicyId" type="id"></field>
+		<field name="erpPolicyName" type="name"></field>
+		<prim-key field="erpPolicyId" />
+	</entity>
+
+	<!-- ERP销售政策和销售政策关系 -->
+	<entity entity-name="ErpPolicyRelation" package-name="org.ofbiz.face"
+		title="Erp Policy Relation">
+		<field name="productSalesPolicyId" type="id"></field>
+		<field name="erpPolicyId" type="id"></field>
+		<field name="erpOperatorsId" type="id"></field>
+		<prim-key field="productSalesPolicyId" />
+		<relation type="one" fk-name="ERP_POLICY_R_PID"
+			rel-entity-name="ProductSalesPolicy">
+			<key-map field-name="productSalesPolicyId" />
+		</relation>
+	</entity>
+
+	<!-- ERP预订单上行Header -->
+	<view-entity entity-name="ERPPreOrderHeaderView"
+		package-name="org.ofbiz.face" title="ERPPreOrderHeaderView">
+		<member-entity entity-alias="Header" entity-name="PreOrderHeader" />
+		<alias entity-alias="Header" name="entityID" field="docId" />
+		<alias entity-alias="Header" name="orderType" field="docId" />
+		<alias entity-alias="Header" name="docId" />
+		<alias entity-alias="Header" name="createDocDate" />
+		<alias entity-alias="Header" name="storeId" />
+		<alias entity-alias="Header" name="lastUpdatedStamp" />
+	</view-entity>
+	<!-- ERP预订单上行Dtl -->
+	<view-entity entity-name="ERPPreOrderDtlView" package-name="org.ofbiz.face"
+		title="ERPPreOrderDtlView">
+		<member-entity entity-alias="Header" entity-name="PreOrderHeader" />
+		<member-entity entity-alias="Dtl" entity-name="PreOrderDtl" />
+		<alias entity-alias="Header" name="entityID" field="docId" />
+		<alias entity-alias="Dtl" name="lineNo" />
+		<alias entity-alias="Dtl" name="productId" />
+		<alias entity-alias="Dtl" name="quantity" />
+		<alias entity-alias="Dtl" name="rebatePrice" />
+		<alias entity-alias="Dtl" name="rebateAmount" />
+		<alias entity-alias="Dtl" name="memo" />
+		<alias entity-alias="Dtl" name="lastUpdatedStamp" />
+		<view-link entity-alias="Dtl" rel-entity-alias="Header">
+			<key-map field-name="docId" rel-field-name="docId" />
+		</view-link>
+	</view-entity>
+
+	<!-- ERP退订单上行Header -->
+	<view-entity entity-name="ERPBackOrderHeaderView"
+		package-name="org.ofbiz.face" title="ERPBackOrderHeaderView">
+		<member-entity entity-alias="Header" entity-name="BackOrderHeader" />
+		<alias entity-alias="Header" name="entityID" field="docId" />
+		<alias entity-alias="Header" name="orderType" field="docId" />
+		<alias entity-alias="Header" name="baseEntry" />
+		<alias entity-alias="Header" name="docId" />
+		<alias entity-alias="Header" name="createDocDate" />
+		<alias entity-alias="Header" name="storeId" />
+		<alias entity-alias="Header" name="lastUpdatedStamp" />
+	</view-entity>
+	<!-- ERP退订单上行Dtl -->
+	<view-entity entity-name="ERPBackOrderDtlView"
+		package-name="org.ofbiz.face" title="ERPBackOrderDtlView">
+		<member-entity entity-alias="Header" entity-name="BackOrderHeader" />
+		<member-entity entity-alias="Dtl" entity-name="BackOrderDtl" />
+		<alias entity-alias="Header" name="entityID" field="docId" />
+		<alias entity-alias="Dtl" name="lineNo" />
+		<alias entity-alias="Dtl" name="productId" />
+		<alias entity-alias="Dtl" name="quantity" />
+		<alias entity-alias="Dtl" name="rebatePrice" />
+		<alias entity-alias="Dtl" name="rebateAmount" />
+		<alias entity-alias="Dtl" name="memo" />
+		<alias entity-alias="Dtl" name="lastUpdatedStamp" />
+		<view-link entity-alias="Dtl" rel-entity-alias="Header">
+			<key-map field-name="docId" rel-field-name="docId" />
+		</view-link>
+	</view-entity>
+
+	<!-- 预订金上传Header View -->
+	<view-entity entity-name="ERPPreCollectionOrderHeaderView"
+		package-name="org.ofbiz.face" title="ERPPreCollectionOrderHeaderView">
+		<member-entity entity-alias="Header" entity-name="PreCollectionOrderHeader" />
+		<alias entity-alias="Header" name="entityID" field="baseEntry" />
+		<alias entity-alias="Header" name="orderType" field="docId" />
+		<alias entity-alias="Header" name="docId" field="baseEntry" />
+		<alias entity-alias="Header" name="createDocDate" />
+		<alias entity-alias="Header" name="storeId" />
+		<alias entity-alias="Header" name="lastUpdatedStamp" />
+	</view-entity>
+	<!-- 预订金上传Dtl View -->
+	<view-entity entity-name="ERPPreCollectionOrderDtlView"
+		package-name="org.ofbiz.face" title="ERPPreCollectionOrderDtlView">
+		<member-entity entity-alias="Header" entity-name="PreCollectionOrderHeader" />
+		<member-entity entity-alias="Dtl" entity-name="PreCollectionOrderDtl" />
+		<!-- <alias entity-alias="Dtl" name="docId"/> -->
+		<alias entity-alias="Header" name="entityID" field="baseEntry" />
+		<alias entity-alias="Dtl" name="lineNo" />
+		<alias entity-alias="Header" name="storeId" />
+		<alias entity-alias="Dtl" name="type" />
+		<alias entity-alias="Dtl" name="amount" />
+		<alias entity-alias="Dtl" name="code" />
+		<alias entity-alias="Dtl" name="extNo" />
+		<alias entity-alias="Dtl" name="lastUpdatedStamp" />
+		<alias entity-alias="Header" name="postingDate" />
+		<view-link entity-alias="Dtl" rel-entity-alias="Header">
+			<key-map field-name="docId" rel-field-name="docId" />
+		</view-link>
+	</view-entity>
+
+	<!-- 退订金上传Header View -->
+	<view-entity entity-name="ERPPPreRefundOrderHeaderView"
+		package-name="org.ofbiz.face" title="ERPPPreRefundOrderHeaderView">
+		<member-entity entity-alias="Header" entity-name="PreRefundOrderHeader" />
+		<member-entity entity-alias="BHeader" entity-name="BackOrderHeader" />
+		<alias entity-alias="Header" name="entityID" field="baseEntry" />
+		<alias entity-alias="Header" name="orderType" field="docId" />
+		<alias entity-alias="Header" name="docId" />
+		<alias entity-alias="BHeader" name="baseEntry" />
+		<alias entity-alias="Header" name="createDocDate" />
+		<alias entity-alias="Header" name="storeId" />
+		<alias entity-alias="Header" name="lastUpdatedStamp" />
+		<view-link entity-alias="Header" rel-entity-alias="BHeader">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+	</view-entity>
+	<!-- 退订金上传Dtl View -->
+	<view-entity entity-name="ERPPreRefundOrderDtlView"
+		package-name="org.ofbiz.face" title="ERPPreRefundOrderDtlView">
+		<member-entity entity-alias="Header" entity-name="PreRefundOrderHeader" />
+		<member-entity entity-alias="Dtl" entity-name="PreRefundOrderDtl" />
+		<alias entity-alias="Dtl" name="docId" />
+		<alias entity-alias="Header" name="entityID" field="baseEntry" />
+		<alias entity-alias="Dtl" name="lineNo" />
+		<alias entity-alias="Header" name="storeId" />
+		<alias entity-alias="Dtl" name="type" />
+		<alias entity-alias="Dtl" name="amount" />
+		<alias entity-alias="Dtl" name="code" />
+		<alias entity-alias="Dtl" name="extNo" />
+		<alias entity-alias="Dtl" name="lastUpdatedStamp" />
+		<alias entity-alias="Header" name="postingDate" />
+		<view-link entity-alias="Dtl" rel-entity-alias="Header">
+			<key-map field-name="docId" rel-field-name="docId" />
+		</view-link>
+	</view-entity>
+
+	<!-- 调拨出库 Header View (指令单状态不做判断) -->
+	<view-entity entity-name="ERPDeliveryDocHeaderView"
+		package-name="org.ofbiz.face" title="ERPDeliveryDocHeaderView">
+		<member-entity entity-alias="Header" entity-name="DeliveryDoc" />
+		<member-entity entity-alias="Command" entity-name="DeliveryCommand" />
+		<alias entity-alias="Header" name="entityID" field="docId" />
+		<alias entity-alias="Command" name="baseEntry" />
+		<alias entity-alias="Command" name="extDocNo" />
+		<alias entity-alias="Header" name="movementTypeId" />
+		<alias entity-alias="Header" name="docId" />
+		<alias entity-alias="Header" name="docDate" />
+		<alias entity-alias="Header" name="docStatus" />
+		<alias entity-alias="Header" name="memo" />
+		<alias entity-alias="Header" name="productStoreId" />
+		<alias entity-alias="Header" name="productStoreIdTo" />
+		<alias entity-alias="Header" name="userId" />
+		<alias entity-alias="Header" name="lastUpdatedStamp" />
+
+		<view-link entity-alias="Header" rel-entity-alias="Command"
+			rel-optional="true">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Header" field-name="docStatus"
+					operator="equals" value="1" />
+				<condition-list combine="or">
+					<!-- 总部指令 Z移库 -->
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="DO" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="ZO" />
+					<!-- 自主调拨 Z移库 -->
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="DG" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="DZ" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="DY" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="ZG" />
+				</condition-list>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+	<!-- 调拨出库 Dtl View -->
+	<view-entity entity-name="ERPDeliveryItemDtlView"
+		package-name="org.ofbiz.face" title="ERPDeliveryItemDtlView">
+		<member-entity entity-alias="Header" entity-name="DeliveryDoc" />
+		<member-entity entity-alias="Dtl" entity-name="DeliveryItem" />
+		<member-entity entity-alias="Command" entity-name="DeliveryCommand" />
+		<member-entity entity-alias="Itemcommand" entity-name="DeliveryItemcommand" />
+		<alias entity-alias="Dtl" name="entityID" field="docId" />
+		<alias entity-alias="Command" name="baseEntry" />
+		<alias entity-alias="Itemcommand" name="baseLineNo" field="lineNo" />
+		<alias entity-alias="Itemcommand" name="lineNo" field="baseLineNo" />
+		<alias entity-alias="Itemcommand" name="extDocDemo" />
+		<!-- 自主调拨lineNo -->
+		<alias entity-alias="Dtl" name="dLineNo" field="lineNo" />
+		<alias entity-alias="Dtl" name="productId" />
+		<alias entity-alias="Dtl" name="sequenceId" />
+		<alias entity-alias="Dtl" name="quantity" />
+		<alias entity-alias="Dtl" name="facilityId" />
+		<alias entity-alias="Dtl" name="lastUpdatedStamp" />
+
+		<view-link entity-alias="Dtl" rel-entity-alias="Header">
+			<key-map field-name="docId" rel-field-name="docId" />
+		</view-link>
+		<view-link entity-alias="Header" rel-entity-alias="Command"
+			rel-optional="true">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+		<view-link entity-alias="Dtl" rel-entity-alias="Itemcommand"
+			rel-optional="true">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+			<key-map field-name="baseLineNo" rel-field-name="lineNo" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Header" field-name="docStatus"
+					operator="equals" value="1" />
+				<condition-list combine="or">
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="DO" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="ZO" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="DG" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="DZ" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="DY" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="ZG" />
+				</condition-list>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+	<!-- 调拨入库 Header View -->
+	<view-entity entity-name="ERPReceiveDocHeaderView"
+		package-name="org.ofbiz.face" title="ERPReceiveDocHeaderView">
+		<member-entity entity-alias="Header" entity-name="ReceiveDoc" />
+		<member-entity entity-alias="Command" entity-name="ReceiveCommand" />
+		<alias entity-alias="Header" name="entityID" field="docId" />
+		<alias entity-alias="Command" name="extDocNo" />
+		<alias entity-alias="Command" name="baseEntry" />
+		<alias entity-alias="Header" name="movementTypeId" />
+		<alias entity-alias="Header" name="docId" />
+		<alias entity-alias="Header" name="docDate" />
+		<alias entity-alias="Header" name="docStatus" />
+		<alias entity-alias="Header" name="memo" />
+		<alias entity-alias="Header" name="productStoreId" />
+		<alias entity-alias="Header" name="productStoreIdFrom" />
+		<alias entity-alias="Header" name="userId" />
+		<alias entity-alias="Header" name="lastUpdatedStamp" />
+
+		<view-link entity-alias="Header" rel-entity-alias="Command">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Header" field-name="docStatus"
+					operator="equals" value="1" />
+				<!-- <condition-expr entity-alias="Command" field-name="status" operator="equals" 
+					value="2" /> -->
+				<condition-list combine="or">
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="RZ" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="RY" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="RG" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="RO" />
+				</condition-list>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+	<!-- 调拨入库 Dtl View -->
+	<view-entity entity-name="ERPReceiveItemDtlView"
+		package-name="org.ofbiz.face" title="ERPReceiveItemDtlView">
+		<member-entity entity-alias="Header" entity-name="ReceiveDoc" />
+		<member-entity entity-alias="Dtl" entity-name="ReceiveItem" />
+		<member-entity entity-alias="Command" entity-name="ReceiveCommand" />
+		<member-entity entity-alias="Itemcommand" entity-name="ReceiveItemcommand" />
+		<alias entity-alias="Itemcommand" name="extDocDemo" />
+		<alias entity-alias="Dtl" name="entityID" field="docId" />
+		<alias entity-alias="Command" name="baseEntry" />
+		<!-- baseLineNo 外部单据号 -->
+		<alias entity-alias="Itemcommand" name="lineNo" field="baseLineNo" />
+		<alias entity-alias="Itemcommand" name="baseLineNo" field="lineNo" />
+		<alias entity-alias="Dtl" name="rLineNo" field="lineNo" />
+		<alias entity-alias="Dtl" name="productId" />
+		<alias entity-alias="Dtl" name="sequenceId" />
+		<alias entity-alias="Dtl" name="quantity" />
+		<alias entity-alias="Dtl" name="facilityId" />
+		<alias entity-alias="Dtl" name="facilityIdFrom" />
+		<alias entity-alias="Dtl" name="lastUpdatedStamp" />
+
+		<view-link entity-alias="Dtl" rel-entity-alias="Header">
+			<key-map field-name="docId" rel-field-name="docId" />
+		</view-link>
+		<view-link entity-alias="Header" rel-entity-alias="Command">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+		<view-link entity-alias="Dtl" rel-entity-alias="Itemcommand">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+			<key-map field-name="baseLineNo" rel-field-name="lineNo" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Header" field-name="docStatus"
+					operator="equals" value="1" />
+				<!-- <condition-expr entity-alias="Command" field-name="status" operator="equals" 
+					value="2" /> -->
+				<condition-list combine="or">
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="RZ" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="RY" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="RG" />
+					<condition-expr entity-alias="Header" field-name="movementTypeId"
+						operator="equals" value="RO" />
+				</condition-list>
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+	<!-- 调拨指令Header View -->
+	<view-entity entity-name="ERPReceiveCommandHeaderView"
+		package-name="org.ofbiz.face" title="ERPReceiveCommandHeaderView">
+		<member-entity entity-alias="Doc" entity-name="ReceiveDoc" />
+		<member-entity entity-alias="Header" entity-name="ReceiveCommand" />
+		<alias entity-alias="Header" name="entityID" field="docId" />
+		<alias entity-alias="Header" name="extDocNo" />
+		<alias entity-alias="Header" name="baseEntry" />
+		<alias entity-alias="Header" name="docId" />
+		<alias entity-alias="Header" name="docDate" />
+		<alias entity-alias="Header" name="docStatus" />
+		<alias entity-alias="Header" name="memo" />
+		<alias entity-alias="Header" name="productStoreId" />
+		<alias entity-alias="Header" name="productStoreIdFrom" />
+		<alias entity-alias="Header" name="userId" />
+		<alias entity-alias="Header" name="lastUpdatedStamp" />
+
+		<view-link entity-alias="Doc" rel-entity-alias="Header">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Doc" field-name="docStatus"
+					operator="equals" value="1" />
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+	<!-- 调拨指令 Details View -->
+	<view-entity entity-name="ERPReceiveItemCommandDtlView"
+		package-name="org.ofbiz.face" title="ERPReceiveItemCommandDtlView">
+		<member-entity entity-alias="Doc" entity-name="ReceiveDoc" />
+		<member-entity entity-alias="Details" entity-name="ReceiveItemcommand" />
+		<alias entity-alias="Details" name="entityID" field="docId" />
+		<alias entity-alias="Details" name="baseEntry" />
+		<alias entity-alias="Details" name="baseLineNo" />
+		<alias entity-alias="Details" name="lineNo" />
+		<alias entity-alias="Details" name="productId" />
+		<alias entity-alias="Details" name="sequenceId" />
+		<alias entity-alias="Details" name="quantity" />
+		<alias entity-alias="Details" name="facilityId" />
+		<alias entity-alias="Details" name="facilityIdFrom" />
+		<alias entity-alias="Details" name="memo" />
+		<alias entity-alias="Details" name="createdStamp" />
+		<alias entity-alias="Details" name="lastUpdatedStamp" />
+
+		<view-link entity-alias="Doc" rel-entity-alias="Details">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="Doc" field-name="docStatus"
+					operator="equals" value="1" />
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+
+	<!-- 门店要货单 Header View -->
+	<view-entity entity-name="ERPReplenishmentHeaderView"
+		package-name="org.ofbiz.face" title="ERPReplenishmentHeaderView">
+		<member-entity entity-alias="Header" entity-name="Replenishment" />
+		<alias entity-alias="Header" name="entityID" field="docId" />
+		<alias entity-alias="Header" name="docId" />
+		<alias entity-alias="Header" name="docDate" />
+		<alias entity-alias="Header" name="productStoreId" />
+		<alias entity-alias="Header" name="saleDay" />
+		<alias entity-alias="Header" name="lastUpdatedStamp" />
+	</view-entity>
+	<!-- 门店要货单 Dtl View -->
+	<view-entity entity-name="ERPReplenishmentItemDtlView"
+		package-name="org.ofbiz.face" title="ERPReplenishmentItemDtlView">
+		<member-entity entity-alias="Header" entity-name="Replenishment" />
+		<member-entity entity-alias="Dtl" entity-name="ReplenishmentItem" />
+		<alias entity-alias="Dtl" name="entityID" field="docId" />
+		<alias entity-alias="Dtl" name="docId" />
+		<alias entity-alias="Dtl" name="lineNo" />
+		<alias entity-alias="Dtl" name="productId" />
+		<alias entity-alias="Dtl" name="quantity" />
+		<alias entity-alias="Header" name="productStoreId" />
+		<alias entity-alias="Header" name="receiveDate" />
+		<alias entity-alias="Dtl" name="saftyQuantity" />
+		<alias entity-alias="Dtl" name="onhand" />
+		<alias entity-alias="Dtl" name="promise" />
+		<alias entity-alias="Dtl" name="availableQuantity" />
+		<alias entity-alias="Dtl" name="receiveQuantity" />
+		<alias entity-alias="Dtl" name="preQuantity" />
+		<alias entity-alias="Dtl" name="memo" />
+		<alias entity-alias="Dtl" name="lastUpdatedStamp" />
+		<view-link entity-alias="Dtl" rel-entity-alias="Header">
+			<key-map field-name="docId" rel-field-name="docId" />
+		</view-link>
+	</view-entity>
+
+
+	<!-- 门店日结Header View -->
+	<view-entity entity-name="PaymentInOrderHeaderView"
+		package-name="org.ofbiz.face">
+		<member-entity entity-alias="Header" entity-name="PaymentInOrderHeader" />
+		<alias entity-alias="Header" name="entityID" field="docId" />
+
+		<!-- 交款单号 -->
+		<alias entity-alias="Header" name="docId" />
+		<!-- 过账日期 -->
+		<alias entity-alias="Header" name="postingDate" />
+		<!-- 备注 -->
+		<alias entity-alias="Header" name="memo" />
+		<alias entity-alias="Header" name="storeId" />
+	</view-entity>
+	<!-- 门店日结Header Dtl -->
+	<view-entity entity-name="PaymentInOrderDtlView"
+		package-name="org.ofbiz.face">
+		<member-entity entity-alias="Dtl" entity-name="PaymentInOrderDtl" />
+		<member-entity entity-alias="Header" entity-name="PaymentInOrderHeader" />
+		<alias entity-alias="Dtl" name="entityID" field="docId" />
+		<alias entity-alias="Dtl" name="lineNo" />
+
+		<!-- 收款方式 -->
+		<alias entity-alias="Dtl" name="type" />
+		<!-- 当日应缴款金额 -->
+		<alias entity-alias="Dtl" name="targetAmount" />
+		<!-- 预交款金额 -->
+		<alias entity-alias="Dtl" name="preAmount" />
+		<!-- 当日实缴款金额 -->
+		<alias entity-alias="Dtl" name="amount" />
+		<!-- 差异金额 -->
+		<alias entity-alias="Dtl" name="diffAmount" />
+		<!-- 备注 -->
+		<alias entity-alias="Dtl" name="memo" />
+
+		<view-link entity-alias="Dtl" rel-entity-alias="Header">
+			<key-map field-name="docId" rel-field-name="docId" />
+		</view-link>
+	</view-entity>
+
+
+	<!-- 竞品信息 -->
+	<entity entity-name="Competing" package-name="org.ofbiz.competing"
+		title="Competing Enity">
+		<field name="docId" type="d-id"></field>
+		<field name="productStoreId" type="d-id"></field>
+		<field name="productStoreName" type="name"></field>
+		<field name="status" type="name"></field>
+		<field name="circle" type="name"></field><!--商圈 -->
+		<field name="montioring" type="name"></field><!--监测人 -->
+		<field name="startDate" type="date-time"></field>
+		<field name="endDate" type="date-time"></field>
+		<field name="docDate" type="date-time"></field>
+		<field name="memo" type="name"></field>
+		<field name="att" type="name"></field>
+		<field name="att1" type="name"></field>
+		<prim-key field="docId" />		
+	</entity>
+
+
+	<entity entity-name="CompetingDtl" package-name="org.ofbiz.competing"
+		title="CompetingDtl Enity">
+		<!-- 单据号:门店号+流水号 -->
+		<field name="docId" type="d-id"></field>
+		<field name="productStoreId" type="d-id"></field>
+		<field name="monitoringObject" type="name"></field>
+		<field name="lineNo" type="name"></field>
+		<field name="brand" type="name"></field>
+		<field name="model" type="name"></field>
+		<field name="price" type="currency-amount"></field>
+		<field name="suggestedPrice" type="currency-amount"></field>
+		<field name="publicityPrice" type="currency-amount"></field>
+		<field name="transactionPrice" type="currency-amount"></field>
+		<field name="salesPolicy" type="name"></field>
+		<field name="sourcesInfo" type="name"></field>
+		<field name="memo" type="name"></field>
+		<field name="reason" type="name"></field>
+		<field name="opinion" type="name"></field>
+		<field name="startDate" type="date-time"></field>
+		<field name="endDate" type="date-time"></field>
+		<field name="docDate" type="date-time"></field>
+		<field name="att" type="name"></field>
+		<field name="att1" type="name"></field>
+		<prim-key field="docId" />
+		<prim-key field="lineNo"/>
+	</entity>
+
+
+</entitymodel>

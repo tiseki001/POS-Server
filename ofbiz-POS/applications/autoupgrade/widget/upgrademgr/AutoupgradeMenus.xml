@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<menus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-menu.xsd">
+    <menu name="AutoupgradeAppBar" title="${uiLabelMap.AutoupgradeManager}" extends="CommonAppBarMenu" extends-resource="component://common/widget/CommonMenus.xml">
+        <menu-item name="find" title="${uiLabelMap.AutoupgradeVersion}"><link target="FindNewVersion"/></menu-item>
+        <menu-item name="uploadAttach" title="${uiLabelMap.UploadAttach}"><link target="UploadVersion"/></menu-item>
+    </menu>
+    <menu name="ProfileTabBar" extends="CommonTabBarMenu" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="find">
+         <menu-item name="find" title="${uiLabelMap.AutoupgradeVersion}">
+            <link target="FindNewVersion">
+            </link>
+        </menu-item>
+    </menu>
+    <menu name="ProfileTabBar" extends="CommonTabBarMenu" extends-resource="component://common/widget/CommonMenus.xml"
+        default-menu-item-name="uploadAttach">
+         <menu-item name="uploadAttach" title="${uiLabelMap.UploadAttach}">
+            <link target="UploadVersion">
+            </link>
+        </menu-item>
+    </menu>
+
+</menus>

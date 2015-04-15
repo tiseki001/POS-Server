@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+
+	<!--查找 -->
+	<form name="findCompeting" type="single" target="findCompeting"
+		header-row-style="header-row" default-table-style="basic-table">
+
+		<!-- <field name="noConditionFind"> <hidden value="Y" /> if this isn't 
+			there then with all fields empty no query will be done </field> -->
+
+		<field name="productStoreId" title="门店">
+			<lookup target-form-name="LookupProductStore"></lookup>
+		</field>
+		<field name="date" title="${uiLabelMap.date}">
+			<date-time type="date" />
+		</field>
+		<field name="status" title="${uiLabelMap.status}">
+			<drop-down allow-empty="true">
+				<option key="0" description="草稿" />
+				<option key="1" description="确定" />
+				<option key="2" description="审批" />
+				<option key="3" description="反馈" />
+				<option key="4" description="指令下达" />
+			</drop-down>
+		</field>
+		<field name="searchButton" title="${uiLabelMap.CommonFind}"
+			widget-style="smallSubmit find">
+			<submit />
+		</field>
+	</form>
+	<!-- 查找明细 -->
+	
+	
+
+	<form name="ListCompeting" target="" title="" list-name="listIt"
+		type="list" paginate-target="findCompeting" odd-row-style="alternate-row"
+		header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="parameters.noConditionFind" value="Y" />
+			<service service-name="performFind" result-map="result"
+				result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="parameters" />
+				<field-map field-name="entityName" value="Competing" />
+				<field-map field-name="orderBy" from-field="parameters.sortField" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+		</actions>
+
+		<field name="docId" title="编码" widget-style="buttontext">
+			<hyperlink target="FindCompeingInfo" description="${docId}">
+				<parameter param-name="productStoreId" />
+				<parameter param-name="docId" />
+				<parameter param-name="memo" />
+				<parameter param-name="circle" />
+				<parameter param-name="status" />
+				<parameter param-name="startDate" />
+				<parameter param-name="endDate" />
+			</hyperlink>
+		</field>
+		<field name="productStoreId"  title="门店">
+			<display-entity entity-name="ProductStore"
+				description="${storeName}" key-field-name="productStoreId" />
+		</field>
+
+		<field name="status" title="状态"
+			use-when="&quot;${status}&quot;.equals(&quot;0&quot;)">
+			<display description="草稿" />
+		</field>
+		<field name="status" title="状态"
+			use-when="&quot;${status}&quot;.equals(&quot;1&quot;)">
+			<display description="确定" />
+		</field>
+		<field name="status" title="状态"
+			use-when="&quot;${status}&quot;.equals(&quot;2&quot;)">
+			<display description="审批" />
+		</field>
+		<field name="status" title="状态"
+			use-when="&quot;${status}&quot;.equals(&quot;3&quot;)">
+			<display description="反馈" />
+		</field>
+		<field name="status" title="状态"
+			use-when="&quot;${status}&quot;.equals(&quot;4&quot;)">
+			<display description="指令下达" />
+		</field>
+		
+		<field name="startDate" title="起始日期">
+			<display />
+		</field>
+		<field name="endDate" title="终止日期">
+			<display />
+		</field>
+		<field name="circle" title="${uiLabelMap.circle}">
+			<display />
+		</field>
+
+		<field name="memo" title="${uiLabelMap.memo}">
+			<display />
+		</field>
+
+		<field name="deleteLink" title="${uiLabelMap.CommonDelete}"
+			widget-style="buttontext">
+			<hyperlink target="deleteCompetingheader" description="${uiLabelMap.CommonDelete}">
+				<parameter param-name="docId" />
+			</hyperlink>
+		</field>
+	</form>
+
+
+	<!-- headerbuxiugai -->
+
+	<form name="findCompetingheader" type="single" target=""
+		odd-row-style="alternate-row" header-row-style="header-row-2"
+		default-table-style="basic-table hover-bar">
+
+		<!-- default-map-name="Competing"> header-row-style="header-row" default-table-style="basic-table" -->
+		<field name="productStoreId" title="门店" position="1">
+			<text size="10" />
+		</field>
+
+		<field name="circle" title="${uiLabelMap.circle}" position="2">
+			<text size="20" />
+		</field>
+
+		<field name="montioring" title="${uiLabelMap.monitoring}"
+			position="3">
+			<text size="10" />
+		</field>
+
+		<field name="status" title="${uiLabelMap.status}" id-name="status"
+			position="4">
+			<drop-down allow-empty="false">
+				<option key="0" description="草稿" />
+				<option key="1" description="确定" />
+				<option key="2" description="审批" />
+				<option key="3" description="反馈" />
+				<option key="4" description="指令下达" />
+			</drop-down>
+		</field>
+		<field name="startDate" title="起始日期" position="1">
+			<date-time type="date" />
+		</field>
+		<field name="endDate" title="终止日期" position="2">
+			<date-time type="date" />
+		</field>
+		<field name="docDate" title="日期" position="3">
+			<date-time type="date" />
+		</field>
+		<field name="memo" title="${uiLabelMap.memo}" position="1">
+			<textarea />
+		</field>
+	</form>
+	<!-- findCompetingList -->
+	<form name="ListCompetingConditions" type="list" list-name="listIt"
+		paginate-target="FindCompeingInfo" odd-row-style="alternate-row"
+		default-table-style="basic-table hover-bar" separate-columns="true">
+		<actions>
+			<set field="parameters.noConditionFind" value="Y" />
+			<service service-name="findCompetingList" result-map="result"
+				result-map-list="listIt">
+				<!-- performFind findNotPrameList -->
+				<field-map field-name="inputFields" from-field="parameters" />
+				<field-map field-name="entityName" value="CompetingDtl" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+		</actions>
+		<field name="docId">
+			<hidden />
+		</field>
+		<field name="lineNo">
+			<hidden />
+		</field>
+		<field name="monitoringObject" title="${uiLabelMap.monitoringObject}">
+			<display />
+		</field>
+		<field name="brand" title="${uiLabelMap.brand}">
+			<display />
+		</field>
+		<field name="model" title="${uiLabelMap.model}">
+			<display />
+		</field>
+		<field name="publicityPice" title="${uiLabelMap.publicityPice}">
+			<display />
+		</field>
+		<field name="transactionPrice" title="${uiLabelMap.transactionPrice}">
+			<display />
+		</field>
+		<field name="price" title="${uiLabelMap.price}">
+			<display />
+		</field>
+		<field name="suggestedPrice" title="${uiLabelMap.suggestedPrice}">
+			<display />
+		</field>
+		<field name="sourcesInfo" title="${uiLabelMap.sourcesInfo}">
+			<display />
+		</field>
+		<field name="salesPolicy" title="${uiLabelMap.salesPolicy}">
+			<display />
+		</field>
+		<field name="reason" title="${uiLabelMap.reason}">
+			<display />
+		</field>
+		<field name="opinion" title="${uiLabelMap.opinion}">
+			<display />
+		</field>
+		<field name="memo" title="${uiLabelMap.memo}">
+			<display />
+		</field>
+		<field name="editLink" title="${uiLabelMap.CommonUpdate}"
+			widget-style="buttontext">
+			<hyperlink target="updateCompetings" description="${uiLabelMap.CommonUpdate}">
+				<parameter param-name="docId" />
+				<parameter param-name="productStoreId" />
+				<parameter param-name="lineNo" />
+				<parameter param-name="brand" />
+				<parameter param-name="model" />
+				<parameter param-name="price" />
+				<parameter param-name="suggestedPrice" />
+				<parameter param-name="publicityPrice" />
+				<parameter param-name="transactionPrice" />
+				<parameter param-name="salesPolicy" />
+				<parameter param-name="sourcesInfo" />
+				<parameter param-name="memo" />
+				<parameter param-name="reason" />
+				<parameter param-name="startDate" />
+				<parameter param-name="endDate" />
+				<parameter param-name="docDate" />
+				<parameter param-name="sourcesInfo" />
+			</hyperlink>
+		</field>
+		<field name="deleteLink" title="${uiLabelMap.CommonDelete}"
+			widget-style="buttontext">
+			<hyperlink target="deleteCompeting" description="${uiLabelMap.CommonDelete}">
+				<parameter param-name="docId" />
+				<parameter param-name="lineNo" />
+			</hyperlink>
+		</field>
+	</form>
+	<form name="updateCompetings" type="single" target="updateCompetingsinfo"
+		title="" default-map-name="entity" default-entity-name="CompetingDtl">
+		<!-- <auto-fields-service service-name="updateCompetingsinfo"/> -->
+		<field name="docId">
+			<hidden />
+		</field>
+		<field name="lineNo">
+			<hidden />
+		</field>
+		<field name="monitoringObject" title="${uiLabelMap.monitoringObject}"
+			position="1">
+			<text size="25"></text>
+		</field>
+		<field name="brand" title="${uiLabelMap.brand}" position="2">
+			<lookup target-form-name="LookupProductFeature"></lookup>
+		</field>
+		<field name="model" title="${uiLabelMap.model}" position="3">
+			<lookup target-form-name="LookupProductFeatureModels"></lookup>
+		</field>
+
+		<field name="publicityPice" title="${uiLabelMap.publicityPice}"
+			position="1">
+			<text size="25" />
+		</field>
+		<field name="transactionPrice" title="${uiLabelMap.transactionPrice}"
+			position="2">
+			<text size="25" />
+
+		</field>
+		<field name="price" title="${uiLabelMap.price}" position="3">
+			<text size="25" />
+
+		</field>
+		<field name="suggestedPrice" title="${uiLabelMap.suggestedPrice}"
+			position="4">
+			<text size="25" />
+		</field>
+
+		<field name="sourcesInfo" title="${uiLabelMap.sourcesInfo}"
+			position="1">
+			<text size="25" />
+		</field>
+		<field name="salesPolicy" title="${uiLabelMap.salesPolicy}"
+			position="2">
+			<text size="25" />
+		</field>
+		<field name="reason" title="${uiLabelMap.reason}" position="3">
+			<text size="50" />
+		</field>
+
+		<field name="opinion" title="${uiLabelMap.opinion}" position="2">
+			<text size="50" />
+		</field>
+		<field name="memo" title="${uiLabelMap.memo}" position="3">
+			<text size="50" />
+		</field>
+		<field name="submitButton" title="更新" widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+
+
+
+
+	<form name="FindPromotionBasicInformation" type="single" target=""
+		header-row-style="header-row" default-table-style="basic-table"
+		default-map-name="productPromo">
+		<field name="productPromoId" title="促销活动" position="1">
+			<text size="20"></text>
+		</field>
+		<field name="promoName" title="名称" position="2">
+			<text size="35"></text>
+		</field>
+		<field name="promoType" title="状态" position="3">
+			<drop-down allow-empty="false">
+				<option key="C" description="草稿" />
+				<option key="S" description="已审批" />
+				<option key="F" description="已废弃" />
+			</drop-down>
+		</field>
+		<field name="fromDate" title="${uiLabelMap.CommonFromDate}"
+			position="1">
+			<date-time type="timestamp" />
+		</field>
+		<field name="thruDate" title="${uiLabelMap.CommonThruDate}"
+			position="2">
+			<date-time type="timestamp" />
+		</field>
+		<field name="promoText" title="" position="3">
+			<textarea />
+		</field>
+	</form>
+
+
+	<!-- 创建竞品 -->
+	<form name="createCompetingInformation" type="single" target="EditCompeting"
+		header-row-style="header-row" default-table-style="basic-table" title=""
+		separate-columns="true" default-map-name="entity" default-entity-name="Competing">
+
+		<field name="productStoreId" title="门店" position="1"
+			required-field="true" widget-style="required">
+			<lookup target-form-name="LookupProductStore"></lookup>
+		</field>
+
+		<field name="circle" title="${uiLabelMap.circle}" id-name="circle"
+			position="2">
+			<text size="30" />
+		</field>
+		<field name="montioring" title="${uiLabelMap.monitoring}"
+			id-name="montioring" position="3">
+			<text size="30" />
+		</field>
+
+		<field name="status" title="${uiLabelMap.status}" id-name="status"
+			position="1">
+			<drop-down allow-empty="true">
+				<option key="0" description="草稿" />
+				<option key="1" description="确定" />
+				<option key="2" description="审批" />
+				<option key="3" description="反馈" />
+				<option key="4" description="指令下达" />
+			</drop-down>
+		</field>
+
+		<field name="startDate" title="起始日期" id-name="startDate"
+			position="2">
+			<date-time type="date" />
+		</field>
+		<field name="endDate" title="终止日期" id-name="endDate" position="3">
+			<date-time type="date" />
+		</field>
+		<field name="docDate" title="日期" id-name="docDate" position="3">
+			<date-time type="date" />
+		</field>
+		<field name="memo" title="${uiLabelMap.memo}" id-name="memo"
+			position="4">
+			<textarea />
+		</field>
+		<field name="add" use-when="entity!=null" title="创建基础信息">
+			<submit />
+		</field>
+
+	</form>
+
+	<!-- 添加明细 -->
+	<form name="AddCompeting" type="single" target="AddCompetingConditions"
+		header-row-style="header-row" default-table-style="basic-table">
+		<field name="docId">
+			<hidden />
+		</field>
+		<field name="monitoringObject" title="${uiLabelMap.monitoringObject}"
+			position="1">
+			<text size="25"></text>
+		</field>
+		<field name="brand"  title="${uiLabelMap.brand}"
+			position="2">
+			<lookup target-form-name="LookupProductFeature"></lookup>
+		</field>
+		<field name="model"  title="${uiLabelMap.model}"
+			position="3">
+			<lookup target-form-name="LookupProductFeatureModels"></lookup>
+		</field>
+
+		<field name="publicityPice"
+			title="${uiLabelMap.publicityPice}" position="1">
+			<text size="25" />
+		</field>
+		<field name="transactionPrice" 
+			title="${uiLabelMap.transactionPrice}" position="2">
+			<text size="25" />
+
+		</field>
+		<field name="price" title="${uiLabelMap.price}"
+			position="3">
+			<text size="25" />
+
+		</field>
+		<field name="suggestedPrice" 
+			title="${uiLabelMap.suggestedPrice}" position="4">
+			<text size="25" />
+		</field>
+
+		<field name="sourcesInfo" title="${uiLabelMap.sourcesInfo}"
+			position="1">
+			<text size="25" />
+		</field>
+		<field name="salesPolicy"  title="${uiLabelMap.salesPolicy}"
+			position="2">
+			<text size="25" />
+		</field>
+		<field name="reason"  title="${uiLabelMap.reason}"
+			position="3">
+			<text size="50" />
+		</field>
+
+		<field name="opinion"  title="${uiLabelMap.opinion}"
+			position="2">
+			<text size="50" />
+
+		</field>
+		<field name="memo"  title="${uiLabelMap.memo}"
+			position="3">
+			<text size="50" />
+		</field>
+
+		<field name="submitButton" title="添加详细" widget-style="smallSubmit"
+			position="7">
+			<submit />
+		</field>
+	</form>
+
+
+
+
+	<!-- deitCompetingDtl -->
+
+	<form name="editCompetingDtl" type="list" list-name="listIt"
+		target="updateCompetingDtl" odd-row-style="alternate-row"
+		default-table-style="basic-table hover-bar" separate-columns="true"
+		default-map-name="entity" default-entity-name="CompetingDtl">
+
+		<field name="docId">
+			<hidden />
+		</field>
+		<field name="monitoringObject" title="${uiLabelMap.monitoringObject}"
+			position="1">
+			<text size="25"></text>
+		</field>
+		<field name="brand"  title="${uiLabelMap.brand}"
+			position="2">
+			<lookup target-form-name="LookupProductFeature"></lookup>
+		</field>
+		<field name="model"  title="${uiLabelMap.model}"
+			position="3">
+			<lookup target-form-name="LookupProductFeatureModels"></lookup>
+		</field>
+
+		<field name="publicityPice" 
+			title="${uiLabelMap.publicityPice}" position="1">
+			<text size="25" />
+		</field>
+		<field name="transactionPrice" 
+			title="${uiLabelMap.transactionPrice}" position="2">
+			<text size="25" />
+
+		</field>
+		<field name="price"  title="${uiLabelMap.price}"
+			position="3">
+			<text size="25" />
+
+		</field>
+		<field name="suggestedPrice" 
+			title="${uiLabelMap.suggestedPrice}" position="4">
+			<text size="25" />
+		</field>
+
+		<field name="sourcesInfo"  title="${uiLabelMap.sourcesInfo}"
+			position="1">
+			<text size="25" />
+		</field>
+		<field name="salesPolicy"  title="${uiLabelMap.salesPolicy}"
+			position="2">
+			<text size="25" />
+		</field>
+		<field name="reason"  title="${uiLabelMap.reason}"
+			position="3">
+			<text size="50" />
+		</field>
+
+		<field name="opinion"  title="${uiLabelMap.opinion}"
+			position="2">
+			<text size="50" />
+		</field>
+		<field name="memo"  title="${uiLabelMap.memo}"
+			position="3">
+			<text size="50" />
+		</field>
+
+		<field name="submitButton" title="添加详细" widget-style="smallSubmit"
+			position="7">
+			<submit />
+		</field>
+	</form>
+
+
+	<!-- 搜索型号 -->
+	<form name="lookupProductFeatureModels" target="LookupProductFeatureModels"
+		title="" type="single" header-row-style="header-row"
+		default-table-style="basic-table">
+		<auto-fields-entity entity-name="ProductFeature"
+			default-field-type="find" />
+		<field name="submitButton" title="${uiLabelMap.CommonFind}"
+			widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+	</form>
+
+	<form name="listLookupProductFeatureModels" list-name="listIt"
+		title="" type="list" paginate-target="lookupProductFeatureModels"
+		odd-row-style="alternate-row" default-table-style="basic-table"
+		view-size="20">
+		<actions>
+			<service service-name="performFind" result-map="result"
+				result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="parameters" />
+				<field-map field-name="entityName" value="ProductFeature" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+		</actions>
+		<auto-fields-entity entity-name="ProductFeature"
+			default-field-type="display" />
+		<field name="description" title="描述" widget-style="buttontext">
+			<hyperlink also-hidden="false" target-type="plain"
+				description="${description}" target="javascript:set_value('${description}')" />
+		</field>
+	</form>
+
+</forms>

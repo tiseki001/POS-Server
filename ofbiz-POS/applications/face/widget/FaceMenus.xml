@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-menu.xsd">
+	<!-- 组件二级菜单 -->
+	<menu name="MainAppBar" title="${uiLabelMap.FaceApplication}"
+		extends="CommonAppBarMenu" extends-resource="component://common/widget/CommonMenus.xml">
+		<menu-item name="LogMgr" title="${uiLabelMap.LogMgr}">
+			<link target="logMgr" />
+		</menu-item>
+		<menu-item name="StorageMappingMgr" title="${uiLabelMap.StorageMappingMgr}">
+			<link target="storageMappingMgr" />
+		</menu-item>
+		<menu-item name="SalesPolicyMgr" title="${uiLabelMap.SalesPolicyMgr}">
+			<link target="salesPolicyMgr" />
+		</menu-item>
+		<menu-item name="Operators" title="${uiLabelMap.Operators}">
+			<link target="FindOperators" />
+		</menu-item>
+		<menu-item name="AfterAccepted" title="${uiLabelMap.AfterAccepted}">
+			<link target="FindAccept" />
+		</menu-item>
+		<menu-item name="SalesCommission" title="${uiLabelMap.SalesCommission}">
+			<link target="FindSalesCommission" />
+		</menu-item>
+		
+		<!-- 竞品信息 -->
+		<menu-item name="findCompeting" title="${uiLabelMap.findCompeting}">
+			<link target="findCompeting" />
+		</menu-item>
+		<!-- <menu-item name="ErpOptSetValueRelation" title="${uiLabelMap.ErpOptSetValueRelation}">
+			<link target="FindGeneric" >
+				<parameter param-name="entityName" value="ErpOptSetValueRelation"/>
+				<parameter param-name="find" value="true"/>
+				<parameter param-name="VIEW_SIZE" value="50"/>
+				<parameter param-name="VIEW_INDEX" value="0"/>
+			</link>
+		</menu-item>
+		<menu-item name="ErpPolicyRelation" title="${uiLabelMap.ErpPolicyRelation}">
+			<link target="FindGeneric" >
+				<parameter param-name="entityName" value="ErpPolicyRelation"/>
+			</link>
+		</menu-item>
+		<menu-item name="ErpPolicySetValueRelation" title="${uiLabelMap.ErpPolicySetValueRelation}">
+			<link target="FindGeneric" >
+				<parameter param-name="entityName" value="ErpPolicySetValueRelation"/>
+			</link>
+		</menu-item>
+		<menu-item name="AfterSaleCode" title="售后受理code维护">
+			<link target="FindGeneric" >
+				<parameter param-name="entityName" value="AfterSaleCode"/>
+			</link>
+		</menu-item> -->
+	</menu>
+	
+	<menu name="OperatorsTabBar" extends="CommonTabBarMenu" extends-resource="component://common/widget/CommonMenus.xml">
+        <menu-item name="SaleBusiness" title="${uiLabelMap.SaleBusiness}">
+            <link target="FindSalesOptBusiness"/>
+        </menu-item>
+        <menu-item name="ERPOperators" title="${uiLabelMap.ERPOperatorsId}">
+            <link target="FindOperators">
+            </link>
+        </menu-item>
+        <menu-item name="ERPCheck" title="${uiLabelMap.ERPCheck}">
+            <link target="FindCheck">
+            </link>
+        </menu-item>
+    </menu>
+    <menu name="AcceptedTabBar" extends="CommonTabBarMenu" extends-resource="component://common/widget/CommonMenus.xml">
+        <menu-item name="Accepted" title="受理">
+            <link target="EditAccept">
+            	<parameter param-name="docId"/>
+            	<parameter param-name="accepteStoreId"/>
+            </link>
+        </menu-item>
+        <menu-item name="Quote" title="报价">
+            <link target="EditQuote">
+            	<parameter param-name="docId"/>
+            	<parameter param-name="accepteStoreId"/>
+            </link>
+        </menu-item>
+    </menu>
+	
+	<!-- 创建仓库映射编辑菜单菜单 -->
+	<menu name="storageMappingMenu" menu-container-style="button-bar button-style-2"
+		default-selected-style="selected">
+		<menu-item name="EditStorageMapping" title="${uiLabelMap.CommonCreateNew}"
+			widget-style="buttontext create">
+			<link target="editStorageMapping" />
+		</menu-item>
+	</menu>
+	<menu name="salesPolicyMenu" menu-container-style="button-bar button-style-2"
+		default-selected-style="selected">
+		<menu-item name="editSalesPolicy" title="${uiLabelMap.CommonCreateNew}"
+			widget-style="buttontext create">
+			<link target="editSalesPolicy" />
+		</menu-item>
+	</menu>
+   
+	<menu name="checkMenu" menu-container-style="button-bar button-style-2"
+		default-selected-style="selected">
+		<menu-item name="EditCheck" title="新建校验信息" widget-style="buttontext create">
+			<link target="EditCheck" />
+		</menu-item>
+		<menu-item name="ERPCheck" title="校验" widget-style="buttontext">
+			<link target="ERPCheck" style="buttontext" />
+		</menu-item>
+		<menu-item name="ERPCheckDownLoad" title="下载" widget-style="buttontext">
+			<link target="DownLoadCheck" style="buttontext" />
+		</menu-item>
+	</menu>
+	
+	<!--销售奖励 -->
+    <menu name="SalesCommissionTabBar" extends="CommonTabBarMenu" extends-resource="component://common/widget/CommonMenus.xml">
+       	<menu-item name="Cash" title="现金">
+       		<link target="FindCash">
+           	</link>
+       	</menu-item>
+        <menu-item name="Integral" title="积分">
+        	<link target="FindIntegral">
+            </link>
+        </menu-item>
+    </menu>
+	
+	<!-- 竞品信息 -->
+	 <menu name="competinginfo" menu-container-style="button-bar button-style-2"
+		default-selected-style="selected">
+		<menu-item name="findCompeting" title="${uiLabelMap.Competing}">
+			<link target="findCompeting" />
+		</menu-item>
+     
+        <menu-item name="createCompeting" title="创建竞品信息">
+            <link target="createCompeting">
+            </link>
+        </menu-item>
+	</menu>
+	
+</menus>

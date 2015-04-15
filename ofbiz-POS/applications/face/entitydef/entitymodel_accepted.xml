@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<!-- ========================================================= -->
+	<!-- ======================== Defaults ======================= -->
+	<!-- ========================================================= -->
+	<title>Entity of an Open For Business Project Component</title>
+	<description>None</description>
+	<version>1.0</version>
+
+	<!-- ========================================================= -->
+	<!-- ======================== Data Model ===================== -->
+	<!-- The modules in this file are as follows: -->
+	<!-- ========================================================= -->
+	<!-- org.ofbiz.face.accepted -->
+	<!-- ========================================================= -->
+	
+	<entity entity-name="AfterSaleAccepted" package-name="org.ofbiz.face.Accept"
+		title="After Sale Accepted">
+		<!-- 基础信息 -->
+		<!-- 单据号:门店号+流水号 -->
+		<field name="docId" type="id-ne"></field>
+		<!-- 单据号:商品名称+编码 -->
+		<field name="docName" type="name"></field>
+		<!-- 受理门店 -->
+		<field name="accepteStoreId" type="id"></field>
+		<field name="accepteDate" type="date-time"></field>
+		<!-- 制单人 -->
+		<field name="touchPartyId" type="id"></field>
+		<!-- 审核时间-->
+		<field name="auditorDate" type="date-time"></field>
+		<!-- 审核人 -->
+		<field name="auditorId" type="id"></field>
+		<field name="status" type="indicator"></field>
+		<field name="demo" type="description"></field>
+		<!-- 商品信息 -->
+		<field name="productId" type="id-ne"></field>
+		<field name="sequenceId" type="name"></field>
+		<field name="productSN" type="name"></field>
+		<field name="productStoreId" type="id"></field>
+		<field name="price" type="currency-amount"></field>
+		<field name="productDate" type="date-time"></field>
+		<field name="acceptedFacility" type="indicator"></field>
+		<field name="customerName" type="name"></field>
+		<field name="customerPhone" type="name"></field>
+		<field name="customerAddr" type="description"></field>
+		<field name="attachment" type="name"></field>
+		<field name="inspectUnit" type="name"></field>
+		<field name="inspectNumber" type="name"></field>
+		<!-- 受理信息 -->
+		<!-- initialSurvey Status -->
+		<field name="initSStatus" type="id"></field>
+		<field name="initSAppearance" type="description"></field>
+		<field name="faultCategory" type="id"></field>
+		<field name="faultDesc" type="description"></field>
+		<field name="accepteDemo" type="description"></field>
+		<!-- 维护信息 -->
+		<field name="NewProductId" type="id-ne"></field>
+		<field name="NewSequenceId" type="name"></field>
+		<field name="NewSN" type="name"></field>
+		<field name="qualityResult" type="id"></field>
+		<field name="maintainMethod" type="description"></field>
+		<field name="account" type="name"></field>
+		<!-- 报价信息 -->
+		<field name="quoteDate" type="date-time"></field>
+		<field name="offerer" type="name"></field>
+		<field name="department" type="name"></field>
+		<field name="quoteAccount" type="name"></field>
+		<field name="extDocNo" type="name"></field>
+		<field name="cost1" type="currency-amount"></field>
+		<field name="cost2" type="currency-amount"></field>
+		<field name="costTotal" type="currency-amount"></field>
+		<field name="quoteDemo" type="description"></field>
+		<!-- 报价确认 -->
+		<field name="confirmDate" type="date-time"></field>
+		<field name="confirmor" type="name"></field>
+		<field name="confirmResult" type="name"></field>
+		<field name="confirmDemo" type="description"></field>
+		<prim-key field="docId"/>
+	</entity>
+	
+	<!-- 销售单用户信息view -->
+	<view-entity entity-name="SaleOrderAndPersonView" package-name="org.ofbiz.face.Accept" 
+		title="SaleOrderHeader, SaleOrderDtl, PartyAndPerson">
+		<member-entity entity-alias="Header" entity-name="SaleOrderHeader" />
+		<member-entity entity-alias="Detail" entity-name="SaleOrderDtl" />
+		<member-entity entity-alias="PE" entity-name="Person" />
+		<member-entity entity-alias="P" entity-name="PartyContactMechPurpose" />
+		<member-entity entity-alias="PA" entity-name="PostalAddress" />
+		<alias entity-alias="Header" name="storeId" />
+		<alias entity-alias="Header" name="postingDate" />
+		<alias entity-alias="Detail" name="productId" />
+		<alias entity-alias="Detail" name="rebatePrice" />
+		<alias entity-alias="Detail" name="serialNo" />
+		<alias entity-alias="PE" name="firstName" />
+		<alias entity-alias="PE" name="middleName" />
+		<alias entity-alias="PE" name="lastName" />
+		<alias entity-alias="PE" name="phoneMobile" />
+		<alias entity-alias="PA" name="address1" />
+		<view-link entity-alias="Header" rel-entity-alias="Detail">
+			<key-map field-name="docId"/>
+		</view-link>
+		<view-link entity-alias="Header" rel-entity-alias="PE">
+			<key-map field-name="partyId"/>
+		</view-link>
+		<view-link entity-alias="PE" rel-entity-alias="P" rel-optional="true">
+			<key-map field-name="partyId"/>
+			<key-map field-name="partyId" rel-field-name="contactMechId"/>
+		</view-link>
+		<view-link entity-alias="P" rel-entity-alias="PA" rel-optional="true">
+			<key-map field-name="contactMechId"/>
+		</view-link>
+	</view-entity>
+	<entity entity-name="AfterSaleCode" package-name="org.ofbiz.face.Accept"
+		title="After Sale code">
+		<field name="codeId" type="id"></field>
+		<field name="description" type="name"></field>
+		<field name="type" type="name"></field>
+		<prim-key field="codeId"/>
+	</entity>
+	
+</entitymodel>

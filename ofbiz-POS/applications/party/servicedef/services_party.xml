@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Inventory Component Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+	<!-- 查询会员信息 -->
+	 <service name="findPartyInfoWeb" engine="java" export="true"
+            location="org.ofbiz.party.webservice.PartyWebServices" invoke="findPartyInfo">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 添加会员信息 -->
+	 <service name="createPartyWeb" engine="java" export="true"
+            location="org.ofbiz.party.webservice.PartyWebServices" invoke="createParty">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+     <!-- 修改会员信息 -->
+	 <service name="updatePartyWeb" engine="java" export="true"
+            location="org.ofbiz.party.webservice.PartyWebServices" invoke="updateParty">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+	<!-- 查询人员信息 -->
+	 <service name="findPersonByProductStoreIdWeb" engine="java" export="true" location="org.ofbiz.party.webservice.PersonWebService" invoke="findPersonByProductStoreId">
+        <attribute name="jsonStr" type="String" mode="IN" optional="false"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 获取Id -->
+    <service name="getId" engine="java" export="true" location="org.ofbiz.party.webservice.PartyWebServices" invoke="getId">
+    	<attribute name="productStoreId" type="String" mode="IN" optional="true"/>
+    	<attribute name="contactMechId" type="String" mode="OUT" optional="false"/>
+    </service>
+    <!-- 获取会员等级 -->
+    <service name="findPartyPcWeb" engine="java" export="true" location="org.ofbiz.party.webservice.PartyWebServices" invoke="findPartyPc">
+    	<attribute name="jsonStr" type="String" mode="IN" optional="true"/>
+        <attribute name="jsonOut" type="String" mode="OUT" optional="false"/>
+    </service>
+    
+    <!-- add by ft start-->
+    <service name="addProductStoreRoleCon" engine="java"
+    		location="org.ofbiz.party.party.PartyServices"  invoke="addProductStoreRoleCon" >
+	    <description>create SalesPolicyPriceRule</description>
+	    <attribute name="partyId" type="String" mode="IN" optional="true"/>
+	    <attribute name="left1" type="String" mode="IN" optional="true"/>
+	    <attribute name="fieldName" type="String" mode="IN" optional="true"/>
+	    <attribute name="operate" type="String" mode="IN" optional="true"/>
+	    <attribute name="value1" type="String" mode="IN" optional="true"/>
+	    <attribute name="right1" type="String" mode="IN" optional="true"/>
+	    <attribute name="relation" type="String" mode="IN" optional="true"/>
+	    <attribute name="rowCount" type="String" mode="IN" optional="true"/>
+ 	</service>
+ 	
+ 	<service name="findStoreLists" engine="java" auth="false"
+        location="org.ofbiz.party.party.PartyServices" invoke="findStoreList">
+        <description>Set the Value options for selected Price Rule Condition Input</description>
+        <attribute name="partyId" type="String" mode="IN" optional="true"/>
+        <attribute name="inputFields" type="java.util.Map" mode="IN" optional="true"/>
+        <attribute name="viewIndex" type="Integer" mode="IN" optional="true"/>
+        <attribute name="viewSize" type="Integer" mode="IN" optional="true"/>
+        <attribute name="listIt" type="org.ofbiz.entity.util.EntityListIterator" mode="OUT" optional="true"/>
+        <attribute name="listSize" type="Integer" mode="OUT" optional="true"/>
+    </service>
+    
+    <service name="createBatchProductStoreRoles" engine="java"
+    		location="org.ofbiz.party.party.PartyServices"  invoke="createBatchProductStoreRoles" >
+	    <description>create SalesPolicyPriceRule</description>
+	    <attribute name="partyId" type="String" mode="IN" optional="true"/>
+	    <attribute name="batchRoleTypeId" type="String" mode="IN" optional="true"/>
+	    <attribute name="batchFromDate" type="Timestamp" mode="IN" optional="true"/>
+	    <attribute name="batchThruDate" type="Timestamp" mode="IN" optional="true"/>
+	    <attribute name="sequenceNum" type="String" mode="IN" optional="true"/>
+	    <attribute name="viewIndex" type="Integer" mode="IN" optional="true"/>
+        <attribute name="viewSize" type="Integer" mode="IN" optional="true"/>
+ 	</service>
+    <!-- add by ft end-->
+</services>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<simple-methods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/simple-methods-v2.xsd">
+	<simple-method method-name="removeStorageMapping" short-description="">
+        <make-value entity-name="ErpFacilityMap" value-field="lookupPKMap"/>
+        <set-pk-fields map="parameters" value-field="lookupPKMap"/>
+        <find-by-primary-key entity-name="ErpFacilityMap" map="lookupPKMap" value-field="lookedUpValue"/>
+       <remove-value value-field="lookedUpValue"/>
+	</simple-method>
+</simple-methods>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+    <form name="FindNewVersion" list-name="listIt" title="" type="list"
+        odd-row-style="alternate-row" default-table-style="basic-table">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="VersionAttachment"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="attachmentId" title="数据编号"><display/></field>
+
+        <field name="status" use-when="${status}==1" title="版本状态">
+			<display description="已下载"/>
+		</field>
+		<field name="status" use-when="${status}==2" title="版本状态">
+			<display description="已更新"/>
+		</field>
+        
+        <field name="curVersion" title="更新包版本"><display/></field>
+
+        <field name="viewAttachment" use-when="${status}!=2" title="${uiLabelMap.UpgradeAct}" widget-style="buttontext">
+            <hyperlink target="viewAttachment" description="${uiLabelMap.UpgradeActStart}">
+                <parameter param-name="attachmentId"/>
+                <parameter param-name="curVersion"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+	<form name="ListVersions" list-name="listIt" title="" type="list" paginate-target=""
+        odd-row-style="alternate-row" default-table-style="basic-table">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="VersionAttachment"/>
+                <field-map field-name="orderBy" from-field="parameters.sortField"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="attachmentId" title="数据编号"><display/></field>
+        <field name="zippath" title="文件目录"><display/></field>
+
+        <field name="status" use-when="${status}!=1" title="版本状态">
+			<display description="已上传"/>
+		</field>
+        
+        <field name="curVersion" title="更新包版本"><display/></field>
+
+        <field name="deleteVersionAttach" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="DeleteVersion" description="${uiLabelMap.CommonDelete}">
+                <parameter param-name="attachmentId"/>
+            </hyperlink>
+        </field>
+
+    </form>
+ 
+
+</forms>

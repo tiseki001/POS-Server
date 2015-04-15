@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+
+	<service name="getSaleOrderAndPersonView" engine="java" auth="false"
+        location="org.ofbiz.face.accept.AcceptService" invoke="getSaleOrderAndPersonView">
+        <description>Set the Value options for selected sales Operators Condition Input</description>
+        <attribute name="sequenceId" mode="IN" type="String" optional="true"/>
+        <attribute name="valList" mode="OUT" type="java.util.List" optional="true"/><!-- optional="true" because of quantity or other kind of fiels needing an input -->
+    </service> 
+    <service name="getPartyByStoreId" engine="java" auth="false"
+        location="org.ofbiz.face.accept.AcceptService" invoke="getPartyByStoreId">
+        <description>Set the Value options for selected sales Operators Condition Input</description>
+        <attribute name="storeId" mode="IN" type="String" optional="true"/>
+        <attribute name="partyList" mode="OUT" type="java.util.List" optional="true"/><!-- optional="true" because of quantity or other kind of fiels needing an input -->
+    </service> 
+	<!-- after accept -->
+	<service name="createAccept" default-entity-name="AfterSaleAccepted"
+		engine="java" invoke="createAccept" auth="true" location="org.ofbiz.face.accept.AcceptService">
+		<description></description>
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+		<attribute name="jsonStr" mode="IN" type="String" optional="true"/>
+	</service>
+	<service name="deleteAccept" default-entity-name="AfterSaleAccepted"
+		engine="entity-auto" invoke="delete" auth="true">
+		<description></description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+	</service>
+	<service name="updateAccept" default-entity-name="AfterSaleAccepted"
+		engine="java" invoke="updateAccept" auth="false" 
+		 location="org.ofbiz.face.accept.AcceptService">
+		<description></description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+		<attribute name="jsonStr" mode="IN" type="String" optional="true"/>
+	</service>
+   
+	
+</services>

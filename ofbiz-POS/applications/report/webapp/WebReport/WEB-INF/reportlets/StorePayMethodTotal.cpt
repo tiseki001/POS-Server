@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20141222" releaseVersion="7.1.1">
+<TableDataMap>
+<TableData name="ProductStore" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="userLoginId"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[SELECT DISTINCT T2.PRODUCT_STORE_ID,T3.STORE_NAME 
+FROM user_login T1
+LEFT JOIN product_store_role T2 ON T1.PARTY_ID=T2.PARTY_ID
+LEFT JOIN PRODUCT_STORE T3 ON T3.PRODUCT_STORE_ID=T2.PRODUCT_STORE_ID
+WHERE 1=1
+AND T1.USER_LOGIN_ID='${userLoginId}'
+]]></Query>
+</TableData>
+<TableData name="Company" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="userLoginId"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[select DISTINCT ATTR_VALUE from PRODUCT_STORE_ATTRIBUTE
+where PRODUCT_STORE_ATTR_TYPE_ID='COMPANY'
+AND PRODUCT_STORE_ID IN
+(
+	SELECT DISTINCT T2.PRODUCT_STORE_ID
+	FROM user_login T1
+	LEFT JOIN product_store_role T2 ON T1.PARTY_ID=T2.PARTY_ID
+	LEFT JOIN PRODUCT_STORE T3 ON T3.PRODUCT_STORE_ID=T2.PRODUCT_STORE_ID
+	WHERE 1=1
+	AND T1.USER_LOGIN_ID='${userLoginId}'
+)]]></Query>
+</TableData>
+<TableData name="PayMethod" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="startDate"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="cboArea"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="cboProductStore"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="endDate"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="userLoginId"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="cboCompany"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[SELECT T2.STORE_NAME,T1.COMPANY,T1.BIGAREA,SUM(AMOUNT),T1."DATE",
+T3.DESCRIPTION
+FROM 
+(
+select to_char(T1.CREATE_DOC_DATE,'yyyy-mm-dd') as "DATE",
+T1.STORE_ID,T3.TYPE,SUM(T3.AMOUNT) AS AMOUNT,
+T4.ATTR_VALUE AS COMPANY,T5.ATTR_VALUE AS BIGAREA
+from SALE_ORDER_HEADER t1
+LEFT JOIN Collection_Order_Header t2 on t1.DOC_ID=T2.BASE_ENTRY
+LEFT JOIN Collection_Order_Dtl t3 on t2.DOC_ID=T3.DOC_ID AND T3.STYLE='1'
+LEFT JOIN PRODUCT_STORE_ATTRIBUTE T4 ON T1.STORE_ID=T4.PRODUCT_STORE_ID AND T4.PRODUCT_STORE_ATTR_TYPE_ID='COMPANY'
+LEFT JOIN PRODUCT_STORE_ATTRIBUTE T5 ON T1.STORE_ID=T5.PRODUCT_STORE_ID AND T5.PRODUCT_STORE_ATTR_TYPE_ID='SMALLAREA'
+where 1=1
+AND T1.FUND_STATUS='2'
+AND T1.STORE_ID IN
+(
+	SELECT DISTINCT T2.PRODUCT_STORE_ID
+	FROM user_login T1
+	LEFT JOIN product_store_role T2 ON T1.PARTY_ID=T2.PARTY_ID
+	LEFT JOIN PRODUCT_STORE T3 ON T3.PRODUCT_STORE_ID=T2.PRODUCT_STORE_ID
+	WHERE 1=1
+	AND T1.USER_LOGIN_ID='${userLoginId}'
+)
+${if(len(startDate) == 0,"","and T1.CREATE_DOC_DATE >= TO_DATE('" + startDate +"', 'yyyy-mm-dd,hh24:mi:ss')")}
+${if(len(endDate) == 0,"","and T1.CREATE_DOC_DATE <= TO_DATE('" + endDate +"', 'yyyy-mm-dd,hh24:mi:ss')")}
+${if(len(cboCompany) == 0,"","and T4.ATTR_VALUE = '" + cboCompany + "'")}
+${if(len(cboArea) == 0,"","and T5.ATTR_VALUE = '" + cboArea + "'")}
+${if(len(cboProductStore) == 0,"","and T1.STORE_ID = '" + cboProductStore + "'")}
+GROUP BY to_char(T1.CREATE_DOC_DATE,'yyyy-mm-dd'),T1.STORE_ID,T3.TYPE,T4.ATTR_VALUE,T5.ATTR_VALUE
+UNION ALL
+select to_char(T1.CREATE_DOC_DATE,'yyyy-mm-dd') as "DATE",
+T1.STORE_ID,T3.TYPE,0-SUM(T3.AMOUNT) AS AMOUNT,
+T4.ATTR_VALUE AS COMPANY,T5.ATTR_VALUE AS BIGAREA
+from RETURN_ORDER_HEADER t1
+LEFT JOIN REFUND_ORDER_HEADER t2 on t1.DOC_ID=T2.BASE_ENTRY
+LEFT JOIN REFUND_ORDER_DTL t3 on t2.DOC_ID=T3.DOC_ID
+LEFT JOIN PRODUCT_STORE_ATTRIBUTE T4 ON T1.STORE_ID=T4.PRODUCT_STORE_ID AND T4.PRODUCT_STORE_ATTR_TYPE_ID='COMPANY'
+LEFT JOIN PRODUCT_STORE_ATTRIBUTE T5 ON T1.STORE_ID=T5.PRODUCT_STORE_ID AND T5.PRODUCT_STORE_ATTR_TYPE_ID='SMALLAREA'
+where 1=1
+AND T1.REFUND_STATUS='2'
+AND T1.STORE_ID IN
+(
+	SELECT DISTINCT T2.PRODUCT_STORE_ID
+	FROM user_login T1
+	LEFT JOIN product_store_role T2 ON T1.PARTY_ID=T2.PARTY_ID
+	LEFT JOIN PRODUCT_STORE T3 ON T3.PRODUCT_STORE_ID=T2.PRODUCT_STORE_ID
+	WHERE 1=1
+	AND T1.USER_LOGIN_ID='${userLoginId}'
+)
+${if(len(startDate) == 0,"","and T1.CREATE_DOC_DATE >= TO_DATE('" + startDate +"', 'yyyy-mm-dd,hh24:mi:ss')")}
+${if(len(endDate) == 0,"","and T1.CREATE_DOC_DATE <= TO_DATE('" + endDate +"', 'yyyy-mm-dd,hh24:mi:ss')")}
+${if(len(cboCompany) == 0,"","and T4.ATTR_VALUE = '" + cboCompany + "'")}
+${if(len(cboArea) == 0,"","and T5.ATTR_VALUE = '" + cboArea + "'")}
+${if(len(cboProductStore) == 0,"","and T1.STORE_ID = '" + cboProductStore + "'")}
+GROUP BY to_char(T1.CREATE_DOC_DATE,'yyyy-mm-dd'),T1.STORE_ID,T3.TYPE,T4.ATTR_VALUE,T5.ATTR_VALUE
+UNION ALL
+select to_char(T1.CREATE_DOC_DATE,'yyyy-mm-dd') as "DATE",
+T1.STORE_ID,T3.TYPE,SUM(T3.AMOUNT) AS AMOUNT,
+T4.ATTR_VALUE AS COMPANY,T5.ATTR_VALUE AS BIGAREA
+from PRE_ORDER_HEADER t1
+LEFT JOIN PRE_COLLECTION_ORDER_HEADER t2 on t1.DOC_ID=T2.BASE_ENTRY
+LEFT JOIN PRE_COLLECTION_ORDER_DTL t3 on t2.DOC_ID=T3.DOC_ID
+LEFT JOIN PRODUCT_STORE_ATTRIBUTE T4 ON T1.STORE_ID=T4.PRODUCT_STORE_ID AND T4.PRODUCT_STORE_ATTR_TYPE_ID='COMPANY'
+LEFT JOIN PRODUCT_STORE_ATTRIBUTE T5 ON T1.STORE_ID=T5.PRODUCT_STORE_ID AND T5.PRODUCT_STORE_ATTR_TYPE_ID='SMALLAREA'
+where 1=1
+AND T1.FUND_STATUS='2'
+AND T1.STORE_ID IN
+(
+	SELECT DISTINCT T2.PRODUCT_STORE_ID
+	FROM user_login T1
+	LEFT JOIN product_store_role T2 ON T1.PARTY_ID=T2.PARTY_ID
+	LEFT JOIN PRODUCT_STORE T3 ON T3.PRODUCT_STORE_ID=T2.PRODUCT_STORE_ID
+	WHERE 1=1
+	AND T1.USER_LOGIN_ID='${userLoginId}'
+)
+${if(len(startDate) == 0,"","and T1.CREATE_DOC_DATE >= TO_DATE('" + startDate +"', 'yyyy-mm-dd,hh24:mi:ss')")}
+${if(len(endDate) == 0,"","and T1.CREATE_DOC_DATE <= TO_DATE('" + endDate +"', 'yyyy-mm-dd,hh24:mi:ss')")}
+${if(len(cboCompany) == 0,"","and T4.ATTR_VALUE = '" + cboCompany + "'")}
+${if(len(cboArea) == 0,"","and T5.ATTR_VALUE = '" + cboArea + "'")}
+${if(len(cboProductStore) == 0,"","and T1.STORE_ID = '" + cboProductStore + "'")}
+GROUP BY to_char(T1.CREATE_DOC_DATE,'yyyy-mm-dd'),T1.STORE_ID,T3.TYPE,T4.ATTR_VALUE,T5.ATTR_VALUE
+UNION ALL
+select to_char(T1.CREATE_DOC_DATE,'yyyy-mm-dd') as "DATE",
+T1.STORE_ID,T3.TYPE,0-SUM(T3.AMOUNT) AS AMOUNT,
+T4.ATTR_VALUE AS COMPANY,T5.ATTR_VALUE AS BIGAREA
+from BACK_ORDER_HEADER t1
+LEFT JOIN PRE_REFUND_ORDER_HEADER t2 on t1.DOC_ID=T2.BASE_ENTRY
+LEFT JOIN PRE_REFUND_ORDER_DTL t3 on t2.DOC_ID=T3.DOC_ID
+LEFT JOIN PRODUCT_STORE_ATTRIBUTE T4 ON T1.STORE_ID=T4.PRODUCT_STORE_ID AND T4.PRODUCT_STORE_ATTR_TYPE_ID='COMPANY'
+LEFT JOIN PRODUCT_STORE_ATTRIBUTE T5 ON T1.STORE_ID=T5.PRODUCT_STORE_ID AND T5.PRODUCT_STORE_ATTR_TYPE_ID='SMALLAREA'
+where 1=1
+AND T1.REFUND_STATUS='2'
+AND T1.STORE_ID IN
+(
+	SELECT DISTINCT T2.PRODUCT_STORE_ID
+	FROM user_login T1
+	LEFT JOIN product_store_role T2 ON T1.PARTY_ID=T2.PARTY_ID
+	LEFT JOIN PRODUCT_STORE T3 ON T3.PRODUCT_STORE_ID=T2.PRODUCT_STORE_ID
+	WHERE 1=1
+	AND T1.USER_LOGIN_ID='${userLoginId}'
+)
+${if(len(startDate) == 0,"","and T1.CREATE_DOC_DATE >= TO_DATE('" + startDate +"', 'yyyy-mm-dd,hh24:mi:ss')")}
+${if(len(endDate) == 0,"","and T1.CREATE_DOC_DATE <= TO_DATE('" + endDate +"', 'yyyy-mm-dd,hh24:mi:ss')")}
+${if(len(cboCompany) == 0,"","and T4.ATTR_VALUE = '" + cboCompany + "'")}
+${if(len(cboArea) == 0,"","and T5.ATTR_VALUE = '" + cboArea + "'")}
+${if(len(cboProductStore) == 0,"","and T1.STORE_ID = '" + cboProductStore + "'")}
+GROUP BY to_char(T1.CREATE_DOC_DATE,'yyyy-mm-dd'),T1.STORE_ID,T3.TYPE,T4.ATTR_VALUE,T5.ATTR_VALUE
+) T1
+LEFT JOIN PRODUCT_STORE T2 ON T1.STORE_ID=T2.PRODUCT_STORE_ID
+LEFT JOIN PAYMENT_METHOD_TYPE T3 ON T1.TYPE=T3.PAYMENT_METHOD_TYPE_ID
+GROUP BY T2.STORE_NAME,T1.COMPANY,T1.BIGAREA,
+T3.DESCRIPTION,T1."DATE"
+ORDER BY T1."DATE",T2.STORE_NAME]]></Query>
+</TableData>
+<TableData name="StoreArea" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="userLoginId"/>
+<O>
+<![CDATA[]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[FRDemo]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[select DISTINCT ATTR_VALUE from PRODUCT_STORE_ATTRIBUTE
+where PRODUCT_STORE_ATTR_TYPE_ID='SMALLAREA'
+AND PRODUCT_STORE_ID IN
+(
+	SELECT DISTINCT T2.PRODUCT_STORE_ID
+	FROM user_login T1
+	LEFT JOIN product_store_role T2 ON T1.PARTY_ID=T2.PARTY_ID
+	LEFT JOIN PRODUCT_STORE T3 ON T3.PRODUCT_STORE_ID=T2.PRODUCT_STORE_ID
+	WHERE 1=1
+	AND T1.USER_LOGIN_ID='${userLoginId}'
+)]]></Query>
+</TableData>
+</TableDataMap>
+<Report class="com.fr.report.worksheet.WorkSheet" name="StorePayMethodTotal">
+<ReportPageAttr>
+<HR/>
+<FR/>
+<HC/>
+<FC/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[2019300,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[3352800,4533900,5105400,5029200,4991100,4152900,3771900,2743200,2743200,2743200,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="0" cs="6" s="0">
+<O>
+<![CDATA[营业款报表]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="1" s="1">
+<O>
+<![CDATA[日期]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="1" s="1">
+<O>
+<![CDATA[公司]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="1" s="1">
+<O>
+<![CDATA[区域]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="1" s="1">
+<O>
+<![CDATA[门店]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="1" s="1">
+<O>
+<![CDATA[收款方式]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="1" s="1">
+<O>
+<![CDATA[金额]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="PayMethod" columnName="DATE"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="2" r="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="PayMethod" columnName="COMPANY"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="3" r="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="PayMethod" columnName="BIGAREA"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="4" r="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="PayMethod" columnName="STORE_NAME"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="PayMethod" columnName="DESCRIPTION"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="2" s="2">
+<O t="DSColumn">
+<Attributes dsName="PayMethod" columnName="SUM(AMOUNT)"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper">
+<Attr divideMode="1"/>
+</RG>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="1" r="3" cs="5" s="2">
+<O>
+<![CDATA[总计]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="3" s="2">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=SUM(G3)]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting>
+<PaperSize width="46368000" height="64080000"/>
+<Margin top="986400" left="2743200" bottom="986400" right="2743200"/>
+</PaperSetting>
+</ReportSettings>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+<ParameterUI class="com.fr.form.main.parameter.FormParameterUI">
+<Layout class="com.fr.form.ui.container.WParameterLayout">
+<WidgetName name="para"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<Margin top="1" left="1" bottom="1" right="1"/>
+<Border>
+<border style="0" color="-723724" type="0" borderStyle="0"/>
+<WidgetTitle>
+<O>
+<![CDATA[新建标题]]></O>
+<FRFont name="SimSun" style="0" size="72"/>
+<Position pos="0"/>
+</WidgetTitle>
+<Alpha alpha="1.0"/>
+</Border>
+<Background name="ColorBackground" color="-1118482"/>
+<LCAttr vgap="0" hgap="0" compInterval="0"/>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.Label">
+<WidgetName name="lblStartDate"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue>
+<O>
+<![CDATA[开始时间]]></O>
+</widgetValue>
+<LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
+<FRFont name="SimSun" style="0" size="72"/>
+<border style="0" color="-723724"/>
+</InnerWidget>
+<BoundsAttr x="50" y="25" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.DateEditor">
+<WidgetName name="startDate"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<DateAttr format="yyyy-MM-dd HH:mm:ss"/>
+<widgetValue>
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=TODAY()]]></Attributes>
+</O>
+</widgetValue>
+</InnerWidget>
+<BoundsAttr x="130" y="25" width="178" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.DateEditor">
+<WidgetName name="endDate"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<DateAttr format="yyyy-MM-dd HH:mm:ss"/>
+<widgetValue>
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[=TODAY()+1]]></Attributes>
+</O>
+</widgetValue>
+</InnerWidget>
+<BoundsAttr x="388" y="25" width="178" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.Label">
+<WidgetName name="lblEndDate"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue>
+<O>
+<![CDATA[结束时间]]></O>
+</widgetValue>
+<LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
+<FRFont name="SimSun" style="0" size="72"/>
+<border style="0" color="-723724"/>
+</InnerWidget>
+<BoundsAttr x="308" y="25" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.Label">
+<WidgetName name="lblCompany"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue>
+<O>
+<![CDATA[公司]]></O>
+</widgetValue>
+<LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
+<FRFont name="SimSun" style="0" size="72"/>
+<border style="0" color="-723724"/>
+</InnerWidget>
+<BoundsAttr x="566" y="25" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.ComboBox">
+<WidgetName name="cboCompany"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<Dictionary class="com.fr.data.impl.TableDataDictionary">
+<FormulaDictAttr kiName="ATTR_VALUE" viName="ATTR_VALUE"/>
+<TableDataDictAttr>
+<TableData class="com.fr.data.impl.NameTableData">
+<Name>
+<![CDATA[Company]]></Name>
+</TableData>
+</TableDataDictAttr>
+</Dictionary>
+<widgetValue/>
+</InnerWidget>
+<BoundsAttr x="646" y="25" width="178" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.ComboBox">
+<WidgetName name="cboArea"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<Dictionary class="com.fr.data.impl.TableDataDictionary">
+<FormulaDictAttr kiName="ATTR_VALUE" viName="ATTR_VALUE"/>
+<TableDataDictAttr>
+<TableData class="com.fr.data.impl.NameTableData">
+<Name>
+<![CDATA[StoreArea]]></Name>
+</TableData>
+</TableDataDictAttr>
+</Dictionary>
+<widgetValue/>
+</InnerWidget>
+<BoundsAttr x="130" y="64" width="178" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.Label">
+<WidgetName name="lblArea"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue>
+<O>
+<![CDATA[区域]]></O>
+</widgetValue>
+<LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
+<FRFont name="SimSun" style="0" size="72"/>
+<border style="0" color="-723724"/>
+</InnerWidget>
+<BoundsAttr x="50" y="64" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.Label">
+<WidgetName name="lblProductStore"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<widgetValue>
+<O>
+<![CDATA[门店]]></O>
+</widgetValue>
+<LabelAttr verticalcenter="true" textalign="0" autoline="true"/>
+<FRFont name="SimSun" style="0" size="72"/>
+<border style="0" color="-723724"/>
+</InnerWidget>
+<BoundsAttr x="308" y="64" width="80" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.ui.ComboBox">
+<WidgetName name="cboProductStore"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<Dictionary class="com.fr.data.impl.TableDataDictionary">
+<FormulaDictAttr kiName="PRODUCT_STORE_ID" viName="STORE_NAME"/>
+<TableDataDictAttr>
+<TableData class="com.fr.data.impl.NameTableData">
+<Name>
+<![CDATA[ProductStore]]></Name>
+</TableData>
+</TableDataDictAttr>
+</Dictionary>
+<widgetValue/>
+</InnerWidget>
+<BoundsAttr x="388" y="64" width="178" height="21"/>
+</Widget>
+<Widget class="com.fr.form.ui.container.WAbsoluteLayout$BoundsWidget">
+<InnerWidget class="com.fr.form.parameter.FormSubmitButton">
+<WidgetName name="btnSearch"/>
+<WidgetAttr>
+<PrivilegeControl/>
+</WidgetAttr>
+<Text>
+<![CDATA[查询]]></Text>
+<Hotkeys>
+<![CDATA[enter]]></Hotkeys>
+</InnerWidget>
+<BoundsAttr x="744" y="64" width="80" height="21"/>
+</Widget>
+<Sorted sorted="false"/>
+<Display display="true"/>
+<DelayDisplayContent delay="true"/>
+<Position position="0"/>
+<Design_Width design_width="960"/>
+<MobileWidgetList>
+<Widget widgetName="startDate"/>
+<Widget widgetName="endDate"/>
+<Widget widgetName="cboCompany"/>
+<Widget widgetName="cboArea"/>
+<Widget widgetName="cboProductStore"/>
+</MobileWidgetList>
+<WidgetNameTagMap>
+<NameTag name="startDate" tag="开始时间"/>
+<NameTag name="cboArea" tag="公司"/>
+<NameTag name="endDate" tag="结束时间"/>
+<NameTag name="cboProductStore" tag="门店"/>
+<NameTag name="cboCompany" tag="公司"/>
+</WidgetNameTagMap>
+</Layout>
+<DesignAttr width="960" height="112"/>
+</ParameterUI>
+</ReportParameterAttr>
+<StyleList>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="SimSun" style="1" size="128" foreground="-16776961"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<FRFont name="SimSun" style="0" size="72" foreground="-6737152"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+</StyleList>
+<DesignerVersion DesignerVersion="HBB"/>
+<PreviewType PreviewType="1"/>
+</WorkBook>

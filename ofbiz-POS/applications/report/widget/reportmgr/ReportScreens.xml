@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+        <!--<screen name="main-decorator">
+        <section>
+            <actions>
+                 base/top/specific map first, then more common map added for shared labels 
+                <property-map resource="ReportUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="ContentUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="SecurityUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="ProductUiLabels" map-name="uiLabelMap" global="true"/>
+
+                <set field="layoutSettings.companyName" from-field="uiLabelMap.ReportCompanyName" global="true"/>
+                <set field="layoutSettings.companySubtitle" from-field="uiLabelMap.ReportCompanySubtitle" global="true"/>
+                <set field="activeApp" value="reportmgr" global="true"/>
+                <set field="applicationMenuName" value="ReportAppBar" global="true"/>
+                <set field="applicationMenuLocation" value="component://report/widget/reportmgr/ReportMenus.xml" global="true"/>
+                <set field="applicationTitle" value="${uiLabelMap.InventoryManagerApplication}" global="true"/>
+            </actions>
+            <widgets>
+                <include-screen name="ApplicationDecorator" location="component://commonext/widget/CommonScreens.xml"/>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="navigateReport">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleNavigateReport"/>
+                <set field="tabButtonItem" value="navigateReport"/>
+                <set field="labelTitleProperty" value="PageTitleNavigateReport"/>
+                <entity-and entity-name="Report" list="reportList">
+                    <field-map field-name="reportId" value="POS-Admin"/>
+                </entity-and>
+            </actions>
+            <widgets>
+                <decorator-screen name="reportDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                                <container style="left">
+                                    <screenlet title="${uiLabelMap.PageTitleNavigateReport}" >
+                                        <container id="EditDocumentTree"/>
+                                        <include-screen name="navigateMenu"/>
+                                    </screenlet>
+                                </container>
+                                <container style="leftonly">
+                                    <screenlet title="${uiLabelMap.ReportReport}">
+                                        <container id="Document">
+                                            <include-screen name="ListDocument"/>
+                                        </container>
+                                    </screenlet>
+                                </container>
+                           </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+   
+    <screen name="navigateMenu">
+        <section>
+            <widgets>
+                <platform-specific>
+                    <html>
+                        <html-template location="component://report/webapp/report/report/ReportNav.ftl"/>
+                    </html>
+                </platform-specific>
+            </widgets>
+        </section>
+    </screen> -->
+     <screen name="EditDocumentTree">
+        <section>
+        <actions>
+            <property-map resource="ReportUiLabels" map-name="uiLabelMap" global="true"/>
+            <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+        </actions>
+            <widgets>
+                <platform-specific>
+                    <html>
+                        <html-template location="component://report/webapp/reportmgr/report/EditReportTree.ftl"/>
+                    </html>
+                </platform-specific>
+            </widgets>
+        </section>
+    </screen>
+     <screen name="EditDocument">
+        <section>
+            <actions>
+                <property-map resource="ReportUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+            </actions>
+            <widgets>
+                <container>
+                    <include-form name="AddDocument" location="component://report/widget/reportmgr/ReportForms.xml"/>
+                </container>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="ListDocument">
+        <section>
+            <actions>
+                <property-map resource="ReportUiLabels" map-name="uiLabelMap" global="true"/>
+                <property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true"/>
+                <set field="tabButtonItem" value="ListDocument"/>
+                <!--<set field="parameters" from-field="parameters"/>-->
+                <!--<set field="userLonginId" from-field="parameters.userLoginId"/>-->
+                <!--<set field="reportId" from-field="parameters.reportId"/>-->
+                <set field="viewSize" value="${parameters.VIEW_SIZE}" default-value="30" type="Integer"/>
+                <set field="viewIndex" value="${parameters.VIEW_INDEX}" default-value="0" type="Integer"/>
+                <script location="component://report/webapp/reportmgr/actions/report/GetReportLookupList.groovy"/>
+            </actions>
+            <widgets>
+                <platform-specific>
+                    <html>
+                    	<html-template location="component://report/webapp/reportmgr/report/report1.ftl"/>
+                    	<!--<html-template location="component://report/webapp/reportmgr/report.ftl"/>-->
+                        <!--<html-template location="component://report/webapp/report/lookup/ReportTreeLookupList.ftl"/>-->
+                    </html>
+                </platform-specific>
+            </widgets>
+        </section>
+    </screen>
+</screens>

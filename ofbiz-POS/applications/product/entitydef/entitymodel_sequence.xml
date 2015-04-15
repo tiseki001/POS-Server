@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <title>Entity of an Open For Business Project Component</title>
+    <description>None</description>
+    <version>1.0</version>
+    <!-- 串口实体 -->
+	<entity entity-name="SequenceAttrbute"
+            package-name="org.ofbiz.product"
+            title="SequenceAttrbute Entity">
+      <field name="productId" type="id-ne"></field>
+      <field name="sequenceId" type="id-ne"></field>
+      <field name="sequenceAttrbuteTypeId" type="id"></field>
+      <field name="attrValue" type="name"></field>
+      <prim-key field="productId"/>
+      <prim-key field="sequenceId"/>
+      <relation type="one" rel-entity-name="SequenceAttrbuteType">
+        	<key-map field-name="sequenceAttrbuteTypeId"/>
+      </relation>
+   </entity>
+   <entity entity-name="ProductSequence"
+            package-name="org.ofbiz.product"
+            title="ProductSequence Entity">
+      <field name="productId" type="id-ne"></field>
+      <field name="sequenceId" type="id-ne"></field>
+      <field name="partyId" type="id"></field>
+      <field name="facilityId" type="id"></field>
+      <field name="isOuts" type="name"></field>
+      <field name="isOccupied" type="name"></field>
+      <field name="financeTypeId" type="id"></field>
+      <field name="isSync" type="indicator" ></field>
+      <prim-key field="productId"/>
+      <prim-key field="sequenceId"/>
+      <index name="productId">
+      	<index-field name="productId"/>
+      </index>
+      <index name="sequenceId">
+      	<index-field name="sequenceId"/>
+      </index>
+      <index name="partyId">
+      	<index-field name="partyId"/>
+      </index>
+      <index name="facilityId">
+      	<index-field name="facilityId"/>
+      </index>
+      <index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+      <!--  
+      <relation type="one" rel-entity-name="Party">
+        	<key-map field-name="partyId"/>
+      </relation>
+      <relation type="one" rel-entity-name="Facility">
+        	<key-map field-name="facilityId"/>
+      </relation>-->
+   </entity>
+   <entity entity-name="SequenceAttrbuteType"
+            package-name="org.ofbiz.product"
+            title="SequenceAttrbuteType Entity">
+      <field name="sequenceAttrbuteTypeId" type="id-ne"></field>
+      <field name="description" type="name"></field>
+      <prim-key field="sequenceAttrbuteTypeId"/>
+   </entity>
+   <!-- 
+   <entity entity-name="SequenceValueItem"
+            package-name="org.ofbiz.product"
+            title="SequenceValueItem Entity">
+      <field name="seqID" type="name"></field>
+      <field name="seqName" type="id-ne"></field>
+      <prim-key field="seqName"/>
+   </entity> -->
+</entitymodel>

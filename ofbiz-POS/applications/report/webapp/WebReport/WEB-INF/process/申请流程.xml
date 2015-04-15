@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProcessOB xmlVersion="20120203" releaseVersion="7.0.0" name="申请流程" width="800" height="600">
+<systemName>
+<![CDATA[System1]]></systemName>
+<Tasks>
+<Task class="com.fr.process.pdl.task.FormTask">
+<Name>
+<![CDATA[处理意见]]></Name>
+<JoinMode>
+<![CDATA[1]]></JoinMode>
+<CenterPoint x="280" y="108"/>
+<Transitions>
+<Transition name="已处理" back="false" fromTaskName="处理意见" toTaskName="批复意见" fromPoint="right" toPoint="left"/>
+</Transitions>
+<TaskUsers class="com.fr.process.pdl.user.RoleUsers">
+<JIds>
+<![CDATA[3,]]></JIds>
+</TaskUsers>
+<ReportName>
+<![CDATA[doc/SpecialSubject/WorkFlowReport/handlesuggest.frm]]></ReportName>
+</Task>
+<Task class="com.fr.process.pdl.task.FormTask">
+<Name>
+<![CDATA[申请单]]></Name>
+<JoinMode>
+<![CDATA[1]]></JoinMode>
+<CenterPoint x="168" y="108"/>
+<Transitions>
+<Transition name="提交" back="false" fromTaskName="申请单" toTaskName="处理意见" fromPoint="right" toPoint="left"/>
+</Transitions>
+<TaskUsers class="com.fr.process.pdl.user.ParameterUsers">
+<ParaName>
+<![CDATA[processStarter]]></ParaName>
+</TaskUsers>
+<ReportName>
+<![CDATA[doc/SpecialSubject/WorkFlowReport/SupportApply.frm]]></ReportName>
+</Task>
+<Task class="com.fr.process.pdl.task.StartTask">
+<Name>
+<![CDATA[开始]]></Name>
+<JoinMode>
+<![CDATA[0]]></JoinMode>
+<CenterPoint x="56" y="108"/>
+<Transitions>
+<Transition name="" back="false" fromTaskName="开始" toTaskName="申请单" fromPoint="right" toPoint="left"/>
+</Transitions>
+</Task>
+<Task class="com.fr.process.pdl.task.EndTask">
+<Name>
+<![CDATA[结束]]></Name>
+<JoinMode>
+<![CDATA[1]]></JoinMode>
+<CenterPoint x="504" y="108"/>
+<Transitions/>
+</Task>
+<Task class="com.fr.process.pdl.task.FormTask">
+<Name>
+<![CDATA[批复意见]]></Name>
+<JoinMode>
+<![CDATA[1]]></JoinMode>
+<CenterPoint x="392" y="108"/>
+<Transitions>
+<Transition name="处理意见不通过" back="false" fromTaskName="批复意见" toTaskName="处理意见" fromPoint="bottom" toPoint="bottom"/>
+<Transition name="同意" back="false" fromTaskName="批复意见" toTaskName="结束" fromPoint="right" toPoint="left"/>
+<Transition name="驳回" back="false" fromTaskName="批复意见" toTaskName="申请单" fromPoint="top" toPoint="top"/>
+</Transitions>
+<TaskUsers class="com.fr.process.pdl.user.RoleUsers">
+<JIds>
+<![CDATA[2,]]></JIds>
+</TaskUsers>
+<ReportName>
+<![CDATA[doc/SpecialSubject/WorkFlowReport/Suggest.frm]]></ReportName>
+</Task>
+</Tasks>
+</ProcessOB>

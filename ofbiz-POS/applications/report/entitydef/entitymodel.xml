@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <title>Entity of an Open For Business Project Component</title>
+    <description>None</description>
+    <version>1.0</version>
+
+	<entity entity-name="Report"
+            package-name="org.ofbiz.report"
+            title="Report Entity">
+        <field name="reportId" type="id"/>
+        <field name="reportName" type="long-varchar"/>
+        <field name="reportType" type="short-varchar"/>
+        <prim-key field="reportId"/>
+	</entity>
+	<entity entity-name="ReportRole"
+            package-name="org.ofbiz.report"
+            title="ReportRole Entity">
+        <field name="reportId" type="id"/>
+        <field name="roleTypeId" type="id"/>
+        <prim-key field="reportId"/>
+        <prim-key field="roleTypeId"/>
+	</entity>
+	<view-entity entity-name="ReportRoleAndPartyRole" package-name="org.ofbiz.report">
+		<member-entity entity-alias="RR" entity-name="ReportRole" />
+		<member-entity entity-alias="PR" entity-name="PartyRole" />
+		<alias entity-alias="RR" name="reportId" />
+		<alias entity-alias="PR" name="partyId" />
+		<view-link entity-alias="RR" rel-entity-alias="PR" rel-optional="true">
+			<key-map field-name="roleTypeId" />
+		</view-link>
+	</view-entity>
+</entitymodel>

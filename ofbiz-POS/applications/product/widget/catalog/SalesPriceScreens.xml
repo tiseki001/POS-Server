@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="CommonSalespriceDecorator">
+        <section>
+            <widgets>
+                <decorator-screen name="main-decorator"  location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="left-column">
+                        <include-screen name="leftbar" location="component://product/widget/catalog/CommonScreens.xml"/>
+                    </decorator-section>                    
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <or>
+                                    <if-has-permission permission="CATALOG" action="_ADMIN"/>
+                                    <if-has-permission permission="CATALOG" action="_CREATE"/>
+                                    <if-has-permission permission="CATALOG" action="_UPDATE"/>
+                                    <if-has-permission permission="CATALOG" action="_VIEW"/>
+                                </or>
+                            </condition>
+                            <widgets>
+                                <include-menu name="salesPriceTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+                                <decorator-section-include name="body"/>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.ProductCatalogViewPermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="CommonSalesPolicyDecorator">
+        <section>
+            <widgets>
+                <decorator-screen name="main-decorator"  location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="left-column">
+                        <include-screen name="leftbar" location="component://product/widget/catalog/CommonScreens.xml"/>
+                    </decorator-section>                    
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <or>
+                                    <if-has-permission permission="CATALOG" action="_ADMIN"/>
+                                    <if-has-permission permission="CATALOG" action="_CREATE"/>
+                                    <if-has-permission permission="CATALOG" action="_UPDATE"/>
+                                    <if-has-permission permission="CATALOG" action="_VIEW"/>
+                                </or>
+                            </condition>
+                            <actions>
+                                <set field="productSalesPolicyId" from-field="parameters.productSalesPolicyId"/>
+                                <entity-one entity-name="ProductSalesPolicy" value-field="productSalesPolicy"/>
+                            </actions>
+                            <widgets>
+                                <include-menu name="salesPolicyTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+                                <label style="h1">销售政策 ${uiLabelMap.CommonFor}: ${productSalesPolicy.policyName} [${uiLabelMap.CommonId}:${productSalesPolicyId}] ${${extraFunctionName}}</label>
+                               	<link target="EditSalesPolicy" style="buttontext" text="返回上级菜单"> </link>
+                                <decorator-section-include name="body"/>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.ProductCatalogViewPermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="CommonPriceRuleDecorator">
+        <section>
+            <widgets>
+                <decorator-screen name="main-decorator"  location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="left-column">
+                        <include-screen name="leftbar" location="component://product/widget/catalog/CommonScreens.xml"/>
+                    </decorator-section>                    
+                    <decorator-section name="body">
+                        <section>
+                            <condition>
+                                <or>
+                                    <if-has-permission permission="CATALOG" action="_ADMIN"/>
+                                    <if-has-permission permission="CATALOG" action="_CREATE"/>
+                                    <if-has-permission permission="CATALOG" action="_UPDATE"/>
+                                    <if-has-permission permission="CATALOG" action="_VIEW"/>
+                                </or>
+                            </condition>
+                            <actions>
+                                <set field="productPriceRuleId" from-field="parameters.productPriceRuleId"/>
+                                <entity-one entity-name="ProductPriceRule" value-field="productPriceRule"/>
+                            </actions>
+                            <widgets>
+                                <include-menu name="priceRuleTabBar" location="component://product/widget/catalog/CatalogMenus.xml"/>
+                                <label style="h1">价格规则 ${uiLabelMap.CommonFor}: ${productPriceRule.ruleName} [${uiLabelMap.CommonId}:${productPriceRuleId}] ${${extraFunctionName}}</label>
+                                <link target="EditPriceRule" style="buttontext" text="返回上级菜单"> </link>
+                                <decorator-section-include name="body"/>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.ProductCatalogViewPermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+     <screen name="DetailPriceRule">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditProductFeatureCategories"/>
+                <set field="headerItem" value="priceRule"/>
+                <set field="tabButtonItem" value="PRDetailPriceRule"/>
+                <set field="productPriceRuleId" from-field="parameters.productPriceRuleId"/>
+                <set field="productSalesPolicyId" value="000000"/>
+                <entity-one entity-name="ProductPriceRule" value-field="productPriceRule"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPriceRuleDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                            	<screenlet title="调价规则详情">
+                                    <include-form name="DetailPriceRule" location="component://product/widget/catalog/SalesPriceForms.xml"/>
+                                    <link target="CreateProductPriceTypeRule_" style="buttontext" text="生成价格类型"> <parameter param-name="productPriceRuleId"/></link>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditProductPriceRuleProduct">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditProductFeatureCategories"/>
+                <set field="formType" value="SaveProductPriceRuleProduct"/>
+                <set field="expreType" value="product"/>
+                <set field="headerItem" value="priceRule"/>
+                <set field="tabButtonItem" value="PRProduct"/>
+                <set field="productPriceRuleId" from-field="parameters.productPriceRuleId"/>
+                <set field="productSalesPolicyId" value="000000"/>
+                <entity-one entity-name="ProductPriceRule" value-field="productPriceRule" auto-field-map="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+                <script location="component://product/webapp/catalog/WEB-INF/actions/salesprice/ProductPriceRuleProduct.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPriceRuleDecorator">
+                    <decorator-section name="body">
+                    	<platform-specific>
+                            <html><html-template location="component://product/webapp/catalog/salesprice/EditSalesPolicyPackage.ftl"/></html>
+                        </platform-specific>
+                        <section>
+                            <widgets>
+                            	<screenlet title="搜索结果">
+                                    <include-form name="ListProductPriceRuleProduct" location="component://product/widget/catalog/SalesPriceForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="EditProductPriceRuleStore">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditProductFeatureCategories"/>
+                <set field="formType" value="SaveProductPriceRuleStore"/>
+                <set field="expreType" value="store"/>
+                <set field="headerItem" value="priceRule"/>
+                <set field="tabButtonItem" value="PRStore"/>
+                <set field="productPriceRuleId" from-field="parameters.productPriceRuleId"/>
+                <set field="productSalesPolicyId" value="000000"/>
+                <entity-one entity-name="ProductPriceRule" value-field="productPriceRule" auto-field-map="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+                <script location="component://product/webapp/catalog/WEB-INF/actions/salesprice/ProductPriceRuleStore.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonPriceRuleDecorator">
+                    <decorator-section name="body">
+                    	<platform-specific>
+                            <html><html-template location="component://product/webapp/catalog/salesprice/EditProductPriceRuleStore.ftl"/></html>
+                        </platform-specific>
+                        <section>
+                            <widgets>
+                            	<screenlet title="搜索结果">
+                                    <include-form name="ListProductPriceRuleStore" location="component://product/widget/catalog/SalesPriceForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="EditSalesPolicyPriceRule">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditProductFeatureCategories"/>
+                <set field="headerItem" value="priceRule"/>
+                <set field="tabButtonItem" value="SPPriceRule"/>
+                <set field="productSalesPolicyId" from-field="parameters.productSalesPolicyId"/>
+                <entity-one entity-name="ProductSalesPolicy" value-field="productSalesPolicy" auto-field-map="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonSalesPolicyDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                                <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                     <decorator-section name="search-options">
+                                        <include-form name="FindSalesPolicyPriceSule" location="component://product/widget/catalog/SalesPriceForms.xml"/>
+                                    </decorator-section>
+                                    <decorator-section name="search-results">
+                                        <include-form name="ListSalesPolicyPriceSule" location="component://product/widget/catalog/SalesPriceForms.xml"/>
+                                    </decorator-section>
+                                </decorator-screen>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    
+    <screen name="EditSalesPolicyPackage">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditProductFeatureCategories"/>
+                <set field="formType" value="SaveSalesPolicyPackage"/>
+                <set field="expreType" value="package"/>
+                <set field="headerItem" value="priceRule"/>
+                <set field="tabButtonItem" value="SPPackage"/>
+                <set field="productPriceRuleId" value="000000"/>
+                <set field="productSalesPolicyId" from-field="parameters.productSalesPolicyId"/>
+                <entity-one entity-name="ProductSalesPolicy" value-field="productSalesPolicy" auto-field-map="true"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+                <script location="component://product/webapp/catalog/WEB-INF/actions/salesprice/ProductSalesPolicyBom.groovy"/>
+            </actions>
+            <widgets>
+                  <decorator-screen name="CommonSalesPolicyDecorator">
+                    <decorator-section name="body">
+                        <platform-specific>
+                            <html><html-template location="component://product/webapp/catalog/salesprice/EditSalesPolicyPackage.ftl"/></html>
+                        </platform-specific>
+                        <section>
+                            <widgets>
+                            	<screenlet title="搜索结果">
+                                    <include-form name="ListProductPriceRulePackage" location="component://product/widget/catalog/SalesPriceForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="CreatePriceRule">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditProductFeatureCategories"/>
+                <set field="headerItem" value="priceRule"/>
+                <set field="tabButtonItem" value="PriceRule"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonSalespriceDecorator">
+                    <decorator-section name="body">
+                        <screenlet title="编辑调价规则">
+                            <include-form name="CreatePriceRule" location="component://product/widget/catalog/SalesPriceForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditPriceRule">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditProductFeatureCategories"/>
+                <set field="headerItem" value="priceRule"/>
+                <set field="tabButtonItem" value="PriceRule"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+
+                <!--script location="component://product/webapp/catalog/WEB-INF/actions/feature/EditFeatureCategories.groovy"/-->
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonSalespriceDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                                <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                    <decorator-section name="menu-bar">
+                                        <container style="button-bar">
+                                            <link target="CreatePriceRule" text="新建价格规则" style="buttontext create"/>
+                                        </container>
+                                    </decorator-section>
+                                     <decorator-section name="search-options">
+                                        <include-form name="FindPriceSule" location="component://product/widget/catalog/SalesPriceForms.xml"/>
+                                    </decorator-section>
+                                    <decorator-section name="search-results">
+                                        <include-form name="ListPriceSule" location="component://product/widget/catalog/SalesPriceForms.xml"/>
+                                    </decorator-section>
+                                </decorator-screen>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="CreateSalesPolicy">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditProductFeatureCategories"/>
+                <set field="headerItem" value="priceRule"/>
+                <set field="tabButtonItem" value="SalesPolicy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonSalespriceDecorator">
+                    <decorator-section name="body">
+                        <screenlet title="编辑销售政策">
+                            <include-form name="CreateSalesPolicy" location="component://product/widget/catalog/SalesPriceForms.xml"/>
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditSalesPolicy">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditProductFeatureCategories"/>
+                <set field="headerItem" value="priceRule"/>
+                <set field="tabButtonItem" value="SalesPolicy"/>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX_1" type="Integer" default-value="0"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE_1" type="Integer" default-value="10"/>
+
+                <!--script location="component://product/webapp/catalog/WEB-INF/actions/feature/EditFeatureCategories.groovy"/-->
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonSalespriceDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                                <decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+                                    <decorator-section name="menu-bar">
+                                       <container style="button-bar">
+                                          <link target="CreateSalesPolicy" text="新建销售政策" style="buttontext create"/>
+                                      </container>
+                                    </decorator-section>
+                                     <decorator-section name="search-options">
+                                       <include-form name="FindSalesPolicy" location="component://product/widget/catalog/SalesPriceForms.xml"/>
+                                     </decorator-section>
+                                    <decorator-section name="search-results">
+                                        <include-form name="ListSalesPolicy" location="component://product/widget/catalog/SalesPriceForms.xml"/>
+                                    </decorator-section>
+                                </decorator-screen>
+                            </widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="EditProductPriceList">
+        <section>
+            <actions>
+                <set field="titleProperty" value="PageTitleEditProductFeatureCategories"/>
+                <set field="headerItem" value="priceRule"/>
+                <set field="formType" value="SaveProductPriceListStore"/>
+                <set field="expreType" value="listStore"/>
+                <set field="tabButtonItem" value="ProductPriceList"/>
+                <set field="productId" from-field="parameters.productId"/>
+                <entity-one value-field="productPriceList" entity-name="ProductPriceList"></entity-one>
+                <set field="viewIndex" from-field="parameters.VIEW_INDEX" type="Integer"/>
+                <property-to-field resource="widget" property="widget.form.defaultViewSize" field="viewSizeDefaultValue"/>
+                <set field="viewSize" from-field="parameters.VIEW_SIZE" type="Integer" default-value="${viewSizeDefaultValue}"/>
+                <script location="component://product/webapp/catalog/WEB-INF/actions/salesprice/EditProductPriceList.groovy"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CommonSalespriceDecorator">
+                    <decorator-section name="body">
+                        <section>
+                            <widgets>
+                            	<screenlet>
+									<include-form name="ImportProductPriceList" location="component://product/widget/catalog/SalesPriceForms.xml" />
+								</screenlet>
+                            	<screenlet title="搜索选项">
+                                     <include-form name="FindProductPriceList" location="component://product/widget/catalog/SalesPriceForms.xml"/>
+                                </screenlet>
+                            </widgets>
+                        </section>
+                        <platform-specific>
+                            <html><html-template location="component://product/webapp/catalog/salesprice/EditProductPriceList.ftl"/></html>
+                        </platform-specific>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+</screens>
+

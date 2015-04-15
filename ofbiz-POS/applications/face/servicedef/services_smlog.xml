@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+
+	<!-- 仓库映射 -->
+	<service name="removeStorageMapping" engine="simple"
+		default-entity-name="ErpFacilityMap"
+		location="component://Face/script/StorageMappingSimplServices.xml"
+		invoke="removeStorageMapping">
+		<description>删除仓库映射</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+	</service>
+	<service name="updateStorageMapping" default-entity-name="ErpFacilityMap"
+		engine="entity-auto" invoke="update" auth="true">
+		<description>更新仓库映射</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="createStorageMapping" default-entity-name="ErpFacilityMap"
+		engine="entity-auto" invoke="create" auth="true">
+		<description>创建仓库映射</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="false" />
+	</service>
+
+	<!-- 销售政策 -->
+	<service name="createSalesPolicy" default-entity-name="ErpPolicyRelation"
+		engine="entity-auto" invoke="create" auth="true">
+		<description>创建销售政策</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="false" />
+	</service>
+	<service name="deleteSalesPolicy" default-entity-name="ErpPolicyRelation"
+		engine="entity-auto" invoke="delete" auth="true">
+		<description>删除销售政策</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+	</service>
+	<service name="updateSalesPolicy" default-entity-name="ErpPolicyRelation"
+		engine="entity-auto" invoke="update" auth="true">
+		<description>更新销售政策</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+</services>

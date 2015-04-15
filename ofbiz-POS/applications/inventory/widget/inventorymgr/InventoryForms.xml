@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-form.xsd">
+    <form name="findInventory" list-name="listIt" target="getInventory" title="" type="list" paginate-target=""
+        odd-row-style="alternate-row" default-table-style="basic-table">
+        <actions>
+            <set field="parameters.noConditionFind" value="Y"/>
+            <service service-name="performFind" result-map="result" result-map-list="listIt">
+                <field-map field-name="inputFields" from-field="parameters"/>
+                <field-map field-name="entityName" value="MovementType"/>
+                <field-map field-name="viewIndex" from-field="viewIndex"/>
+                <field-map field-name="viewSize" from-field="viewSize"/>
+            </service>
+        </actions>
+        <field name="movementTypeId" title="数据编号"><display/></field>
+        <field name="movementTypeName" title="数据名称"><display/></field>
+        <field name="movementTypeIdTo" title="下标"><display/></field>
+        <field name="description" title="描述"><display/></field>
+        <field name="inventoryTransferTypeId" title="移动数据类型">
+            <display-entity entity-name="InventorynTransferType" key-field-name="inventoryTransferTypeId" description="${description}"/>
+        </field>
+        <field name="fromfacilityTypeId" title="原始位置">
+			<display-entity entity-name="FacilityType" key-field-name="facilityTypeId" description="${description}"/>
+		</field>
+        <field name="tofacilityTypeId" title="目标位置">
+			<display-entity entity-name="FacilityType" key-field-name="facilityTypeId" description="${description}"/>
+		</field>
+		<field name="getInventory" title="${uiLabelMap.CommonUpdate}" widget-style="buttontext">
+            <hyperlink target="getInventory" description="${uiLabelMap.CommonUpdate}">
+                <parameter param-name="movementTypeId"/>
+                <parameter param-name="movementTypeName"/>
+                <parameter param-name="movementTypeIdTo"/>
+                <parameter param-name="description"/>
+                <parameter param-name="inventoryTransferTypeId"/>
+                <parameter param-name="fromfacilityTypeId"/>
+                <parameter param-name="tofacilityTypeId"/>
+            </hyperlink>
+        </field>
+        <field name="deleteInventory" title="${uiLabelMap.CommonDelete}" widget-style="buttontext">
+            <hyperlink target="deleteInventory" description="${uiLabelMap.CommonDelete}">
+                <parameter param-name="movementTypeId"/>
+            </hyperlink>
+        </field>
+    </form>
+    
+    <form name="SaveInventoryxml" type="single" target="createInventory" >
+    	<auto-fields-service service-name="createInventory"/>
+    	<field name="movementTypeId" title="编号"><text size="30"/></field>
+    	<field name="inventoryTransferTypeId" title="数据类型" >
+			<drop-down allow-empty="false">
+            	<entity-options entity-name="InventorynTransferType" description="${description}" key-field-name="inventoryTransferTypeId"/>
+            </drop-down>
+		</field>
+    	<field name="movementTypeName" title="移动数据名称"><text size="30"/></field>
+    	<field name="description" title="移动数据描述"><text size="30"/></field>
+		<field name="movementTypeIdTo" title="移动数据下游" use-when="&quot;${inventoryTransferTypeId}&quot;.equals(&quot;GoodsDelivery&quot;)">
+			<drop-down allow-empty="false">
+            	<entity-options entity-name="MovementType" description="${movementTypeName}" key-field-name="movementTypeId" >
+            		<entity-constraint name="inventoryTransferTypeId" operator="equals" value="GoodsReceive" />
+            	</entity-options>
+            </drop-down>
+		</field>
+    	<field name="fromfacilityTypeId" title="原始位置">
+           <drop-down allow-empty="false">
+            	<entity-options entity-name="FacilityType" description="${description}" key-field-name="facilityTypeId"/>
+            </drop-down>
+       </field>
+       <field name="tofacilityTypeId" title="目标位置">
+            <drop-down allow-empty="false">
+            	<entity-options entity-name="FacilityType" description="${description}" key-field-name="facilityTypeId"/>
+            </drop-down>
+        </field>
+        <field name="submitButton" title="${uiLabelMap.CommonAdd}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+    
+    <form name="getInventory" type="single" target="updateInventory" >
+    	<auto-fields-service service-name="updateInventory"/>
+    	<field name="movementTypeId" title="移动数据"><display type="text"></display> </field>
+    	<field name="movementTypeName" title="移动数据名称"><text size="30"/></field>
+    	<!--&quot;${inventoryTransferTypeId}&quot;.equals(&quot;GoodsDelivery&quot;)-->
+    	<field name="movementTypeIdTo" title="移动数据下游" use-when="movementTypeIdTo!=null">
+			<drop-down allow-empty="false" current="selected">
+            	<entity-options entity-name="MovementType" description="${movementTypeName}" key-field-name="movementTypeId" >
+            		<entity-constraint name="inventoryTransferTypeId" operator="equals" value="GoodsReceive" />
+            	</entity-options>
+            </drop-down>
+		</field>
+		<field name="movementTypeIdTo" title="移动数据下游" use-when="movementTypeIdTo ==null"><hidden/></field>
+		<field name="inventoryTransferTypeId" title="数据类型" >
+			<drop-down allow-empty="false" >
+            	<entity-options entity-name="InventorynTransferType" description="${description}" key-field-name="inventoryTransferTypeId"/>
+            </drop-down>
+		</field>
+    	<field name="description" title="移动数据描述"><text size="30"/></field>
+    	<field name="fromfacilityTypeId" title="原始位置">
+           <drop-down allow-empty="false">
+            	<entity-options entity-name="FacilityType" description="${description}" key-field-name="facilityTypeId"/>
+            </drop-down>
+       </field>
+       <field name="tofacilityTypeId" title="目标位置">
+            <drop-down allow-empty="false">
+            	<entity-options entity-name="FacilityType" description="${description}" key-field-name="facilityTypeId"/>
+            </drop-down>
+        </field>
+        <field name="submitButton" title="${uiLabelMap.CommonEdit}" widget-style="smallSubmit"><submit button-type="button"/></field>
+    </form>
+</forms>

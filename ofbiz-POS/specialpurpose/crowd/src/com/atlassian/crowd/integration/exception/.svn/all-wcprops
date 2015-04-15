@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/exception
+END
+InvalidCredentialException.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/exception/InvalidCredentialException.java
+END
+InvalidGroupException.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/exception/InvalidGroupException.java
+END
+ObjectNotFoundException.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/exception/ObjectNotFoundException.java
+END
+InvalidAuthenticationException.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/exception/InvalidAuthenticationException.java
+END
+InvalidTokenException.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/exception/InvalidTokenException.java
+END
+InvalidAuthorizationTokenException.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/exception/InvalidAuthorizationTokenException.java
+END
+InvalidPrincipalException.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/exception/InvalidPrincipalException.java
+END
+InvalidRoleException.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/exception/InvalidRoleException.java
+END
+ApplicationPermissionException.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/exception/ApplicationPermissionException.java
+END
+ApplicationAccessDeniedException.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/exception/ApplicationAccessDeniedException.java
+END
+InactiveAccountException.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/exception/InactiveAccountException.java
+END

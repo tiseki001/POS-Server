@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/themes/bluelight/includes
+END
+appbarClose.ftl
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/themes/bluelight/includes/appbarClose.ftl
+END
+footer.ftl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/themes/bluelight/includes/footer.ftl
+END
+appbarOpen.ftl
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/themes/bluelight/includes/appbarOpen.ftl
+END
+messages.ftl
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/themes/bluelight/includes/messages.ftl
+END
+header.ftl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/themes/bluelight/includes/header.ftl
+END

@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+	<include location="component://common/webcommon/WEB-INF/common-controller.xml" />
+	<description>Face Component Site Configuration File</description>
+
+
+
+	<!-- 日志管理 request-maps -->
+	<request-map uri="main">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="logMgr" />
+	</request-map>
+
+	<request-map uri="logMgr">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="logMgr" />
+	</request-map>
+
+	<!-- 仓库映射 request-maps -->
+	<request-map uri="storageMappingMgr">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="storageMappingMgr" />
+	</request-map>
+	<request-map uri="removeStorageMapping">
+		<security https="true" auth="true" />
+		<event type="service" invoke="removeStorageMapping" />
+		<response name="success" type="request-redirect" value="storageMappingMgr" />
+	</request-map>
+	<request-map uri="editStorageMapping">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="editStorageMapping" />
+	</request-map>
+	<request-map uri="updateStorageMapping">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateStorageMapping" />
+		<response name="success" type="request-redirect" value="editStorageMapping">
+			<redirect-parameter name="facilityId" />
+			<redirect-parameter name="financeTypeId" />
+		</response>
+		<response name="error" type="view" value="editStorageMapping" />
+	</request-map>
+	<request-map uri="createStorageMapping">
+		<security https="true" auth="true" />
+		<event type="service" invoke="createStorageMapping" />
+		<response name="success" type="request-redirect" value="editStorageMapping">
+		</response>
+		<response name="error" type="view" value="editStorageMapping" />
+	</request-map>
+
+	<!-- 销售政策 request-maps -->
+	<request-map uri="salesPolicyMgr">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="salesPolicyMgr" />
+	</request-map>
+	<request-map uri="editSalesPolicy">
+		<description>编辑销售政策</description>
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="editSalesPolicy" />
+	</request-map>
+	<request-map uri="updateSalesPolicy">
+		<description>保存编辑销售政策</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateSalesPolicy" />
+		<response name="success" type="request-redirect" value="editSalesPolicy">
+			<redirect-parameter name="productSalesPolicyId" />
+		</response>
+		<response name="error" type="view" value="editSalesPolicy" />
+	</request-map>
+	<request-map uri="createSalesPolicy">
+		<description>创建销售政策</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="createSalesPolicy" />
+		<response name="success" type="request-redirect" value="editSalesPolicy">
+		</response>
+		<response name="error" type="view" value="editSalesPolicy" />
+	</request-map>
+	<request-map uri="deleteSalesPolicy">
+		<description>删除销售政策</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="deleteSalesPolicy" />
+		<response name="success" type="request-redirect" value="salesPolicyMgr" />
+	</request-map>
+
+	<!-- operators request-maps -->
+	<request-map uri="UploadOperators">
+		<security https="true" auth="true" />
+		<event type="service" invoke="uploadOperators" />
+		<response name="success" type="view" value="FindOperators" />
+		<response name="error" type="view" value="FindOperators" />
+	</request-map>
+	<request-map uri="FindOperators">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindOperators" />
+	</request-map>
+	<request-map uri="EditOperators">
+		<description>EditOperators</description>
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditOperators" />
+	</request-map>
+	<request-map uri="CreateOperators">
+		<description>CreateOperators</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="createOperators" />
+		<response name="success" type="request-redirect" value="FindOperators">
+		</response>
+		<response name="error" type="view" value="EditOperators" />
+	</request-map>
+	<request-map uri="UpdateOperators">
+		<description>UpdateOperators</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateOperators" />
+		<response name="success" type="request-redirect" value="FindOperators">
+		</response>
+		<response name="error" type="view" value="EditOperators" />
+	</request-map>
+
+	<request-map uri="UploadCheck">
+		<security https="true" auth="true" />
+		<event type="service" invoke="uploadCheck" />
+		<response name="success" type="view" value="FindCheck" />
+		<response name="error" type="view" value="FindCheck" />
+	</request-map>
+	<request-map uri="DownLoadCheck_">
+		<security https="true" auth="true" />
+		<event type="service" invoke="downLoadCheck" />
+		<response name="success" type="view" value="FindCheck" />
+		<response name="error" type="view" value="FindCheck" />
+	</request-map>
+	<request-map uri="DownLoadCheck">
+		<security https="true" auth="false" />
+		<event type="java" path="org.ofbiz.face.operators.DownloadEvents"
+			invoke="download" />
+		<response name="success" type="none" value="FindCheck" />
+		<response name="error" type="none" value="FindCheck" />
+	</request-map>
+	<request-map uri="FindCheck">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindCheck" />
+	</request-map>
+	<request-map uri="EditCheck">
+		<description>EditCheck</description>
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditCheck" />
+	</request-map>
+	<request-map uri="CreateCheck">
+		<description>CreateCheck</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="createCheck" />
+		<response name="success" type="request-redirect" value="FindCheck">
+		</response>
+		<response name="error" type="view" value="EditCheck" />
+	</request-map>
+	<request-map uri="UpdateCheck">
+		<description>UpdateCheck</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateCheck" />
+		<response name="success" type="request-redirect" value="FindCheck">
+		</response>
+		<response name="error" type="view" value="EditCheck" />
+	</request-map>
+	<request-map uri="ERPCheck">
+		<description>ERPCheck</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="ERPCheck" />
+		<response name="success" type="request-redirect" value="FindCheck" />
+		<response name="error" type="view" value="FindCheck" />
+	</request-map>
+
+	<request-map uri="FindSalesOptBusiness">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindSalesOptBusiness" />
+	</request-map>
+	<request-map uri="EditSalesOptBusiness">
+		<description>EditSalesOptBusiness</description>
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditSalesOptBusiness" />
+	</request-map>
+	<request-map uri="CreateSalesOptBusiness">
+		<description>CreateSalesOptBusiness</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="createSalesOptBusiness" />
+		<response name="success" type="request-redirect" value="FindSalesOptBusiness">
+		</response>
+		<response name="error" type="view" value="FindSalesOptBusiness" />
+	</request-map>
+	<request-map uri="UpdateSalesOptBusiness">
+		<description>UpdateSalesOptBusiness</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateSalesOptBusiness" />
+		<response name="success" type="request-redirect" value="FindSalesOptBusiness">
+		</response>
+		<response name="error" type="view" value="EditSalesOptBusiness" />
+	</request-map>
+
+	<!-- 售后受理 request-maps -->
+	<request-map uri="FindAccept">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindAccept" />
+	</request-map>
+	<request-map uri="EditAccept">
+		<description>EditAccept</description>
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditAccept" />
+	</request-map>
+	<request-map uri="EditQuote">
+		<description>EditQuote</description>
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditQuote" />
+	</request-map>
+	<request-map uri="CreateAccept">
+		<description>CreateAccept</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="createAccept" />
+		<response name="success" type="request-redirect" value="FindAccept" />
+		<response name="error" type="request-redirect" value="FindAccept">
+			<redirect-parameter name="docId" />
+		</response>
+	</request-map>
+	<request-map uri="UpdateAccept">
+		<description>UpdateAccept</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateAccept" />
+		<response name="success" type="request-redirect" value="FindAccept" />
+		<response name="error" type="request-redirect" value="FindAccept">
+			<redirect-parameter name="docId" />
+		</response>
+	</request-map>
+	<request-map uri="DeleteAccept">
+		<description>DeleteAccept</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="deleteAccept" />
+		<response name="success" type="request-redirect" value="FindAccept" />
+		<response name="error" type="request-redirect" value="FindAccept">
+			<redirect-parameter name="docId" />
+		</response>
+	</request-map>
+
+<!-- 销售奖励  -->
+	<request-map uri="FindSalesCommission">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindSalesCommission" />
+	</request-map>
+	<request-map uri="FindCash">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindCash" />
+	</request-map>
+	<request-map uri="FindIntegral">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindIntegral" />
+	</request-map>
+	<request-map uri="FindCashCommission">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindCashCommission" />
+	</request-map>
+	<request-map uri="FindCashAward">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindCashAward" />
+	</request-map>
+	<request-map uri="FindIntegralBase">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindIntegralBase" />
+	</request-map>
+	<request-map uri="FindIntegralRate">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindIntegralRate" />
+	</request-map>
+	<request-map uri="EditCashCommission">
+		<description>EditCashCommission</description>
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditCashCommission" />
+	</request-map>
+	<request-map uri="EditCashAward">
+		<description>EditCashAward</description>
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditCashAward" />
+	</request-map>
+	<request-map uri="EditIntegralBase">
+		<description>EditIntegralBase</description>
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditIntegralBase" />
+	</request-map>
+	<request-map uri="EditIntegralRate">
+		<description>EditIntegralRate</description>
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="EditIntegralRate" />
+	</request-map>
+	<request-map uri="CreateCommission">
+		<description>CreateCommission</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="createCommission" />
+		<response name="success" type="request-redirect" value="FindCashCommission"/>
+		<response name="error" type="request-redirect" value="FindCashCommission" >
+			<redirect-parameter name="storeId"/>
+		</response>
+	</request-map>
+	<request-map uri="UpdateCommission">
+		<description>UpdateCommission</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateCommission" />
+		<response name="success" type="request-redirect" value="FindCashCommission"/>
+		<response name="error" type="request-redirect" value="FindCashCommission" >
+			<redirect-parameter name="docId"/>
+		</response>
+	</request-map>
+	<request-map uri="DeleteCommission">
+		<description>DeleteCommission</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="deleteCommission" />
+		<response name="success" type="request-redirect" value="FindCashCommission"/>
+		<response name="error" type="request-redirect" value="FindCashCommission" >
+			<redirect-parameter name="docId"/>
+		</response>
+	</request-map>
+	<request-map uri="CreateAward">
+		<description>CreateAward</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="createAward" />
+		<response name="success" type="request-redirect" value="FindCashAward"/>
+		<response name="error" type="request-redirect" value="FindCashAward" >
+			<redirect-parameter name="id"/>
+		</response>
+	</request-map>
+	<request-map uri="UpdateAward">
+		<description>UpdateAccept</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateAward" />
+		<response name="success" type="request-redirect" value="FindCashAward"/>
+		<response name="error" type="request-redirect" value="FindCashAward" >
+			<redirect-parameter name="id"/>
+		</response>
+	</request-map>
+	<request-map uri="DeleteAward">
+		<description>DeleteAccept</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="deleteAward" />
+		<response name="success" type="request-redirect" value="FindCashAward"/>
+		<response name="error" type="request-redirect" value="FindCashAward" >
+			<redirect-parameter name="id"/>
+		</response>
+	</request-map>
+	<request-map uri="CreateBase">
+		<description>CreateBase</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="createBase" />
+		<response name="success" type="request-redirect" value="FindIntegralBase"/>
+		<response name="error" type="request-redirect" value="FindIntegralBase" >
+			<redirect-parameter name="id"/>
+		</response>
+	</request-map>
+	<request-map uri="UpdateBase">
+		<description>UpdateBase</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateBase" />
+		<response name="success" type="request-redirect" value="FindIntegralBase"/>
+		<response name="error" type="request-redirect" value="FindIntegralBase" >
+			<redirect-parameter name="id"/>
+		</response>
+	</request-map>
+	<request-map uri="DeleteBase">
+		<description>DeleteBase</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="deleteBase" />
+		<response name="success" type="request-redirect" value="FindIntegralBase"/>
+		<response name="error" type="request-redirect" value="FindIntegralBase" >
+			<redirect-parameter name="id"/>
+		</response>
+	</request-map>
+	<request-map uri="CreateRate">
+		<description>CreateRate</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="createRate" />
+		<response name="success" type="request-redirect" value="FindIntegralRate"/>
+		<response name="error" type="request-redirect" value="FindIntegralRate" >
+			<redirect-parameter name="id"/>
+		</response>
+	</request-map>
+	<request-map uri="UpdateRate">
+		<description>UpdateRate</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateRate" />
+		<response name="success" type="request-redirect" value="FindIntegralRate"/>
+		<response name="error" type="request-redirect" value="FindIntegralRate" >
+			<redirect-parameter name="id"/>
+		</response>
+	</request-map>
+	<request-map uri="DeleteRate">
+		<description>DeleteRate</description>
+		<security https="true" auth="true" />
+		<event type="service" invoke="deleteRate" />
+		<response name="success" type="request-redirect" value="FindIntegralRate"/>
+		<response name="error" type="request-redirect" value="FindIntegralRate" >
+			<redirect-parameter name="id"/>
+		</response>
+	</request-map>
+	
+	<!-- Get Values options -->
+	<request-map uri="getOperatorList">
+		<security https="true" auth="false" />
+		<event type="service" invoke="getOperatorList" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json" />
+	</request-map>
+	<request-map uri="getOperatorListBySalesId">
+		<security https="true" auth="false" />
+		<event type="service" invoke="getOperatorListBySalesId" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json" />
+	</request-map>
+	<request-map uri="getSaleOrderAndPersonView">
+		<security https="true" auth="true" />
+		<event type="service" invoke="getSaleOrderAndPersonView" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json" />
+	</request-map>
+	<request-map uri="getPartyByStoreId">
+		<security https="true" auth="true" />
+		<event type="service" invoke="getPartyByStoreId" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json" />
+	</request-map>
+
+	<!-- 跳转到web数据维护界面 -->
+	<request-map uri="FindGeneric">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindGeneric" />
+	</request-map>
+
+	<!-- 搜索竞品信息 -->
+	<request-map uri="findCompeting">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="findCompeting" />
+	</request-map>
+	<!-- 竞品查看信息 -->
+	<request-map uri="FindCompeingInfo">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="FindCompeingInfo" />
+		<response name="error" type="view" value="findCompeting" />
+	</request-map>
+
+	<!-- 竞品创建竞品信息 -->
+	<request-map uri="createCompeting">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="createCompeting" />
+		<response name="error" type="view" value="createCompeting" />
+	</request-map>
+
+
+	<!-- 竞品修改头信息 -->
+	<request-map uri="EditCompeting">
+		<security https="true" auth="true" />
+		<event type="service" invoke="createCompetinginfo" />
+		<response name="success" type="view" value="createCompeting" /><!-- 
+			回到创建页面 -->
+		<response name="error" type="view" value="createCompeting">
+			<redirect-parameter name="docId" />
+		</response>
+	</request-map>
+	<!-- 竞品添加明细 -->
+	<request-map uri="AddCompetingConditions">
+		<security https="true" auth="true" />
+		<event type="service" path="" invoke="AddCompetingConditions" />
+		<response name="success" type="view" value="FindCompeingInfo" />
+		<response name="error" type="view" value="FindCompeingInfo" />
+	</request-map>
+	<!-- 竞品 -->
+	  <request-map uri="updateCompetings">
+    	<security https="true" auth="true"/>
+    	<response name="success" type="view" value="updateCompetings" />
+    </request-map>
+    
+    <!-- 竞品更新明细 -->
+     <request-map uri="updateCompetingsinfo">
+    	<security https="true" auth="true"/>
+    	<event type="service" invoke="updateCompetingsinfo" />
+    	<response name="success" type="view" value="FindCompeingInfo" />
+    </request-map>
+
+<!-- 竞品删除明细 -->
+  <request-map uri="deleteCompeting">
+    	<security https="true" auth="true"/>
+    	<event type="service" invoke="deleteCompeting"/>
+    	<response name="success" type="view" value="FindCompeingInfo" />
+    </request-map>
+<!-- 竞品删除头 -->
+ <request-map uri="deleteCompetingheader">
+    	<security https="true" auth="true"/>
+    	<event type="service" invoke="deleteCompetingheader" />
+    	<response name="success" type="view" value="findCompeting" />
+    	<response name="error" type="view" value="findCompeting" />
+    </request-map>
+
+	<!-- ================ Lookup Requests ================= -->
+	<request-map uri="LookupProductStore">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="LookupProductStore" />
+	</request-map>
+	<request-map uri="LookupProduct">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="LookupProduct" />
+	</request-map>
+	<request-map uri="LookupSerialName">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="LookupSerialName" />
+	</request-map>
+	<request-map uri="LookupFacility">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="LookupFacility" />
+	</request-map>
+	<!--竞品 品牌>  -->
+	<request-map uri="LookupProductFeature">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="LookupProductFeature" />
+	</request-map>
+	<!--竞品 型号  -->
+	<request-map uri="LookupProductFeatureModels">
+		<security auth="true" https="true" />
+		<response name="success" type="view" value="LookupProductFeatureModels" />
+	</request-map>
+		<!--竞品 型号  -->
+	<view-map name="LookupProductFeature" type="screen"
+		page="component://product/widget/catalog/LookupScreens.xml#LookupProductFeature" />
+	<!--竞品 型号  -->
+	<view-map name="LookupProductFeatureModels" type="screen"
+		page="component://Face/widget/LookupScreens.xml#LookupProductFeatureModels" />
+	
+	
+	
+	<view-map name="LookupProductStore" type="screen"
+		page="component://product/widget/catalog/LookupScreens.xml#LookupProductStore" />
+	<view-map name="LookupProduct" type="screen"
+		page="component://product/widget/catalog/LookupScreens.xml#LookupProduct" />
+	<view-map name="LookupSerialName" type="screen"
+		page="component://product/widget/catalog/LookupScreens.xml#LookupSerialName" />
+	<view-map name="LookupFacility" type="screen"
+		page="component://product/widget/facility/LookupScreens.xml#LookupFacility" />
+	<view-map name="FindGeneric" type="screen"
+		page="component://webtools/widget/EntityScreens.xml#FindGeneric" />
+
+	<!-- 仓库映射 view-maps -->
+	<view-map name="logMgr" type="screen"
+		page="component://Face/widget/FaceScreens.xml#logMgr" />
+	<view-map name="storageMappingMgr" type="screen"
+		page="component://Face/widget/FaceScreens.xml#storageMappingMgr" />
+	<view-map name="editStorageMapping" type="screen"
+		page="component://Face/widget/FaceScreens.xml#editStorageMapping" />
+
+
+	<!-- 销售政策 view-maps -->
+	<view-map name="salesPolicyMgr" type="screen"
+		page="component://Face/widget/FaceScreens.xml#salesPolicyMgr" />
+	<view-map name="editSalesPolicy" type="screen"
+		page="component://Face/widget/FaceScreens.xml#editSalesPolicy" />
+
+	<view-map name="FindOperators" type="screen"
+		page="component://Face/widget/FaceScreens.xml#FindOperators" />
+	<view-map name="EditOperators" type="screen"
+		page="component://Face/widget/FaceScreens.xml#EditOperators" />
+	<view-map name="FindCheck" type="screen"
+		page="component://Face/widget/FaceScreens.xml#FindCheck" />
+	<view-map name="EditCheck" type="screen"
+		page="component://Face/widget/FaceScreens.xml#EditCheck" />
+	<view-map name="FindSalesOptBusiness" type="screen"
+		page="component://Face/widget/FaceScreens.xml#FindSalesOptBusiness" />
+	<view-map name="EditSalesOptBusiness" type="screen"
+		page="component://Face/widget/FaceScreens.xml#EditSalesOptBusiness" />
+	<view-map name="FindAccept" type="screen"
+		page="component://Face/widget/AcceptScreens.xml#FindAccept" />
+	<view-map name="EditAccept" type="screen"
+		page="component://Face/widget/AcceptScreens.xml#EditAccept" />
+	<view-map name="EditQuote" type="screen"
+		page="component://Face/widget/AcceptScreens.xml#EditQuote" />
+	
+	<!-- 销售奖励 -->
+	<view-map name="FindSalesCommission" type="screen" page="component://Face/widget/CommissionScreens.xml#FindSalesCommission" />
+	<view-map name="FindCash" type="screen" page="component://Face/widget/CommissionScreens.xml#FindCash" />
+	<view-map name="FindIntegral" type="screen" page="component://Face/widget/CommissionScreens.xml#FindIntegral" />
+	<view-map name="FindCashCommission" type="screen" page="component://Face/widget/CommissionScreens.xml#FindCashCommission" />
+	<view-map name="FindCashAward" type="screen" page="component://Face/widget/CommissionScreens.xml#FindCashAward" />
+	<view-map name="FindIntegralBase" type="screen" page="component://Face/widget/CommissionScreens.xml#FindIntegralBase" />
+	<view-map name="FindIntegralRate" type="screen" page="component://Face/widget/CommissionScreens.xml#FindIntegralRate" />
+	<view-map name="EditCashCommission" type="screen" page="component://Face/widget/CommissionScreens.xml#EditCashCommission" />
+	<view-map name="EditCashAward" type="screen" page="component://Face/widget/CommissionScreens.xml#EditCashAward" />
+	<view-map name="EditIntegralBase" type="screen" page="component://Face/widget/CommissionScreens.xml#EditIntegralBase" />
+	<view-map name="EditIntegralRate" type="screen" page="component://Face/widget/CommissionScreens.xml#EditIntegralRate" />
+	
+	
+	
+	<!-- 竞品信息 view-maps -->
+	<view-map name="findCompeting" type="screen"
+		page="component://Face/widget/CompetingScreens.xml#findCompeting" />
+	<view-map name="createCompeting" type="screen"
+		page="component://Face/widget/CompetingScreens.xml#createCompeting" />
+	<view-map name="FindCompeingInfo" type="screen"
+		page="component://Face/widget/CompetingScreens.xml#FindCompeingInfo" />
+    <view-map name="updateCompetings" type="screen" page="component://Face/widget/CompetingScreens.xml#updateCompetings"/>
+
+
+
+</site-conf>

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/pos_doc/!svn/ver/168/ofbiz-POS/specialpurpose/example/webapp/axis2/WEB-INF/services
+END
+party_service.aar
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/axis2/WEB-INF/services/party_service.aar
+END
+product_service.aar
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/axis2/WEB-INF/services/product_service.aar
+END
+services.xml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/axis2/WEB-INF/services/services.xml
+END
+version-1.4.1.aar
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/axis2/WEB-INF/services/version-1.4.1.aar
+END
+erp_service.aar
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/axis2/WEB-INF/services/erp_service.aar
+END
+ebs_service.aar
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/pos_doc/!svn/ver/168/ofbiz-POS/specialpurpose/example/webapp/axis2/WEB-INF/services/ebs_service.aar
+END
+services.list
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/axis2/WEB-INF/services/services.list
+END
+wd2.aar
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/example/webapp/axis2/WEB-INF/services/wd2.aar
+END

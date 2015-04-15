@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+
+	<!-- 仓库映射 -->
+	<service name="removeStorageMapping" engine="simple"
+		default-entity-name="ErpFacilityMap"
+		location="component://Face/script/StorageMappingSimplServices.xml"
+		invoke="removeStorageMapping">
+		<description>删除仓库映射</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+	</service>
+	<service name="updateStorageMapping" default-entity-name="ErpFacilityMap"
+		engine="entity-auto" invoke="update" auth="true">
+		<description>更新仓库映射</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="createStorageMapping" default-entity-name="ErpFacilityMap"
+		engine="entity-auto" invoke="create" auth="true">
+		<description>创建仓库映射</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="false" />
+	</service>
+
+	<!-- 销售政策 -->
+	<service name="createSalesPolicy" default-entity-name="ErpPolicyRelation"
+		engine="entity-auto" invoke="create" auth="true">
+		<description>创建销售政策</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="false" />
+	</service>
+	<service name="deleteSalesPolicy" default-entity-name="ErpPolicyRelation"
+		engine="entity-auto" invoke="delete" auth="true">
+		<description>删除销售政策</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+	</service>
+	<service name="updateSalesPolicy" default-entity-name="ErpPolicyRelation"
+		engine="entity-auto" invoke="update" auth="true">
+		<description>更新销售政策</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<!-- upload  -->
+	<service name="uploadOperators" engine="java" auth="true" 
+		location="org.ofbiz.face.operators.OperatorsService" invoke="upload"  transaction-timeout="1800">
+	    <description>Upload Service</description>
+	    <attribute name="uploadFile" type="java.nio.ByteBuffer" mode="IN" optional="false"/>
+	    <attribute name="_uploadFile_contentType" type="String" mode="IN" optional="true"/>
+	    <attribute name="_uploadFile_fileName" type="String" mode="IN" optional="false"/>
+	    <attribute name="target" type="String" mode="IN" optional="false"/>
+	</service>
+	<!-- Operators  -->
+	<service name="getOperatorList" engine="java" auth="false"
+        location="org.ofbiz.face.operators.OperatorsService" invoke="getOperatorList">
+        <description>Set the Value options for selected sales Operators Condition Input</description>
+        <attribute name="productSalesPolicyId" mode="IN" type="String" optional="true"/>
+        <attribute name="operatorList" mode="OUT" type="java.util.List" optional="true"/><!-- optional="true" because of quantity or other kind of fiels needing an input -->
+    </service> 
+    <service name="getOperatorListBySalesId" engine="java" auth="false"
+        location="org.ofbiz.face.operators.OperatorsService" invoke="getOperatorListBySalesId">
+        <description>Set the Value options for selected sales Operators Condition Input</description>
+        <attribute name="productSalesPolicyId" mode="IN" type="String" optional="true"/>
+        <attribute name="operatorList" mode="OUT" type="java.util.List" optional="true"/><!-- optional="true" because of quantity or other kind of fiels needing an input -->
+    </service> 
+    
+	<service name="createOperators" default-entity-name="ErpOperatorsBusiness" engine="java" 
+		location="org.ofbiz.face.operators.OperatorsService" invoke="createOrUpdateOperators" auth="true">
+		<description>create operators</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="updateOperators" default-entity-name="ErpOperatorsBusiness" engine="java" 
+		location="org.ofbiz.face.operators.OperatorsService" invoke="createOrUpdateOperators" auth="true">
+		<description>updateOperators</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<!-- upload check  -->
+	<service name="uploadCheck" engine="java" auth="true" 
+		location="org.ofbiz.face.operators.OperatorsService" invoke="upload"  transaction-timeout="1800">
+	    <description>Upload Service</description>
+	    <attribute name="uploadFile" type="java.nio.ByteBuffer" mode="IN" optional="false"/>
+	    <attribute name="_uploadFile_contentType" type="String" mode="IN" optional="true"/>
+	    <attribute name="_uploadFile_fileName" type="String" mode="IN" optional="false"/>
+	    <attribute name="target" type="String" mode="IN" optional="false"/>
+	</service>
+	<!-- downLoad check  -->
+	<service name="downLoadCheck" engine="java" auth="true" 
+		location="org.ofbiz.face.operators.OperatorsService" invoke="downLoad"  transaction-timeout="1800">
+	    <description>download Service</description>
+	</service>
+	<service name="createCheck" default-entity-name="ErpOptBusinessCheck" engine="java" 
+		location="org.ofbiz.face.operators.OperatorsService" invoke="createOrUpdateCheck" auth="true">
+		<description>create Check</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="updateCheck" default-entity-name="ErpOptBusinessCheck" engine="java" 
+		location="org.ofbiz.face.operators.OperatorsService" invoke="createOrUpdateCheck" auth="true">
+		<description>update Check</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="ERPCheck" engine="java" 
+		location="org.ofbiz.face.operators.OperatorsService" invoke="ERPCheck" auth="true">
+		<description>校验运营商与销售绑定</description>
+	</service>
+	
+	<service name="createSalesOptBusiness" default-entity-name="ErpSalesOptBusiness" engine="java" 
+		location="org.ofbiz.face.operators.OperatorsService" invoke="createSalesOptBusiness" auth="true">
+		<description>create SalesOptBusiness</description>
+		<auto-attributes include="pk" mode="IN" optional="true" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="updateSalesOptBusiness" default-entity-name="ErpSalesOptBusiness" engine="java" 
+		location="org.ofbiz.face.operators.OperatorsService" invoke="updateSalesOptBusiness" auth="true">
+		<description>update SalesOptBusiness</description>
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	 <service name="findOperatorsList" engine="java" auth="false"
+        location="org.ofbiz.face.operators.OperatorsService" invoke="findOperatorsList">
+        <description>Set the Value options for selected Price Rule Condition Input</description>
+        <attribute name="inputFields" type="java.util.Map" mode="IN" optional="true"/>
+        <attribute name="entityName" type="String" mode="IN" optional="true"/>
+        <attribute name="noConditionFind" type="String" mode="IN" optional="true"><!-- find with no condition (empty entityConditionList) only done when this is Y --></attribute>
+        <attribute name="viewIndex" type="Integer" mode="IN" optional="true"/>
+        <attribute name="viewSize" type="Integer" mode="IN" optional="true"/>
+        <attribute name="listIt" type="org.ofbiz.entity.util.EntityListIterator" mode="OUT" optional="true"/>
+        <attribute name="listSize" type="Integer" mode="OUT" optional="true"/>
+    </service> 
+	
+</services>

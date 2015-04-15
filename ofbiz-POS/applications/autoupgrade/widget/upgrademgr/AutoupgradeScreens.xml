@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+    <screen name="FindNewVersion">
+        <section>
+            <widgets>
+                <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <section>
+                        	<condition>
+                            	<if-has-permission permission="AUTOUPGRADE" action="UPDATE"/>
+                            </condition>
+                            <widgets>
+                            <screenlet title="查询结果">
+                        			<include-form name="FindNewVersion" location="component://autoupgrade/widget/upgrademgr/AutoupgradeForms.xml"/>
+                            </screenlet>
+                            </widgets>
+                            <fail-widgets>
+                                <label style="h3">${uiLabelMap.AUTOUPGRADEUpdatePermissionError}</label>
+                            </fail-widgets>
+                        </section>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="UploadVersion">
+        <section>
+        	<actions>
+                 <!-- <set field="movementTypeId" from-field="parameters.movementTypeId"/>
+                 <entity-one entity-name="MovementType" value-field="movementType"/> -->
+                 <set field="viewSize" type="Integer" default-value="100"/>
+                 <set field="viewIndex" type="Integer" from-field="parameters.VIEW_INDEX_1" default-value="0"/>
+                 <set field="parameters.sortField" from-field="parameters.sortField" default-value="-lastUpdatedStamp"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="AutoupgradeCommonDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+						<screenlet title="${uiLabelMap.CommonUpload}">
+							<platform-specific>
+								<html><html-template location="component://autoupgrade/webapp/upgrademgr/attachment/AddAttach.ftl"/></html>
+							</platform-specific>
+						</screenlet>
+						<screenlet title="${uiLabelMap.UploadList}">
+							<include-form name="ListVersions" location="component://autoupgrade/widget/upgrademgr/AutoupgradeForms.xml"/>
+						</screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+            <fail-widgets>
+               <label style="h3" text="${uiLabelMap.AutoupgradeManager}"/>
+           </fail-widgets>
+        </section>
+    </screen>
+
+</screens>

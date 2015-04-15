@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/authentication
+END
+AuthenticatedToken.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/authentication/AuthenticatedToken.java
+END
+PrincipalAuthenticationContext.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/authentication/PrincipalAuthenticationContext.java
+END
+ApplicationAuthenticationContext.java
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/authentication/ApplicationAuthenticationContext.java
+END
+ValidationFactor.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/authentication/ValidationFactor.java
+END
+PasswordCredential.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/pos_doc/!svn/ver/63/ofbiz-POS/specialpurpose/crowd/src/com/atlassian/crowd/integration/authentication/PasswordCredential.java
+END

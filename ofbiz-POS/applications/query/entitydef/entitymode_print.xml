@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<!-- ========================================================= -->
+	<!-- ======================== Defaults ======================= -->
+	<!-- ========================================================= -->
+	<title>Entity of an Open For Business Project Component</title>
+	<description>None</description>
+	<version>1.0</version>
+
+	<!-- ========================================================= -->
+	<!-- ======================== Data Model ===================== -->
+	<!-- The modules in this file are as follows: -->
+	<!-- ========================================================= -->
+	<!-- org.ofbiz.query -->
+	<!-- ========================================================= -->
+	<!-- 销售订单 Header -->
+	<view-entity entity-name="SalesOrderPrint" package-name="org.ofbiz.query"
+		title="Sales Order Print">
+		<member-entity entity-alias="SOH" entity-name="SaleOrderHeader" />
+		<member-entity entity-alias="PS" entity-name="ProductStore" />
+		<member-entity entity-alias="P1" entity-name="Person" />
+		<member-entity entity-alias="P2" entity-name="Person" />
+		<member-entity entity-alias="P3" entity-name="Person" />
+		<member-entity entity-alias="COH" entity-name="CollectionOrderHeader" />
+
+
+		<alias name="Title" entity-alias="PS" field="printTitle" />
+		<alias name="Num" entity-alias="SOH" field="printNum" />
+		<alias name="Tel" entity-alias="PS" field="printTel" />
+		<alias name="StoreName" entity-alias="PS" field="storeName" />
+		<alias name="AD" entity-alias="PS" field="printAd" />
+		<alias name="DocId" entity-alias="SOH" field="docId" />
+		<alias name="PersonLName" entity-alias="SOH" field="attrName1" />
+		<alias name="PersonFName" entity-alias="SOH" field="attrName9" />
+		<alias name="SalesLName" entity-alias="P2" field="lastName" />
+		<alias name="SalesFName" entity-alias="P2" field="firstName" />
+		<alias name="CreateUserLName" entity-alias="P3" field="lastName" />
+		<alias name="CreateUserFName" entity-alias="P3" field="firstName" />
+		<alias name="PersonTel" entity-alias="SOH" field="attrName2" />
+		<alias name="DocDate" entity-alias="SOH" field="createDocDate" />
+		<alias name="CollectionAmount" entity-alias="COH" field="collectionAmount" />
+		<alias name="StoreId" entity-alias="SOH" field="storeId" />
+
+
+		<view-link entity-alias="SOH" rel-entity-alias="PS">
+			<key-map field-name="storeId" rel-field-name="productStoreId" />
+		</view-link>
+		<view-link entity-alias="SOH" rel-entity-alias="P1"
+			rel-optional="true">
+			<key-map field-name="memberId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="SOH" rel-entity-alias="P2"
+			rel-optional="true">
+			<key-map field-name="salesId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="SOH" rel-entity-alias="P3"
+			rel-optional="true">
+			<key-map field-name="lastUpdateUserId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="SOH" rel-entity-alias="COH"
+			rel-optional="true">
+			<key-map field-name="docId" rel-field-name="baseEntry" />
+		</view-link>
+	</view-entity>
+	<!-- 收款方式 -->
+	<view-entity entity-name="PayMethods" package-name="org.ofbiz.query"
+		title="PayMethods">
+		<member-entity entity-alias="CollectionOrderDtl"
+			entity-name="CollectionOrderDtl" />
+		<member-entity entity-alias="CollectionOrderHeader"
+			entity-name="CollectionOrderHeader" />
+		<member-entity entity-alias="PaymentMethodType"
+			entity-name="PaymentMethodType" />
+	
+		<alias entity-alias="CollectionOrderDtl" name="docId" />
+		<alias entity-alias="CollectionOrderDtl" name="lineNo" />
+		<alias entity-alias="CollectionOrderDtl" name="amount" />
+		<alias entity-alias="PaymentMethodType" name="description" />
+
+		<view-link entity-alias="CollectionOrderHeader"
+			rel-entity-alias="CollectionOrderDtl" rel-optional="true">
+			<key-map field-name="docId" rel-field-name="docId" />
+		</view-link>
+		<view-link entity-alias="CollectionOrderDtl"
+			rel-entity-alias="PaymentMethodType" rel-optional="true">
+			<key-map field-name="type" rel-field-name="paymentMethodTypeId" />
+		</view-link>
+	</view-entity>
+	<!-- 销售订单 Dtl -->
+	<view-entity entity-name="SalesOrderDtlPrint" package-name="org.ofbiz.query"
+		title="Sales Order Print">
+		<member-entity entity-alias="SOD" entity-name="SaleOrderDtl" />
+		<member-entity entity-alias="p" entity-name="Product" />
+
+
+		<alias name="LineNo" entity-alias="SOD" field="lineNo" />
+		<alias name="DocId" entity-alias="SOD" field="docId" />
+		<alias name="ProductName" entity-alias="SOD" field="productName" />
+		<alias name="Config" entity-alias="p" field="config" />
+		<alias name="SeqId" entity-alias="SOD" field="serialNo" />
+		<alias name="Quantity" entity-alias="SOD" field="quantity" />
+		<alias name="RebateAmount" entity-alias="SOD" field="rebateAmount" />
+		<alias name="Memo" entity-alias="SOD" field="memo" />
+
+
+		<view-link entity-alias="SOD" rel-entity-alias="p">
+			<key-map field-name="productId" />
+		</view-link>
+	</view-entity>
+	<!-- 调拨出库 Header -->
+	<view-entity entity-name="RequisitionPrint" package-name="org.ofbiz.query"
+		title=" Delivery Print ">
+		<member-entity entity-alias="Delivery" entity-name="DeliveryDoc" />
+		<member-entity entity-alias="MovementType" entity-name="MovementType" />
+		<member-entity entity-alias="ProductStoreFrom"
+			entity-name="ProductStore" />
+		<member-entity entity-alias="ProductStoreTo"
+			entity-name="ProductStore" />
+		<member-entity entity-alias="Person" entity-name="Person" />
+
+
+		<alias name="DocId" entity-alias="Delivery" field="docId" />
+		<alias name="Num" entity-alias="Delivery" field="printNum" />
+		<alias name="DocDate" entity-alias="Delivery" field="docDate" />
+		<alias name="Type" entity-alias="MovementType" field="movementTypeName" />
+		<alias name="From" entity-alias="ProductStoreFrom" field="storeName" />
+		<alias name="To" entity-alias="ProductStoreTo" field="storeName" />
+		<alias name="Memo" entity-alias="Delivery" field="memo" />
+		<alias name="CreatorFirstName" entity-alias="Person" field="firstName" />
+		<alias name="CreatorLastName" entity-alias="Person" field="lastName" />
+
+
+		<view-link entity-alias="Delivery" rel-entity-alias="MovementType">
+			<key-map field-name="movementTypeId" />
+		</view-link>
+		<view-link entity-alias="Delivery" rel-entity-alias="ProductStoreFrom"
+			rel-optional="true">
+			<key-map field-name="productStoreId" />
+		</view-link>
+		<view-link entity-alias="Delivery" rel-entity-alias="ProductStoreTo"
+			rel-optional="true">
+			<key-map field-name="productStoreIdTo" rel-field-name="productStoreId" />
+		</view-link>
+		<view-link entity-alias="Delivery" rel-entity-alias="Person"
+			rel-optional="true">
+			<key-map field-name="userId" rel-field-name="partyId" />
+		</view-link>
+	</view-entity>
+	<!-- 调拨出库 Dtl -->
+	<view-entity entity-name="RequisitionDtlPrint"
+		package-name="org.ofbiz.query" title=" Delivery Dtl Print ">
+		<member-entity entity-alias="DeliveryDtl" entity-name="DeliveryItem" />
+		<member-entity entity-alias="Product" entity-name="Product" />
+
+
+		<alias entity-alias="DeliveryDtl" name="lineNo" />
+		<alias entity-alias="DeliveryDtl" name="docId" />
+		<alias entity-alias="Product" name="productName" />
+		<alias entity-alias="Product" name="config" />
+		<alias entity-alias="DeliveryDtl" name="quantity" />
+		<alias entity-alias="DeliveryDtl" name="memo" />
+		<alias entity-alias="DeliveryDtl" name="sequenceId" />
+
+
+		<view-link entity-alias="DeliveryDtl" rel-entity-alias="Product"
+			rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+	</view-entity>
+	<!-- 其它出库 Header -->
+	<view-entity entity-name="OtherOutStorePrint" package-name="org.ofbiz.query"
+		title="Delivery Dtl Print ">
+		<member-entity entity-alias="Delivery" entity-name="DeliveryDoc" />
+		<member-entity entity-alias="MovementType" entity-name="MovementType" />
+		<member-entity entity-alias="Person" entity-name="Person" />
+		<member-entity entity-alias="ProductStore" entity-name="ProductStore" />
+
+		<alias name="DocId" entity-alias="Delivery" field="docId" />
+		<alias name="Num" entity-alias="Delivery" field="printNum" />
+		<alias name="DocDate" entity-alias="Delivery" field="docDate" />
+		<alias name="Type" entity-alias="MovementType" field="description" />
+		<alias name="Memo" entity-alias="Delivery" field="memo" />
+		<alias name="Store" entity-alias="ProductStore" field="storeName" />
+		<alias name="CreatorFirstName" entity-alias="Person" field="firstName" />
+		<alias name="CreatorLastName" entity-alias="Person" field="lastName" />
+
+		<view-link entity-alias="Delivery" rel-entity-alias="MovementType"
+			rel-optional="true">
+			<key-map field-name="movementTypeId" />
+		</view-link>
+		<view-link entity-alias="Delivery" rel-entity-alias="Person"
+			rel-optional="true">
+			<key-map field-name="userId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="Delivery" rel-entity-alias="ProductStore"
+			rel-optional="true">
+			<key-map field-name="productStoreId" rel-field-name="productStoreId" />
+		</view-link>
+	</view-entity>
+
+
+	<!-- 其它出库 Dtl -->
+	<view-entity entity-name="OtherOutStoreDtlPrint"
+		package-name="org.ofbiz.query" title=" Other Out Delivery Dtl Print ">
+		<member-entity entity-alias="DeliveryDtl" entity-name="DeliveryItem" />
+		<member-entity entity-alias="Product" entity-name="Product" />
+		<member-entity entity-alias="ProductPrice" entity-name="ProductPrice" />
+
+
+		<alias name="LineNo" entity-alias="DeliveryDtl" field="lineNo" />
+		<alias name="DocId" entity-alias="DeliveryDtl" field="docId" />
+		<alias name="ProductName" entity-alias="Product" field="productName" />
+		<alias name="Config" entity-alias="Product" field="config" />
+		<alias name="Quantity" entity-alias="DeliveryDtl" field="quantity" />
+		<!-- <alias name="Price" entity-alias="ProductPrice" field="price" /> -->
+		<alias name="Price">
+			<complex-alias operator="">
+				<complex-alias-field entity-alias="ProductPrice"
+					field="price" default-value="0" />
+			</complex-alias>
+		</alias>
+		<alias name="Memo" entity-alias="DeliveryDtl" field="memo" />
+
+
+		<view-link entity-alias="DeliveryDtl" rel-entity-alias="Product"
+			rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="DeliveryDtl" rel-entity-alias="ProductPrice"
+			rel-optional="true">
+			<key-map field-name="productId" />
+			<entity-condition filter-by-date="false">
+				<condition-expr entity-alias="ProductPrice"
+					field-name="productPriceTypeId" operator="equals" value="SUGGESTED_PRICE" />
+			</entity-condition>
+		</view-link>
+
+	</view-entity>
+
+
+	<!-- 其它入库 Header -->
+	<view-entity entity-name="OtherInStorePrint" package-name="org.ofbiz.query"
+		title="Delivery Dtl Print ">
+		<member-entity entity-alias="Receive" entity-name="ReceiveDoc" />
+		<member-entity entity-alias="MovementType" entity-name="MovementType" />
+		<member-entity entity-alias="Person" entity-name="Person" />
+		<member-entity entity-alias="ProductStore" entity-name="ProductStore" />
+
+
+		<alias name="DocId" entity-alias="Receive" field="docId" />
+		<alias name="Num" entity-alias="Receive" field="printNum" />
+		<alias name="DocDate" entity-alias="Receive" field="docDate" />
+		<alias name="Type" entity-alias="MovementType" field="description" />
+		<alias name="Memo" entity-alias="Receive" field="memo" />
+		<alias name="Store" entity-alias="ProductStore" field="storeName" />
+		<alias name="CreatorFirstName" entity-alias="Person" field="firstName" />
+		<alias name="CreatorLastName" entity-alias="Person" field="lastName" />
+
+
+		<view-link entity-alias="Receive" rel-entity-alias="MovementType"
+			rel-optional="true">
+			<key-map field-name="movementTypeId" />
+		</view-link>
+		<view-link entity-alias="Receive" rel-entity-alias="Person"
+			rel-optional="true">
+			<key-map field-name="userId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="Receive" rel-entity-alias="ProductStore"
+			rel-optional="true">
+			<key-map field-name="productStoreId" rel-field-name="productStoreId" />
+		</view-link>
+	</view-entity>
+
+
+	<!-- 其它入库 Dtl -->
+	<view-entity entity-name="OtherInStoreDtlPrint"
+		package-name="org.ofbiz.query" title=" Other Out Delivery Dtl Print ">
+		<member-entity entity-alias="ReceiveDtl" entity-name="ReceiveItem" />
+		<member-entity entity-alias="Product" entity-name="Product" />
+		<member-entity entity-alias="ProductPrice" entity-name="ProductPrice" />
+
+
+		<alias name="LineNo" entity-alias="ReceiveDtl" field="lineNo" />
+		<alias name="DocId" entity-alias="ReceiveDtl" field="docId" />
+		<alias name="ProductName" entity-alias="Product" field="productName" />
+		<alias name="Config" entity-alias="Product" field="config" />
+		<alias name="Quantity" entity-alias="ReceiveDtl" field="quantity" />
+		<!-- <alias name="Price" entity-alias="ProductPrice" field="price"/> -->
+		<alias name="Price">
+			<complex-alias operator="">
+				<complex-alias-field entity-alias="ProductPrice"
+					field="price" default-value="0" />
+			</complex-alias>
+		</alias>
+		<alias name="Memo" entity-alias="ReceiveDtl" field="memo" />
+
+
+		<view-link entity-alias="ReceiveDtl" rel-entity-alias="Product"
+			rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="ReceiveDtl" rel-entity-alias="ProductPrice"
+			rel-optional="true">
+			<key-map field-name="productId" />
+			<entity-condition filter-by-date="false">
+				<condition-expr entity-alias="ProductPrice"
+					field-name="productPriceTypeId" operator="equals" value="SUGGESTED_PRICE" />
+			</entity-condition>
+		</view-link>
+	</view-entity>
+
+	<!-- 预订单 Header -->
+	<view-entity entity-name="PreSalesOrderPrint" package-name="org.ofbiz.query"
+		title="PreSalesOrderPrint">
+		<member-entity entity-alias="PreOrderHeader"
+			entity-name="PreOrderHeader" />
+		<member-entity entity-alias="Creator" entity-name="Person" />
+		<member-entity entity-alias="Member" entity-name="Person" />
+		<member-entity entity-alias="Salesman" entity-name="Person" />
+		<member-entity entity-alias="ProductStore" entity-name="ProductStore" />
+
+
+		<alias entity-alias="PreOrderHeader" name="docId" />
+		<alias entity-alias="PreOrderHeader" name="printNum" />
+		<alias entity-alias="PreOrderHeader" name="createDocDate" />
+		<alias entity-alias="PreOrderHeader" name="rebateAmount" />
+		<alias entity-alias="PreOrderHeader" name="phoneMobile" field="attrName2" />
+		<alias entity-alias="ProductStore" name="storeName" />
+
+		<alias entity-alias="Creator" name="createNameL" field="lastName" />
+		<alias entity-alias="Creator" name="createNameF" field="firstName" />
+
+		<alias entity-alias="PreOrderHeader" name="memberNameL" field="attrName1" />
+		<alias entity-alias="PreOrderHeader" name="memberNameF" field="attrName9" />
+
+		<alias entity-alias="Salesman" name="salesNameL" field="lastName" />
+		<alias entity-alias="Salesman" name="salesNameF" field="firstName" />
+
+
+		<view-link entity-alias="PreOrderHeader" rel-entity-alias="ProductStore"
+			rel-optional="true">
+			<key-map field-name="storeId" rel-field-name="productStoreId" />
+		</view-link>
+		<view-link entity-alias="PreOrderHeader" rel-entity-alias="Creator"
+			rel-optional="true">
+			<key-map field-name="createUserId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="PreOrderHeader" rel-entity-alias="Member"
+			rel-optional="true">
+			<key-map field-name="memberId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="PreOrderHeader" rel-entity-alias="Salesman"
+			rel-optional="true">
+			<key-map field-name="salesId" rel-field-name="partyId" />
+		</view-link>
+	</view-entity>
+	<!-- 预订单 Dtl -->
+	<view-entity entity-name="PreSalesOrderDtlPrint"
+		package-name="org.ofbiz.query" title="PreSalesOrderDtlPrint">
+		<member-entity entity-alias="PreOrderDtl" entity-name="PreOrderDtl" />
+		<member-entity entity-alias="Product" entity-name="Product" />
+
+		<alias entity-alias="PreOrderDtl" name="lineNo" />
+		<alias entity-alias="Product" name="productName" />
+		<alias entity-alias="PreOrderDtl" name="quantity" />
+		<alias entity-alias="PreOrderDtl" name="rebateAmount" />
+		<alias entity-alias="PreOrderDtl" name="memo" />
+
+		<view-link entity-alias="PreOrderDtl" rel-entity-alias="Product"
+			rel-optional="true">
+			<key-map field-name="productId" rel-field-name="productId" />
+		</view-link>
+	</view-entity>
+	<!-- 日结 Header -->
+	<view-entity entity-name="PaymentInOrderPrint"
+		package-name="org.ofbiz.query" title="PaymentInOrderPrint">
+		<member-entity entity-alias="PaymentInOrderHeader"
+			entity-name="PaymentInOrderHeader" />
+		<member-entity entity-alias="Creator" entity-name="Person" />
+		<member-entity entity-alias="Salesman" entity-name="Person" />
+		<member-entity entity-alias="ProductStore" entity-name="ProductStore" />
+
+		<alias entity-alias="PaymentInOrderHeader" name="storeId" />
+		<alias entity-alias="ProductStore" name="storeName" />
+		<alias entity-alias="PaymentInOrderHeader" name="docId" />
+		<alias entity-alias="PaymentInOrderHeader" name="createDocDate" />
+
+		<alias entity-alias="Creator" name="createNameL" field="lastName" />
+		<alias entity-alias="Creator" name="createNameF" field="firstName" />
+
+		<alias entity-alias="PaymentInOrderHeader" name="memo" />
+
+		<view-link entity-alias="PaymentInOrderHeader"
+			rel-entity-alias="ProductStore" rel-optional="true">
+			<key-map field-name="storeId" rel-field-name="productStoreId" />
+		</view-link>
+		<view-link entity-alias="PaymentInOrderHeader"
+			rel-entity-alias="Creator" rel-optional="true">
+			<key-map field-name="createUserId" rel-field-name="partyId" />
+		</view-link>
+	</view-entity>
+	<!-- 日结 Dtl -->
+	<view-entity entity-name="PaymentInOrderDtlPrint"
+		package-name="org.ofbiz.query" title="PaymentInOrderDtlPrint">
+
+		<member-entity entity-alias="PaymentInOrderDtl"
+			entity-name="PaymentInOrderDtl" />
+		<member-entity entity-alias="PaymentMethodType"
+			entity-name="PaymentMethodType" />
+
+
+		<alias entity-alias="PaymentInOrderDtl" name="lineNo" />
+		<alias entity-alias="PaymentMethodType" name="type" field="description" />
+		<alias entity-alias="PaymentInOrderDtl" name="targetAmount" />
+		<alias entity-alias="PaymentInOrderDtl" name="amount" />
+		<alias entity-alias="PaymentInOrderDtl" name="memo" />
+
+		<view-link entity-alias="PaymentInOrderDtl"
+			rel-entity-alias="PaymentMethodType" rel-optional="true">
+			<key-map field-name="type" rel-field-name="paymentMethodTypeId" />
+		</view-link>
+	</view-entity>
+	<!-- 退货单 Header -->
+	<view-entity entity-name="ReturnOrderPrint" package-name="org.ofbiz.query"
+		title="ReturnOrderPrint">
+		<member-entity entity-alias="ReturnOrderHeader"
+			entity-name="ReturnOrderHeader" />
+		<member-entity entity-alias="SaleOrderHeader"
+			entity-name="SaleOrderHeader" />
+		<member-entity entity-alias="Customer" entity-name="Person" />
+		<member-entity entity-alias="Salesman" entity-name="Person" />
+		<member-entity entity-alias="Creator" entity-name="Person" />
+		<member-entity entity-alias="ProductStore" entity-name="ProductStore" />
+
+
+		<alias entity-alias="ProductStore" name="hotLine" field="printTel" />
+		<alias entity-alias="ReturnOrderHeader" name="docId" />
+		<alias entity-alias="Customer" name="phoneMobile" />
+		<alias entity-alias="Customer" name="CustomerFirstName" field="firstName" />
+		<alias entity-alias="Customer" name="CustomerLastName" field="lastName" />
+		<alias entity-alias="ProductStore" name="storeName" />
+		<alias entity-alias="ReturnOrderHeader" name="docDate" field="createDocDate" />
+		<alias entity-alias="Salesman" name="SalesmanFirstName" field="firstName" />
+		<alias entity-alias="Salesman" name="SalesmanLastName" field="lastName" />
+		<alias entity-alias="Creator" name="CreatorFirstName" field="firstName" />
+		<alias entity-alias="Creator" name="CreatorLastName" field="lastName" />
+
+		<view-link entity-alias="ReturnOrderHeader"
+			rel-entity-alias="SaleOrderHeader" rel-optional="true">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+		<view-link entity-alias="ReturnOrderHeader"
+			rel-entity-alias="Creator" rel-optional="true">
+			<key-map field-name="salesId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="SaleOrderHeader" rel-entity-alias="Customer"
+			rel-optional="true">
+			<key-map field-name="memberId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="SaleOrderHeader" rel-entity-alias="Salesman"
+			rel-optional="true">
+			<key-map field-name="salesId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="SaleOrderHeader" rel-entity-alias="ProductStore"
+			rel-optional="true">
+			<key-map field-name="storeId" rel-field-name="productStoreId" />
+		</view-link>
+
+	</view-entity>
+	<!-- 退货单 Dtl -->
+	<view-entity entity-name="ReturnOrderDtlPrint"
+		package-name="org.ofbiz.query" title="ReturnOrderDtlPrint">
+		<member-entity entity-alias="ReturnOrderDtl"
+			entity-name="ReturnOrderDtl" />
+		<member-entity entity-alias="Product" entity-name="Product" />
+
+
+		<alias entity-alias="ReturnOrderDtl" name="docId" />
+		<alias entity-alias="ReturnOrderDtl" name="lineNo" />
+		<alias entity-alias="Product" name="productName" />
+		<alias entity-alias="Product" name="config" />
+		<alias entity-alias="ReturnOrderDtl" name="serialNo" />
+		<alias entity-alias="ReturnOrderDtl" name="quantity" />
+		<alias entity-alias="ReturnOrderDtl" name="rebateAmount" />
+		<alias entity-alias="ReturnOrderDtl" name="memo" />
+
+		<view-link entity-alias="ReturnOrderDtl" rel-entity-alias="Product"
+			rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+	</view-entity>
+
+	<!-- 定金单冲销 Header -->
+	<view-entity entity-name="BackOrderPrint" package-name="org.ofbiz.query"
+		title="BackOrderPrint">
+		<member-entity entity-alias="BackOrderHeader"
+			entity-name="BackOrderHeader" />
+
+		<member-entity entity-alias="Customer" entity-name="Person" />
+		<member-entity entity-alias="Creator" entity-name="Person" />
+		<member-entity entity-alias="Salesman" entity-name="Person" />
+		<member-entity entity-alias="ProductStore" entity-name="ProductStore" />
+		<member-entity entity-alias="PreOrderHeader"
+			entity-name="PreOrderHeader" />
+
+
+
+		<alias entity-alias="BackOrderHeader" name="docId" />
+		<alias entity-alias="BackOrderHeader" name="docDate" field="createDocDate" />
+		<alias entity-alias="ProductStore" name="storeName" />
+		<alias entity-alias="Customer" name="phoneMobile" />
+		<alias entity-alias="Customer" name="CustomerFirstName" field="firstName" />
+		<alias entity-alias="Customer" name="CustomerLastName" field="lastName" />
+		<alias entity-alias="Salesman" name="SalesmanFirstName" field="firstName" />
+		<alias entity-alias="Salesman" name="SalesmanLastName" field="lastName" />
+		<alias entity-alias="Creator" name="CreatorFirstName" field="firstName" />
+		<alias entity-alias="Creator" name="CreatorLastName" field="lastName" />
+		<alias entity-alias="BackOrderHeader" name="memo" />
+
+		<view-link entity-alias="BackOrderHeader" rel-entity-alias="PreOrderHeader"
+			rel-optional="true">
+			<key-map field-name="baseEntry" rel-field-name="docId" />
+		</view-link>
+
+		<view-link entity-alias="PreOrderHeader" rel-entity-alias="Customer"
+			rel-optional="true">
+			<key-map field-name="memberId" rel-field-name="partyId" />
+		</view-link>
+
+		<view-link entity-alias="BackOrderHeader" rel-entity-alias="Creator"
+			rel-optional="true">
+			<key-map field-name="salesId" rel-field-name="partyId" />
+		</view-link>
+
+
+		<view-link entity-alias="PreOrderHeader" rel-entity-alias="Salesman"
+			rel-optional="true">
+			<key-map field-name="salesId" rel-field-name="partyId" />
+		</view-link>
+
+		<view-link entity-alias="BackOrderHeader" rel-entity-alias="ProductStore"
+			rel-optional="true">
+			<key-map field-name="storeId" rel-field-name="productStoreId" />
+		</view-link>
+	</view-entity>
+	<!-- 定金单冲销 Dtl -->
+	<view-entity entity-name="BackOrderDtlPrint" package-name="org.ofbiz.query"
+		title="BackOrderDtlPrint">
+		<member-entity entity-alias="BackOrderDtl" entity-name="BackOrderDtl" />
+		<member-entity entity-alias="ProductFeatureApplModels"
+			entity-name="ProductFeatureAppl" />
+		<member-entity entity-alias="ProductFeatureModels"
+			entity-name="ProductFeature" />
+		<member-entity entity-alias="ProductFeatureApplBrand"
+			entity-name="ProductFeatureAppl" />
+		<member-entity entity-alias="ProductFeatureBrand"
+			entity-name="ProductFeature" />
+
+
+
+		<alias entity-alias="BackOrderDtl" name="docId" />
+		<alias entity-alias="BackOrderDtl" name="lineNo" />
+		<alias entity-alias="ProductFeatureBrand" name="brand" field="description" />
+		<alias entity-alias="ProductFeatureModels" name="models" field="description" />
+		<alias entity-alias="BackOrderDtl" name="quantity" />
+		<alias entity-alias="BackOrderDtl" name="rebateAmount" />
+
+
+
+		<!-- 型号 -->
+		<view-link entity-alias="BackOrderDtl" rel-entity-alias="ProductFeatureApplModels"
+			rel-optional="true">
+			<key-map field-name="productId" />
+			<entity-condition filter-by-date="false">
+				<condition-expr entity-alias="ProductFeatureApplModels"
+					field-name="productFeatureId" operator="like" value="MODELS%" />
+			</entity-condition>
+		</view-link>
+
+
+		<view-link entity-alias="ProductFeatureApplModels"
+			rel-entity-alias="ProductFeatureModels" rel-optional="true">
+			<key-map field-name="productFeatureId" />
+		</view-link>
+
+		<!-- 品牌 -->
+		<view-link entity-alias="BackOrderDtl" rel-entity-alias="ProductFeatureApplBrand"
+			rel-optional="true">
+			<key-map field-name="productId" />
+			<entity-condition filter-by-date="false">
+				<condition-expr entity-alias="ProductFeatureApplBrand"
+					field-name="productFeatureId" operator="like" value="BRAND%" />
+			</entity-condition>
+		</view-link>
+
+
+		<view-link entity-alias="ProductFeatureApplBrand"
+			rel-entity-alias="ProductFeatureBrand" rel-optional="true">
+			<key-map field-name="productFeatureId" />
+		</view-link>
+	</view-entity>
+</entitymodel>

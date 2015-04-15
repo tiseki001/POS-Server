@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>Inventory Component Services</description>
+    <vendor>OFBiz</vendor>
+    <version>1.0</version>
+    <!-- 移动数据类型 -->
+	<!-- controller.xml配置的方法  查(findAll)  -->
+	<!-- location去那里找这个方法，返回。。相当于action -->
+    <service name="findInventory" engine="simple" default-entity-name="MovementType" auth="false"
+            location="component://inventory/script/org/ofbiz/inventory/InventoryServices.xml" invoke="findInventory">
+        <description>Find all Inventory</description>
+        <attribute name="movementTypeList" mode="OUT" type="List" optional="false"/>
+    </service>
+    <!-- 增 -->
+     <service name="createInventory" engine="simple" default-entity-name="MovementType" auth="true"
+            location="component://inventory/script/org/ofbiz/inventory/InventoryServices.xml" invoke="createInventory">
+        <description>Create a Inventory</description>
+        <auto-attributes include="pk" mode="IN" optional="true"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+    </service>
+    <!--  -->
+    <service name="createInventoryTransferType" engine="simple" default-entity-name="InventorynTransferType" auth="true"
+            location="component://inventory/script/org/ofbiz/inventory/InventoryServices.xml" invoke="createInventoryTransferType">
+        <description>Create a Inventory</description>
+        <auto-attributes include="pk" mode="INOUT" optional="false"/>
+        <attribute name="description" type="String" mode="IN" optional="true"/>
+    </service>
+    <!-- 删 -->
+     <service name="deleteInventory" engine="simple" default-entity-name="MovementType" auth="true"
+            location="component://inventory/script/org/ofbiz/inventory/InventoryServices.xml" invoke="deleteInventory" >
+        <description>Delete a Inventory</description>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+    </service>
+    <!-- 改 -->
+     <service name="updateInventory" engine="simple" default-entity-name="MovementType" auth="true"
+            location="component://inventory/script/org/ofbiz/inventory/InventoryServices.xml" invoke="updateInventory">
+        <description>Update a Inventory</description>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+    </service>
+    <!-- 查(get) -->
+	 <service name="getInventory" engine="simple" default-entity-name="MovementType" auth="true"
+            location="component://inventory/script/org/ofbiz/inventory/InventoryServices.xml" invoke="FindInventory">
+        <description>Get a Inventory</description>
+        <auto-attributes include="pk" mode="IN" optional="false"/>
+        <auto-attributes include="nonpk" mode="IN" optional="true"/>
+        <attribute name="moventType" type="List" mode="OUT" optional="false"/>
+    </service>
+   	<!-- eecas update or create  setProductSequence setProductSequenceFacility-->
+    <service name="lockProductSequence" engine="java" export="true"
+            location="org.ofbiz.inventory.webService.InventoryItemWebService" invoke="lockProductSequence">
+       <attribute name="deliveryItemcommand" type="org.ofbiz.entity.GenericValue" mode="IN" optional="true"/> 
+    </service>
+    <service name="updateProductSequence" engine="java" export="true"
+            location="org.ofbiz.inventory.webService.InventoryItemWebService" invoke="updateProductSequence">
+       <attribute name="receiveItem" type="org.ofbiz.entity.GenericValue" mode="IN" optional="true"/> 
+    </service>
+</services>

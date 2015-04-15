@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	you under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<!-- PreOrder -->
+	<view-entity entity-name="PreOrderHeaderMessage"
+		package-name="org.ofbiz.order.preorder" title="PreOrderHeader And Person View Entiry">
+		<member-entity entity-alias="POH" entity-name="PreOrderHeader" />
+		<member-entity entity-alias="CP" entity-name="Person" />
+		<member-entity entity-alias="MP" entity-name="Person" />
+		<member-entity entity-alias="SP" entity-name="Person" />
+		<alias-all entity-alias="POH" />
+		<alias entity-alias="CP" name="createUserNameF" field="firstName" />
+		<alias entity-alias="CP" name="createUserNameM" field="middleName" />
+		<alias entity-alias="CP" name="createUserNameL" field="lastName" />
+		<alias entity-alias="MP" name="memberPhoneMobile" field="phoneMobile" />
+		<alias entity-alias="MP" name="memberNameF" field="firstName" />
+		<alias entity-alias="MP" name="memberNameM" field="middleName" />
+		<alias entity-alias="MP" name="memberNameL" field="lastName" />
+		<alias entity-alias="SP" name="salesPersonNameF" field="firstName" />
+		<alias entity-alias="SP" name="salesPersonNameM" field="middleName" />
+		<alias entity-alias="SP" name="salesPersonNameL" field="lastName" />
+		<view-link entity-alias="POH" rel-entity-alias="CP"
+			rel-optional="true">
+			<key-map field-name="createUserId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="POH" rel-entity-alias="MP"
+			rel-optional="true">
+			<key-map field-name="memberId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="POH" rel-entity-alias="SP"
+			rel-optional="true">
+			<key-map field-name="salesId" rel-field-name="partyId" />
+		</view-link>
+	</view-entity>
+	<view-entity entity-name="PreOrderDtlMessage"
+		package-name="org.ofbiz.order.preorder" title="PreOrderDtl And Product View Entiry">
+		<member-entity entity-alias="POD" entity-name="PreOrderDtl" />
+		<member-entity entity-alias="PT" entity-name="Product" />
+		<member-entity entity-alias="PSP" entity-name="ProductSalesPolicy" />
+		<alias-all entity-alias="POD" />
+		<alias entity-alias="PT" name="bomName" field="productName" />
+		<alias entity-alias="PSP" name="productSalesPolicyName" field="policyName" />
+		<view-link entity-alias="POD" rel-entity-alias="PT"
+			rel-optional="true">
+			<key-map field-name="bomId" rel-field-name="productId" />
+		</view-link>
+		<view-link entity-alias="POD" rel-entity-alias="PSP"
+			rel-optional="true">
+			<key-map field-name="productSalesPolicyId" />
+		</view-link>
+	</view-entity>
+	
+	<!-- BackOrder -->
+	<view-entity entity-name="BackOrderHeaderMessage"
+		package-name="org.ofbiz.order.backorder" title="BackOrderHeader And Person View Entiry">
+		<member-entity entity-alias="BOH" entity-name="BackOrderHeader" />
+		<member-entity entity-alias="CP" entity-name="Person" />
+		<member-entity entity-alias="MP" entity-name="Person" />
+		<member-entity entity-alias="SP" entity-name="Person" />
+		<alias-all entity-alias="BOH" />
+		<alias entity-alias="CP" name="createUserNameF" field="firstName" />
+		<alias entity-alias="CP" name="createUserNameM" field="middleName" />
+		<alias entity-alias="CP" name="createUserNameL" field="lastName" />
+		<alias entity-alias="MP" name="memberPhoneMobile" field="phoneMobile" />
+		<alias entity-alias="MP" name="memberNameF" field="firstName" />
+		<alias entity-alias="MP" name="memberNameM" field="middleName" />
+		<alias entity-alias="MP" name="memberNameL" field="lastName" />
+		<alias entity-alias="SP" name="salesPersonNameF" field="firstName" />
+		<alias entity-alias="SP" name="salesPersonNameM" field="middleName" />
+		<alias entity-alias="SP" name="salesPersonNameL" field="lastName" />
+		<view-link entity-alias="BOH" rel-entity-alias="CP"
+			rel-optional="true">
+			<key-map field-name="createUserId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="BOH" rel-entity-alias="MP"
+			rel-optional="true">
+			<key-map field-name="memberId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="BOH" rel-entity-alias="SP"
+			rel-optional="true">
+			<key-map field-name="salesId" rel-field-name="partyId" />
+		</view-link>
+	</view-entity>
+	
+	<view-entity entity-name="BackOrderDtlMessage"
+		package-name="org.ofbiz.order.backorder" title="BackOrderDtl And Product View Entiry">
+		<member-entity entity-alias="BOD" entity-name="BackOrderDtl" />
+		<member-entity entity-alias="PT" entity-name="Product" />
+		<member-entity entity-alias="PSP" entity-name="ProductSalesPolicy" />
+		<alias-all entity-alias="BOD" />
+		<alias entity-alias="PT" name="bomName" field="productName" />
+		<alias entity-alias="PSP" name="productSalesPolicyName" field="policyName" />
+		<view-link entity-alias="BOD" rel-entity-alias="PT"
+			rel-optional="true">
+			<key-map field-name="bomId" rel-field-name="productId" />
+		</view-link>
+		<view-link entity-alias="BOD" rel-entity-alias="PSP"
+			rel-optional="true">
+			<key-map field-name="productSalesPolicyId" />
+		</view-link>
+	</view-entity>
+	
+	<!-- QueryDataForSales -->
+	
+	<view-entity entity-name="ProductStoreRolePriceType"
+		package-name="org.ofbiz.querydataforsales"
+		title="productStoreRole And ProductPriceTypeRule View Entiry">
+		<member-entity entity-alias="PSR" entity-name="ProductStoreRole" />
+		<member-entity entity-alias="PPTR" entity-name="ProductPriceTypeRule" />
+		<alias entity-alias="PSR" name="partyId" />
+		<alias entity-alias="PSR" name="roleTypeId"  />
+		<alias entity-alias="PSR" name="productStoreId" />
+		<alias entity-alias="PPTR" name="productPriceTypeId" />
+		<alias entity-alias="PPTR" name="isVisble" />
+		<view-link entity-alias="PSR" rel-entity-alias="PPTR">
+			<key-map field-name="roleTypeId" />
+		</view-link>
+		<entity-condition>
+			<condition-expr entity-alias="PPTR" field-name="isVisble"
+					operator="equals" value="Y" />
+		</entity-condition>
+	</view-entity>
+	
+	<view-entity entity-name="PaymentMethodMessage"
+		package-name="org.ofbiz.querydataforsales"
+		title="PaymentMethodType And ProductStorePaymentSetting View Entiry">
+		<member-entity entity-alias="PMT" entity-name="PaymentMethodType" />
+		<member-entity entity-alias="PSPS" entity-name="ProductStorePaymentSetting" />
+		<alias entity-alias="PSPS" name="storeId" field="productStoreId" />
+		<alias entity-alias="PMT" name="paymentMethodTypeId" />
+		<alias entity-alias="PMT" name="description" />
+		<view-link entity-alias="PMT" rel-entity-alias="PSPS">
+			<key-map field-name="paymentMethodTypeId" />
+		</view-link>
+	</view-entity>
+
+
+	<view-entity entity-name="PreCollectionOrderAmount"
+		package-name="org.ofbiz.querydataforsales" title="PreCollectionOrderAmount View Entiry">
+		<member-entity entity-alias="PCOH" entity-name="PreCollectionOrderHeader" />
+		<member-entity entity-alias="PCOD" entity-name="PreCollectionOrderDtl" />
+		<alias entity-alias="PCOH" name="storeId" group-by="true" />
+		<alias entity-alias="PCOH" name="postingDate" group-by="true" />
+		<alias entity-alias="PCOD" name="type" group-by="true" />
+		<alias entity-alias="PCOD" name="amount" function="sum" />
+		<view-link entity-alias="PCOD" rel-entity-alias="PCOH">
+			<key-map field-name="docId" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="PCOH" field-name="docStatus"
+					operator="in" value="1,2,3" />
+			</condition-list>
+			<order-by field-name="type" />
+		</entity-condition>
+
+	</view-entity>
+	<view-entity entity-name="CollectionOrderAmount"
+		package-name="org.ofbiz.querydataforsales" title="CollectionOrderAmount View Entiry">
+		<member-entity entity-alias="COH" entity-name="CollectionOrderHeader" />
+		<member-entity entity-alias="COD" entity-name="CollectionOrderDtl" />
+		<alias entity-alias="COH" name="storeId" group-by="true" />
+		<alias entity-alias="COH" name="postingDate" group-by="true" />
+		<alias entity-alias="COD" name="type" group-by="true" />
+		<alias entity-alias="COD" name="amount" function="sum" />
+		<view-link entity-alias="COH" rel-entity-alias="COD">
+			<key-map field-name="docId" />
+		</view-link>
+		<entity-condition>
+			<condition-list combine="and">
+				<condition-expr entity-alias="COH" field-name="docStatus"
+					operator="in" value="1,2,3" />
+				<condition-expr entity-alias="COD" field-name="style"
+					operator="equals" value="1" />
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+	<view-entity entity-name="PreRefundOrderAmount"
+		package-name="org.ofbiz.querydataforsales" title="PreRefundOrderAmount View Entiry">
+		<member-entity entity-alias="PROH" entity-name="PreRefundOrderHeader" />
+		<member-entity entity-alias="PROD" entity-name="PreRefundOrderDtl" />
+		<alias entity-alias="PROH" name="storeId" group-by="true" />
+		<alias entity-alias="PROH" name="postingDate" group-by="true" />
+		<alias entity-alias="PROD" name="type" group-by="true" />
+		<alias entity-alias="PROD" name="amount" function="sum" />
+		<view-link entity-alias="PROH" rel-entity-alias="PROD">
+			<key-map field-name="docId" />
+		</view-link>
+		<entity-condition>
+			<condition-expr entity-alias="PROH" field-name="docStatus"
+				operator="in" value="1,2,3" />
+		</entity-condition>
+	</view-entity>
+	<view-entity entity-name="RefundOrderAmount" package-name="org.ofbiz.querydataforsales"
+		title="RefundOrderAmount View Entiry">
+		<member-entity entity-alias="ROH" entity-name="RefundOrderHeader" />
+		<member-entity entity-alias="ROD" entity-name="RefundOrderDtl" />
+		<alias entity-alias="ROH" name="storeId" group-by="true" />
+		<alias entity-alias="ROH" name="postingDate" group-by="true" />
+		<alias entity-alias="ROD" name="type" group-by="true" />
+		<alias entity-alias="ROD" name="amount" function="sum" />
+		<view-link entity-alias="ROH" rel-entity-alias="ROD">
+			<key-map field-name="docId" />
+		</view-link>
+		<entity-condition>
+			<condition-expr entity-alias="ROH" field-name="docStatus"
+				operator="in" value="1,2,3" />
+		</entity-condition>
+	</view-entity>
+
+	<view-entity entity-name="PaymentInOrderAmount"
+		package-name="org.ofbiz.querydataforsales" title="PaymentInOrderAmount View Entiry">
+		<member-entity entity-alias="RIOH" entity-name="PaymentInOrderHeader" />
+		<member-entity entity-alias="RIOD" entity-name="PaymentInOrderDtl" />
+		<alias entity-alias="RIOH" name="docId" group-by="true" />
+		<alias entity-alias="RIOH" name="storeId" group-by="true" />
+		<alias entity-alias="RIOH" name="postingDate" group-by="true" />
+		<alias entity-alias="RIOD" name="type" group-by="true" />
+		<alias entity-alias="RIOD" name="amount" field="diffAmount" function="sum" />
+		<view-link entity-alias="RIOH" rel-entity-alias="RIOD">
+			<key-map field-name="docId" />
+		</view-link>
+		<entity-condition>
+			<condition-list>
+				<condition-expr entity-alias="RIOH" field-name="docStatus"
+					operator="in" value="1,2,3" />
+				<condition-expr entity-alias="RIOH" field-name="docType"
+					operator="equals" value="1" />
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+	<view-entity entity-name="PaymentInOrderPreAmount"
+		package-name="org.ofbiz.querydataforsales" title="PaymentInOrderPreAmount View Entiry">
+		<member-entity entity-alias="RIOH" entity-name="PaymentInOrderHeader" />
+		<member-entity entity-alias="RIOD" entity-name="PaymentInOrderDtl" />
+		<alias entity-alias="RIOH" name="storeId" group-by="true" />
+		<alias entity-alias="RIOH" name="postingDate" group-by="true" />
+		<alias entity-alias="RIOD" name="type" group-by="true" />
+		<alias entity-alias="RIOD" name="amount" function="sum" />
+		<view-link entity-alias="RIOH" rel-entity-alias="RIOD">
+			<key-map field-name="docId" />
+		</view-link>
+		<entity-condition>
+			<condition-list>
+				<condition-expr entity-alias="RIOH" field-name="docStatus"
+					operator="in" value="1,2,3" />
+				<condition-expr entity-alias="RIOH" field-name="docType"
+					operator="equals" value="0" />
+			</condition-list>
+		</entity-condition>
+	</view-entity>
+
+
+
+
+	<!-- 销售订单 BOM信息 -->
+
+	<view-entity entity-name="SaleOrderDtlandBomAndPolicyView"
+		package-name="org.ofbiz.order.saleorder" title="SaleOrderDtlandBom View Entiry">
+		<member-entity entity-alias="SOD" entity-name="SaleOrderDtl" />
+		<member-entity entity-alias="Pt" entity-name="Product" />
+		<member-entity entity-alias="PSP" entity-name="ProductSalesPolicy" />
+		<alias-all entity-alias="SOD">
+			<exclude field="bomId" />
+
+		</alias-all>
+		<alias entity-alias="Pt" name="bomId" field="productId" />
+		<alias entity-alias="Pt" name="bomName" field="productName" />
+		<alias entity-alias="PSP" name="productSalesPolicyId" />
+		<alias entity-alias="PSP" name="productSalesPolicyName" field="policyName" />
+		<view-link entity-alias="SOD" rel-entity-alias="Pt"
+			rel-optional="true">
+			<key-map field-name="bomId" rel-field-name="productId" />
+		</view-link>
+		<view-link entity-alias="SOD" rel-entity-alias="PSP"
+			rel-optional="true">
+			<key-map field-name="productSalesPolicyId" />
+		</view-link>
+	</view-entity>
+
+
+
+	<!-- 收款人员 -->
+	<view-entity entity-name="CollectionOrderHeaderAndperson"
+		package-name="org.ofbiz.order.collectionorder" title="SaleOrderHeader And Person View Entiry">
+		<member-entity entity-alias="COH" entity-name="CollectionOrderHeader" />
+		<member-entity entity-alias="PE" entity-name="Person" />
+		<alias-all entity-alias="COH">
+		</alias-all>
+		<alias entity-alias="PE" name="partyId" />
+		<alias entity-alias="PE" name="firstName" />
+		<alias entity-alias="PE" name="middleName" />
+		<alias entity-alias="PE" name="lastName" />
+
+		<view-link entity-alias="COH" rel-entity-alias="PE"
+			rel-optional="true">
+			<key-map field-name="createUserId" rel-field-name="partyId" />
+		</view-link>
+
+	</view-entity>
+
+
+	<!-- ===============person and customer============================= -->
+	<!-- 销售人员和会员 -->
+	<view-entity entity-name="PersonAndCustomer" package-name="org.ofbiz.querydataforsales"
+		title="Person And customer">
+		<member-entity entity-alias="PE" entity-name="Person" />
+		<member-entity entity-alias="PR" entity-name="PartyRole" />
+		<alias entity-alias="PE" name="partyId" />
+		<alias entity-alias="PE" name="memberId" />
+		<alias entity-alias="PE" name="firstName" />
+		<alias entity-alias="PE" name="middleName" />
+		<alias entity-alias="PE" name="lastName" />
+		<alias entity-alias="PE" name="phoneMobile" />
+		<alias entity-alias="PR" name="roleTypeId" />
+		<view-link entity-alias="PE" rel-entity-alias="PR">
+			<key-map field-name="partyId" />
+		</view-link>
+		<!-- <view-link entity-alias="PR" rel-entity-alias="PT"> <key-map field-name="partyId"/> 
+			</view-link> -->
+
+	</view-entity>
+
+
+	<!-- 销售人员 -->
+	<view-entity entity-name="SaleOrderHeaderAndperson"
+		package-name="org.ofbiz.order.saleorder" title="SaleOrderHeader And SaleOrderDtl View Entiry">
+		<member-entity entity-alias="SOH" entity-name="SaleOrderHeader" />
+		<member-entity entity-alias="PC" entity-name="Person" />
+		<member-entity entity-alias="PM" entity-name="Person" />
+		<member-entity entity-alias="PS" entity-name="Person" />
+
+		<alias-all entity-alias="SOH">
+		</alias-all>
+		<alias entity-alias="PC" name="createUserNameF" field="firstName" />
+		<alias entity-alias="PC" name="createUserNameM" field="middleName" />
+		<alias entity-alias="PC" name="createUserNameL" field="lastName" />
+		<alias entity-alias="PM" name="memberPhoneMobile" field="phoneMobile" />
+		<alias entity-alias="PM" name="memberNameF" field="firstName" />
+		<alias entity-alias="PM" name="memberNameM" field="middleName" />
+		<alias entity-alias="PM" name="memberNameL" field="lastName" />
+		<alias entity-alias="PS" name="salesPersonNameF" field="firstName" />
+		<alias entity-alias="PS" name="salesPersonNameM" field="middleName" />
+		<alias entity-alias="PS" name="salesPersonNameL" field="lastName" />
+		<view-link entity-alias="SOH" rel-entity-alias="PC"
+			rel-optional="true">
+			<key-map field-name="createUserId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="SOH" rel-entity-alias="PM"
+			rel-optional="true">
+			<key-map field-name="memberId" rel-field-name="partyId" />
+		</view-link>
+
+		<view-link entity-alias="SOH" rel-entity-alias="PS"
+			rel-optional="true">
+			<key-map field-name="salesId" rel-field-name="partyId" />
+		</view-link>
+
+
+	</view-entity>
+
+
+
+
+
+	<!-- ReturnOrder -->
+	<view-entity entity-name="ReturnOrderHeaderMessage"
+		package-name="org.ofbiz.order.returnorder" title="ReturnOrderHeader And Person View Entiry">
+		<member-entity entity-alias="ROH" entity-name="ReturnOrderHeader" />
+		<member-entity entity-alias="CP" entity-name="Person" />
+		<member-entity entity-alias="MP" entity-name="Person" />
+		<member-entity entity-alias="SP" entity-name="Person" />
+		<alias-all entity-alias="ROH" />
+		<alias entity-alias="CP" name="createUserNameF" field="firstName" />
+		<alias entity-alias="CP" name="createUserNameM" field="middleName" />
+		<alias entity-alias="CP" name="createUserNameL" field="lastName" />
+		<alias entity-alias="MP" name="memberPhoneMobile" field="phoneMobile" />
+		<alias entity-alias="MP" name="memberNameF" field="firstName" />
+		<alias entity-alias="MP" name="memberNameM" field="middleName" />
+		<alias entity-alias="MP" name="memberNameL" field="lastName" />
+		<alias entity-alias="SP" name="salesPersonNameF" field="firstName" />
+		<alias entity-alias="SP" name="salesPersonNameM" field="middleName" />
+		<alias entity-alias="SP" name="salesPersonNameL" field="lastName" />
+		<view-link entity-alias="ROH" rel-entity-alias="CP"
+			rel-optional="true">
+			<key-map field-name="createUserId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="ROH" rel-entity-alias="MP"
+			rel-optional="true">
+			<key-map field-name="memberId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="ROH" rel-entity-alias="SP"
+			rel-optional="true">
+			<key-map field-name="salesId" rel-field-name="partyId" />
+		</view-link>
+	</view-entity>
+
+	<view-entity entity-name="ReturnOrderDtlMessage"
+		package-name="org.ofbiz.order.returnorder" title="ReturnOrderDtl And Product View Entiry">
+		<member-entity entity-alias="ROD" entity-name="ReturnOrderDtl" />
+		<member-entity entity-alias="PT" entity-name="Product" />
+		<member-entity entity-alias="FT" entity-name="FaultType" />
+		<member-entity entity-alias="PSP" entity-name="ProductSalesPolicy" />
+		<alias-all entity-alias="ROD" />
+		<alias entity-alias="PT" name="bomName" field="productName" />
+		<alias entity-alias="FT" name="faultType" field="memo" />
+		<alias entity-alias="PSP" name="productSalesPolicyName" field="policyName" />
+		<view-link entity-alias="ROD" rel-entity-alias="PT"
+			rel-optional="true">
+			<key-map field-name="bomId" rel-field-name="productId" />
+		</view-link>
+		<view-link entity-alias="ROD" rel-entity-alias="FT"
+			rel-optional="true">
+			<key-map field-name="faultTypeId" />
+		</view-link>
+		<view-link entity-alias="ROD" rel-entity-alias="PSP"
+			rel-optional="true">
+			<key-map field-name="productSalesPolicyId" />
+		</view-link>
+	</view-entity>
+
+	<!-- paymentOrder -->
+	<view-entity entity-name="PaymentInOrderHeaderMessage"
+		package-name="org.ofbiz.order.paymentinorder" title="PaymentHeaderand Person view Entry">
+		<member-entity entity-alias="PIH" entity-name="PaymentInOrderHeader"></member-entity>
+		<member-entity entity-alias="CP" entity-name="Person"></member-entity>
+		<alias-all entity-alias="PIH"></alias-all>
+		<alias entity-alias="CP" name="createUserNameF" field="firstName"></alias>
+		<alias entity-alias="CP" name="createUserNameM" field="middleName"></alias>
+		<alias entity-alias="CP" name="createUserNameL" field="lastName"></alias>
+		<view-link entity-alias="PIH" rel-entity-alias="CP"
+			rel-optional="true">
+			<key-map field-name="createUserId" rel-field-name="partyId" />
+		</view-link>
+	</view-entity>
+	
+	<view-entity entity-name="PaymentInOrderDtlMessage" 
+	package-name="org.ofgiz.order.paymentinorder" title="PaymentDtl view Entry">
+	<member-entity entity-alias="PID" entity-name="PaymentInOrderDtl"></member-entity>
+	<member-entity entity-alias="PMT" entity-name="PaymentMethodType"></member-entity>
+	<alias-all entity-alias="PID"></alias-all>
+	<alias entity-alias="PMT" name="typeName" field="description"></alias>
+	<view-link  entity-alias="PID" rel-entity-alias="PMT" rel-optional="true">
+	<key-map field-name="type" rel-field-name="paymentMethodTypeId"/>
+	</view-link>
+	</view-entity>
+	<!-- search help -->
+	<view-entity entity-name="CustomerAndpersonView"
+		package-name="org.ofbiz.saleorder" title="CustomerAndperson View">
+		<member-entity entity-alias="PE" entity-name="Person" />
+		<member-entity entity-alias="PR" entity-name="RoleType" />
+		<member-entity entity-alias="PST" entity-name="ProductStore" />
+		<member-entity entity-alias="PSR" entity-name="ProductStoreRole" />
+		<member-entity entity-alias="UL" entity-name="UserLogin"/>
+		<alias entity-alias="PE" name="partyId" />
+		<alias entity-alias="PE" name="firstName" />
+		<alias entity-alias="PE" name="middleName" />
+		<alias entity-alias="PE" name="lastName" />
+		<alias entity-alias="PE" name="phoneMobile" />
+		<alias entity-alias="PR" name="roleTypeId"/>
+		<alias entity-alias="PR" name="parentTypeId"/>
+		<alias entity-alias="PST" name="productStoreId" />
+		<alias entity-alias="UL" name="userLoginId" />
+		<alias entity-alias="PSR" name="fromDate" />
+		<alias entity-alias="PSR" name="thruDate" />
+		<view-link entity-alias="PE" rel-entity-alias="PSR"
+		rel-optional="true">
+			<key-map field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="PSR" rel-entity-alias="PST"
+		rel-optional="true">
+			<key-map field-name="productStoreId" />
+		</view-link>
+		<view-link entity-alias="PSR" rel-entity-alias="PR"
+		rel-optional="true">
+			<key-map field-name="roleTypeId" />
+		</view-link>
+		<view-link entity-alias="PE" rel-entity-alias="UL"
+		rel-optional="true">
+      	<key-map field-name="partyId"/>
+      </view-link>
+    </view-entity>
+	
+
+
+	<view-entity entity-name="PriceRuleUser"
+            package-name="org.ofbiz.party.party"
+            title="Party Role View Entity">
+      <member-entity entity-alias="PPTR" entity-name="ProductPriceTypeRule"/>
+      <member-entity entity-alias="RT" entity-name="CustomerAndpersonView"/>
+      
+      <alias entity-alias="RT" name="partyId" />
+		<alias entity-alias="RT" name="firstName" />
+		<alias entity-alias="RT" name="middleName" />
+		<alias entity-alias="RT" name="lastName" />
+		<alias entity-alias="RT" name="phoneMobile" />
+		<alias entity-alias="RT" name="roleTypeId"/>
+		<alias entity-alias="RT" name="parentTypeId"/>
+		<alias entity-alias="RT" name="productStoreId" />
+		<alias entity-alias="RT" name="userLoginId" />
+		<alias entity-alias="RT" name="fromDate" />
+		<alias entity-alias="RT" name="thruDate" />
+		<alias entity-alias="PPTR" name="productPriceTypeId" />
+		
+      <view-link entity-alias="PPTR" rel-entity-alias="RT">
+        <key-map field-name="roleTypeId"/>
+        <entity-condition>
+        <condition-expr entity-alias="PPTR" field-name="isVisble"
+					operator="equals" value="Y" />
+        </entity-condition>
+      </view-link>
+      </view-entity>
+      
+      <view-entity entity-name="StoreFacilityView" package-name="org.ofbiz.inventory">
+		<member-entity entity-alias="PSF" entity-name="ProductStoreFacility"/>
+		<member-entity entity-alias="FA" entity-name="Facility"/>
+		
+		
+		<alias entity-alias="PSF" name="facilityId"/>
+		<alias entity-alias="PSF" name="productStoreId"/>
+		<alias entity-alias="FA" name="facilityTypeId"/>
+		<view-link entity-alias="PSF" rel-entity-alias="FA" >
+			<key-map field-name="facilityId"/>
+		</view-link>
+		
+	</view-entity>
+	
+	<!-- ReturnInWhsOrder -->
+	<view-entity entity-name="ProductStoreAllFacilityView"
+		package-name="org.ofbiz.order.returninwhsorder" 
+		title="ProductStoreFacility View Entry">
+		<member-entity entity-alias="PPF" entity-name="ProductStoreFacility" />
+		<member-entity entity-alias="FAC" entity-name="Facility" />
+		<alias entity-alias="PPF" name="productStoreId" />
+		<alias entity-alias="PPF" name="facilityId" group-by="true"/>
+		<alias entity-alias="FAC" name="facilityName" />
+		<view-link entity-alias="PPF" rel-entity-alias="FAC" >
+			<key-map field-name="facilityId"/>
+		</view-link>
+	</view-entity>
+	
+	<!-- salesPromotion -->
+	
+	<view-entity entity-name="ProductPromoView"
+		package-name="org.ofbiz.order.salespromotion" 
+		title="ProductPromoview Entry">
+		<member-entity entity-alias="PP" entity-name="ProductPromo"></member-entity>
+		<alias entity-alias="PP" name="productPromoId" ></alias>
+		<alias entity-alias="PP" name="fromDate" ></alias>
+		<alias entity-alias="PP" name="thruDate" ></alias>
+		<entity-condition>
+				<condition-expr entity-alias="PP" field-name="promoType"
+					operator="equals" value="S" />
+				<order-by field-name="fromDate DESC"/>
+		</entity-condition>
+	</view-entity>
+	
+	
+	<view-entity entity-name="ProductPromoStoreView"
+		package-name="org.ofbiz.order.salespromotion" 
+		title="ProductStore and ProductStoreAttribute view Entry">
+		<member-entity entity-alias="PS" entity-name="ProductStore"></member-entity>
+		<member-entity entity-alias="PSA" entity-name="ProductStoreAttribute"></member-entity>
+		<alias entity-alias="PS" name="productStoreId" group-by="true"></alias>
+		<view-link entity-alias="PS" rel-entity-alias="PSA" >
+			<key-map field-name="productStoreId"  />
+		</view-link>
+    </view-entity>
+    
+    <view-entity entity-name="ProductPromoPartyView"
+		package-name="org.ofbiz.order.salespromotion" 
+		title="Person view Entry">
+		<member-entity entity-alias="PN" entity-name="Person"></member-entity>
+		<alias entity-alias="PN" name="partyId" group-by="true"></alias>
+    </view-entity>
+    
+    <view-entity entity-name="ProductPromoDiscountPriceView"
+		package-name="org.ofbiz.order.salespromotion" 
+		title="ProductPromoDiscountPriceView Entry">
+		<member-entity entity-alias="PPC" entity-name="ProductPromoConditions"></member-entity>
+		<alias entity-alias="PPC" name="productPromoRangeId" ></alias>
+		<alias entity-alias="PPC" name="productPromoId" ></alias>
+		<alias entity-alias="PPC" name="rate" ></alias>
+		<entity-condition>
+				<condition-expr entity-alias="PPC" field-name="promoType"
+					operator="equals" value="Z" />
+				<order-by field-name="lastUpdatedStamp DESC"/>
+		</entity-condition>
+    </view-entity> 
+    
+     <view-entity entity-name="ProductPromoCutPriceView"
+		package-name="org.ofbiz.order.salespromotion" 
+		title="ProductPromoCutPriceView Entry">
+		<member-entity entity-alias="PPC" entity-name="ProductPromoConditions"></member-entity>
+		<alias entity-alias="PPC" name="productPromoRangeId" ></alias>
+		<alias entity-alias="PPC" name="productPromoId" ></alias>
+		<alias entity-alias="PPC" name="rate" ></alias>
+		<entity-condition>
+				<condition-expr entity-alias="PPC" field-name="promoType"
+					operator="equals" value="J" />
+				<order-by field-name="lastUpdatedStamp DESC"/>
+		</entity-condition>
+    </view-entity> 
+	
+	<view-entity entity-name="ProductPromoProductView"
+		package-name="org.ofbiz.order.salespromotion" 
+		title="ProductPromoProductview Entry">
+		<member-entity entity-alias="PRO" entity-name="Product"></member-entity>
+		<member-entity entity-alias="PFA" entity-name="ProductFeatureAppl"></member-entity>
+		<alias entity-alias="PRO" name="productId" group-by="true"></alias>
+		<view-link entity-alias="PRO" rel-entity-alias="PFA" >
+			<key-map field-name="productId" />
+		</view-link>
+	</view-entity>
+	
+	<view-entity entity-name="GiftProductProeoRangeView"
+		package-name="org.ofbiz.order.salespromotion" 
+		title="GiftProductPromoRange view Entry">
+		<member-entity entity-alias="PPC" entity-name="ProductPromoConditions"></member-entity>
+		<alias entity-alias="PPC" name="productPromoId" ></alias>
+		<alias entity-alias="PPC" name="productPromoRangeId" ></alias>
+		<entity-condition>
+				<condition-expr entity-alias="PPC" field-name="promoType"
+					operator="equals" value="L" />
+				<order-by field-name="fromDate DESC"/>
+		</entity-condition>
+	</view-entity>
+	<view-entity entity-name="SpecialProductView"
+		package-name="org.ofbiz.order.salespromotion" 
+		title="SpecialProductView Entry">
+		<member-entity entity-alias="PSSP" entity-name="ProductPromoSpecialProduct"></member-entity>
+		<member-entity entity-alias="PP" entity-name="ProductPromo"></member-entity>
+		<alias entity-alias="PSSP" name="productPromoId" ></alias>
+		<alias entity-alias="PSSP" name="productId" ></alias>
+		<alias entity-alias="PSSP" name="guidePrice" ></alias>
+		<alias entity-alias="PSSP" name="salesPrice" ></alias>
+		<alias entity-alias="PSSP" name="checkPrice" ></alias>
+		<alias entity-alias="PP" name="fromDate" ></alias>
+		<alias entity-alias="PP" name="thruDate" ></alias>
+		<view-link entity-alias="PSSP" rel-entity-alias="PP" >
+			<key-map field-name="productPromoId"/>
+			<entity-condition>
+				<condition-expr entity-alias="PP" field-name="promoType"
+					 operator="equals" value="S" />
+			</entity-condition>
+		</view-link>
+	</view-entity>
+	
+	<view-entity entity-name="SpecialserialView"
+		package-name="org.ofbiz.order.salespromotion" 
+		title="SpecialserialView Entry">
+		<member-entity entity-alias="PPS" entity-name="ProductPromoSpecialserial"></member-entity>
+		<member-entity entity-alias="PP" entity-name="ProductPromo"></member-entity>
+		<alias entity-alias="PPS" name="productPromoId" ></alias>
+		<alias entity-alias="PPS" name="sequenceId" ></alias>
+		<alias entity-alias="PPS" name="productId" ></alias>
+		<alias entity-alias="PPS" name="guidePrice" ></alias>
+		<alias entity-alias="PPS" name="salesPrice" ></alias>
+		<alias entity-alias="PPS" name="checkPrice" ></alias>
+		<alias entity-alias="PP" name="fromDate" ></alias>
+		<alias entity-alias="PP" name="thruDate" ></alias>
+		<view-link entity-alias="PPS" rel-entity-alias="PP" >
+			<key-map field-name="productPromoId"/>
+			<entity-condition>
+				<condition-expr entity-alias="PP" field-name="promoType"
+					operator="equals" value="S" />
+			</entity-condition>
+		</view-link>
+	</view-entity>
+</entitymodel>

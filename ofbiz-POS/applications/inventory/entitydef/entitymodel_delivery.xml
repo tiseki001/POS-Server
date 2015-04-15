@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/entitymodel.xsd">
+	<title>Entity of an Open For Business Project Component</title>
+	<description>None</description>
+	<version>1.0</version>
+	<!-- 命令 -->
+	<entity entity-name="DeliveryCommand" package-name="org.ofbiz.inventory.delivery"
+		title="DeliveryCommand Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="extSystemNo" type="name"></field>
+		<field name="extDocNo" type="name"></field>
+		<field name="docDate" type="date-time"></field>
+		<field name="postingDate" type="date-time"></field>
+		<field name="docStatus" type="name"></field>
+		<field name="memo" type="name"></field>
+		<field name="updateDate" type="date-time"></field>
+		<field name="status" type="name"></field>
+		<field name="isSync" type="name"></field>
+		<field name="partyId" type="id"></field>
+		<field name="partyIdTo" type="id"></field>
+		<field name="printNum" type="numeric"></field>
+		<!-- 外键 -->
+		<field name="movementTypeId" type="id"></field>
+		<field name="userId" type="id"></field>
+		<field name="updateUserId" type="id"></field>
+		<field name="productStoreId" type="id"></field>
+		<field name="productStoreIdTo" type="id"></field>
+		<!-- 结束 -->
+		<prim-key field="docId" />
+		<index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+		<!--  配置外键关系 
+		<relation type="one" rel-entity-name="MovementType">
+			<key-map field-name="movementTypeId" />
+		</relation>
+		<relation type="one" rel-entity-name="ProductStore">
+			<key-map field-name="productStoreId" rel-field-name="productStoreId" />
+			<key-map field-name="productStoreIdTo" rel-field-name="productStoreId" />
+		</relation>
+		<relation type="one" rel-entity-name="Person">
+			<key-map field-name="userId" rel-field-name="partyId" />
+			<key-map field-name="updateUserId" rel-field-name="partyId" />
+		</relation>-->
+	</entity>
+	<view-entity entity-name="DeliveryCommandAndProductStore"
+		package-name="org.ofbiz.inventory.delivery"
+		title="DeliveryCommand,MovementType,ProductStore and Party View Entity">
+		<member-entity entity-alias="DC" entity-name="DeliveryCommand" />
+		<member-entity entity-alias="PS" entity-name="ProductStore" />
+		<member-entity entity-alias="PS1" entity-name="ProductStore" />
+		<member-entity entity-alias="PE" entity-name="Person" />
+		<member-entity entity-alias="PE1" entity-name="Person" />
+		<member-entity entity-alias="MTC" entity-name="MovementTypeCatalog" />
+		<member-entity entity-alias="MT" entity-name="MovementType" />
+		
+		<alias-all entity-alias="DC" />
+		<alias entity-alias="MTC" name="orderType" />
+		<alias entity-alias="PS" name="storeName" />
+		<alias entity-alias="PS1" name="storeNameTo" field="storeName" />
+		
+        <alias entity-alias="PE" name="lastName"/> 
+        <alias entity-alias="PE" name="middleName"/> 
+        <alias entity-alias="PE" name="firstName"/> 
+        <alias entity-alias="PE1" name="updateLastName" field="lastName"/> 
+        <alias entity-alias="PE1" name="updateMiddleName" field="middleName"/> 
+        <alias entity-alias="PE1" name="updateFirstName" field="firstName"/> 
+		
+		<view-link entity-alias="DC" rel-entity-alias="PS" rel-optional="true">
+			<key-map field-name="productStoreId" rel-field-name="productStoreId"/>
+		</view-link>
+		<view-link entity-alias="DC" rel-entity-alias="PS1" rel-optional="true">
+			<key-map field-name="productStoreIdTo" rel-field-name="productStoreId"/>
+		</view-link>
+		<view-link entity-alias="DC" rel-entity-alias="PE" rel-optional="true">
+			<key-map field-name="userId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="DC" rel-entity-alias="PE1" rel-optional="true">
+			<key-map field-name="updateUserId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="DC" rel-entity-alias="MT" rel-optional="true">
+			<key-map field-name="movementTypeId"/>
+		</view-link>
+		<view-link  entity-alias="MT" rel-entity-alias="MTC" rel-optional="true">
+			<key-map field-name="movementTypeId" />
+		</view-link>
+	</view-entity>
+
+	<entity entity-name="DeliveryDoc" package-name="org.ofbiz.inventory.delivery"
+		title="DeliveryDoc Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="extSystemNo" type="name"></field>
+		<field name="extDocNo" type="name"></field>
+		<field name="docDate" type="date-time"></field>
+		<field name="postingDate" type="date-time" ></field>
+		<field name="docStatus" type="name"></field>
+		<field name="memo" type="name"></field>
+		<field name="updateDate" type="date-time"></field>
+		<field name="status" type="name"></field>
+		<field name="isSync" type="name"></field>
+		<field name="printNum" type="numeric"></field>
+
+		<!-- 外键 -->
+		<field name="baseEntry" type="d-id"></field>
+		<field name="movementTypeId" type="id"></field>
+		<field name="userId" type="id"></field>
+		<field name="updateUserId" type="id"></field>
+		<field name="productStoreId" type="id"></field>
+		<field name="productStoreIdTo" type="id"></field>
+		<field name="partyId" type="id"></field>
+		<field name="partyIdTo" type="id"></field>
+		<!-- 结束 -->
+		<prim-key field="docId" />
+		<index name="IS_SYNC_IDX">
+        	<index-field name="isSync"/>
+      	</index>
+		<!--  配置外键关系
+		<relation type="one" rel-entity-name="MovementType">
+			<key-map field-name="movementTypeId" />
+		</relation>
+		<relation type="one" rel-entity-name="ProductStore">
+			<key-map field-name="productStoreId"/>
+			<key-map field-name="productStoreIdTo" rel-field-name="productStoreId" />
+		</relation>
+		<relation type="one" rel-entity-name="Party">
+			<key-map field-name="partyId"/>
+			<key-map field-name="partyIdTo" rel-field-name="partyId" />
+		</relation>
+		<relation type="one" rel-entity-name="Person">
+			<key-map field-name="userId" rel-field-name="partyId" />
+			<key-map field-name="updateUserId" rel-field-name="partyId" />
+		</relation> -->
+	</entity>
+	<view-entity entity-name="DeliveryDocAndProductStore"
+		package-name="org.ofbiz.inventory.delivery"
+		title="DeliveryCommand,MovementType,ProductStore and Party View Entity">
+		<member-entity entity-alias="DD" entity-name="DeliveryDoc" />
+		<member-entity entity-alias="PS" entity-name="ProductStore" />
+		<member-entity entity-alias="PS1" entity-name="ProductStore" />
+		<member-entity entity-alias="PE" entity-name="Person" />
+		<member-entity entity-alias="PE1" entity-name="Person" />
+		<member-entity entity-alias="MTC" entity-name="MovementTypeCatalog" />
+		<member-entity entity-alias="MT" entity-name="MovementType" />
+		
+		<alias-all entity-alias="DD" />
+		<alias entity-alias="MTC" name="orderType" />
+		<alias entity-alias="PS" name="storeName"/>
+		<alias entity-alias="PS1" name="storeNameTo" field="storeName" />
+		<alias entity-alias="PE" name="partyId" />
+		<alias entity-alias="PE" name="firstName" />
+		<alias entity-alias="PE" name="middleName" />
+		<alias entity-alias="PE" name="lastName" />
+		<!--  
+		<alias name="name" col-alias="CONCAT">
+			<complex-alias operator="||">
+				<complex-alias-field entity-alias="PE" field="lastName"/>
+				<complex-alias-field entity-alias="PE" field="middleName" default-value="''"/>
+				<complex-alias-field entity-alias="PE" field="firstName"/>		
+			</complex-alias>
+		</alias>-->
+		<alias entity-alias="PE1" name="updateFirstName" field="firstName"/>
+		<alias entity-alias="PE1" name="updateMiddleName" field="middleName"/>
+		<alias entity-alias="PE1" name="updateLastName" field="lastName"/>
+		<view-link entity-alias="DD" rel-entity-alias="PS" rel-optional="true">
+			<key-map field-name="productStoreId" />
+		</view-link>
+		<view-link entity-alias="DD" rel-entity-alias="PS1" rel-optional="true">
+			<key-map field-name="productStoreIdTo" rel-field-name="productStoreId"/>
+		</view-link>
+		<view-link entity-alias="DD" rel-entity-alias="PE" rel-optional="true">
+			<key-map field-name="userId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="DD" rel-entity-alias="PE1" rel-optional="true">
+			<key-map field-name="updateUserId" rel-field-name="partyId" />
+		</view-link>
+		<view-link entity-alias="DD" rel-entity-alias="MT" rel-optional="true">
+			<key-map field-name="movementTypeId"/>
+		</view-link>
+		<view-link  entity-alias="MT" rel-entity-alias="MTC" rel-optional="true">
+			<key-map field-name="movementTypeId" />
+		</view-link>
+	</view-entity>
+	<entity entity-name="DeliveryItem" package-name="org.ofbiz.inventory.delivery"
+		title="DeliveryItem Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="baseLineNo" type="numeric"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="memo" type="name"></field>
+		<field name="quantity" type="numeric"></field>
+		<field name="isSequence" type="name"></field>
+		<field name="idValue" type="name"></field>
+		<!-- 外键 -->
+		<field name="faultTypeId" type="id"></field>
+		<field name="productId" type="id"></field>
+		<field name="sequenceId" type="id"></field>
+		<field name="facilityId" type="id"></field>
+		<field name="facilityIdTo" type="id"></field>
+		<!-- 结束 -->
+		<prim-key field="docId" />
+		<prim-key field="lineNo" />
+		<!--  配置外键关系 
+		<relation type="one" rel-entity-name="Product">
+			<key-map field-name="productId" />
+		</relation>
+		<relation type="one" rel-entity-name="ProductSequence">
+			<key-map field-name="sequenceId" />
+		</relation>
+		<relation type="one" rel-entity-name="Facility">
+			<key-map field-name="facilityId" />
+			<key-map field-name="facilityIdTo" rel-field-name="facilityId" />
+		</relation>-->
+	</entity>
+	<view-entity entity-name="DeliveryItemAndProduct"
+		package-name="org.ofbiz.inventory.delivery"
+		title="DeliveryCommand,Product,ProductSequence and FacilityView Entity">
+		<member-entity entity-alias="DI" entity-name="DeliveryItem" />
+		<member-entity entity-alias="PR" entity-name="Product" />
+		<member-entity entity-alias="II" entity-name="InventorynItem" />
+		<member-entity entity-alias="FA" entity-name="Facility" />
+		<member-entity entity-alias="FA1" entity-name="Facility" />
+		<member-entity entity-alias="GI" entity-name="GoodIdentification" />
+		<member-entity entity-alias="DIC" entity-name="DeliveryItemcommand" />
+		
+		<alias-all entity-alias="DI" />
+		<alias entity-alias="PR" name="productName" />
+		<alias entity-alias="PR" name="config" />
+		<alias entity-alias="PR" name="brandName" />
+		<alias entity-alias="PR" name="isSequence" />
+
+		<alias entity-alias="II" name="onhand" />
+		<alias entity-alias="II" name="promise" />
+
+		<alias entity-alias="FA" name="facilityName" />
+		<alias entity-alias="FA1" name="facilityNameTo" field="facilityName" />
+
+		<alias entity-alias="GI" name="idValue" />
+		
+		<alias entity-alias="DIC" name="planQuantity" field="quantity"/>
+		<alias entity-alias="DIC" name="deliveryQuantity"/>
+		
+		<view-link entity-alias="DI" rel-entity-alias="PR" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="DI" rel-entity-alias="FA" rel-optional="true">
+			<key-map field-name="facilityId" />
+		</view-link>
+		<view-link entity-alias="DI" rel-entity-alias="FA1" rel-optional="true">
+			<key-map field-name="facilityIdTo" rel-field-name="facilityId"/>
+		</view-link>
+		<view-link entity-alias="DI" rel-entity-alias="DIC" rel-optional="true">
+			<key-map field-name="baseEntry" rel-field-name="docId"/>
+			<key-map field-name="baseLineNo" rel-field-name="lineNo"/>
+		</view-link>
+		<view-link entity-alias="DI" rel-entity-alias="II" rel-optional="true">
+			<key-map field-name="productId" />
+			<key-map field-name="facilityId" />
+		</view-link>
+		<view-link entity-alias="PR" rel-entity-alias="GI" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+	</view-entity>
+	<view-entity entity-name="DeliveryItemcommandAndDeliveryItem" package-name="org.ofbiz.inventory.delivery">
+		<member-entity entity-alias="DIC" entity-name="DeliveryItemcommand" />
+		<member-entity entity-alias="DI" entity-name="DeliveryItem" />
+		<alias-all entity-alias="DIC" />
+		<alias-all entity-alias="DI" />
+		<view-link entity-alias="DIC" rel-entity-alias="DI" rel-optional="true">
+			<key-map field-name="docId" rel-field-name="baseEntry"/>
+			<key-map field-name="lineNo" rel-field-name="baseLineNo"/>
+		</view-link>
+	</view-entity>
+	<entity entity-name="DeliveryItemcommand" package-name="org.ofbiz.inventory.delivery"
+		title="DeliveryItemcommand Entity">
+		<field name="docId" type="d-id"></field>
+		<field name="baseEntry" type="d-id"></field>
+		<field name="baseLineNo" type="numeric"></field>
+		<field name="lineNo" type="numeric"></field>
+		<field name="memo" type="name"></field>
+		<field name="quantity" type="numeric"></field>
+		<field name="deliveryQuantity" type="numeric"></field>
+		<field name="isSequence" type="name"></field>
+		<field name="idValue" type="name"></field>
+		<!-- 外键 -->
+		<field name="faultTypeId" type="id"></field>
+		<field name="productId" type="id"></field>
+		<field name="sequenceId" type="id"></field>
+		<field name="facilityId" type="id"></field>
+		<field name="facilityIdTo" type="id"></field>
+		<field name="extDocDemo" type="id"></field>
+		<!-- 结束 -->
+		<prim-key field="docId" />
+		<prim-key field="lineNo" />
+		<!--  配置外键关系
+		<relation type="one" rel-entity-name="Product">
+			<key-map field-name="productId" />
+		</relation>
+		<relation type="one" rel-entity-name="ProductSequence">
+			<key-map field-name="sequenceId" />
+		</relation>
+		<relation type="one" rel-entity-name="Facility">
+			<key-map field-name="facilityId" rel-field-name="facilityId" />
+			<key-map field-name="facilityIdTo" rel-field-name="facilityId" />
+		</relation> -->
+	</entity>
+	<view-entity entity-name="DeliveryItemcommandAndProductStore"
+		package-name="org.ofbiz.inventory.delivery"
+		title="DeliveryItemcommand,Product,ProductSequence and Facility View Entity">
+		<member-entity entity-alias="DIC" entity-name="DeliveryItemcommand" />
+		<member-entity entity-alias="PR" entity-name="Product" />
+		<member-entity entity-alias="FA" entity-name="Facility" />
+		<member-entity entity-alias="FA1" entity-name="Facility" />
+		<member-entity entity-alias="GI" entity-name="GoodIdentification" />
+		<member-entity entity-alias="II" entity-name="InventorynItem" />
+
+		<alias-all entity-alias="DIC" />
+
+		<alias entity-alias="PR" name="productName" />
+		<alias entity-alias="PR" name="config" />
+		<alias entity-alias="PR" name="brandName" />
+		<alias entity-alias="PR" name="isSequence" />
+
+		<alias entity-alias="FA" name="facilityName" />
+		<alias entity-alias="FA1" name="facilityNameTo" field="facilityName" />
+
+		<alias entity-alias="II" name="onhand" />
+		<alias entity-alias="II" name="promise" />
+
+		<alias entity-alias="GI" name="idValue" />
+
+		<view-link entity-alias="DIC" rel-entity-alias="PR" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+		<view-link entity-alias="DIC" rel-entity-alias="FA" rel-optional="true">
+			<key-map field-name="facilityId" />
+		</view-link>
+		<view-link entity-alias="DIC" rel-entity-alias="II" rel-optional="true">
+			<key-map field-name="productId" />
+			<key-map field-name="facilityId" />
+		</view-link>
+		<view-link entity-alias="DIC" rel-entity-alias="FA1" rel-optional="true">
+			<key-map field-name="facilityIdTo" rel-field-name="facilityId" />
+		</view-link>
+		<view-link entity-alias="PR" rel-entity-alias="GI" rel-optional="true">
+			<key-map field-name="productId" />
+		</view-link>
+	</view-entity>
+	<!-- 发货指令 -->
+	<view-entity entity-name="DeliveryCommandView"
+		package-name="org.ofbiz.inventory" title="DeliveryCommandView">
+		<member-entity entity-alias="DC" entity-name="DeliveryCommand" />
+		<member-entity entity-alias="PS" entity-name="ProductStore" />
+		<member-entity entity-alias="MT" entity-name="MovementType" />
+		<member-entity entity-alias="MTC" entity-name="MovementTypeCatalog" />
+		
+		<alias entity-alias="MTC" name="orderType" />
+		<alias entity-alias="MT" name="movementTypeName" />
+		<alias entity-alias="DC" name="docId" />
+		<alias entity-alias="DC" name="memo" />
+		<alias entity-alias="DC" name="docDate" />
+		<alias entity-alias="PS" name="storeName" />
+		<view-link entity-alias="DC" rel-entity-alias="PS">
+			<key-map field-name="productStoreId" 
+			rel-field-name="productStoreId"/>
+		</view-link>
+		<view-link entity-alias="DC" rel-entity-alias="MT">
+			<key-map field-name="movementTypeId"/>
+		</view-link>
+		<view-link entity-alias="MT" rel-entity-alias="MTC">
+			<key-map field-name="movementTypeId"/>
+		</view-link>
+	</view-entity>
+</entitymodel>
