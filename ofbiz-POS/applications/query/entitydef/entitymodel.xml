@@ -78,7 +78,7 @@ under the License.
     
     
 
-    <view-entity entity-name="ProductPriceListQuery"
+    <view-entity entity-name="ProductPriceListQuery1"
         package-name="org.ofbiz.query"
         title="ProductPriceListQuery View Entity">
         <member-entity entity-alias="P0" entity-name="ProductPriceListView"/>        
@@ -158,6 +158,136 @@ under the License.
 			</condition-list>	
 		</entity-condition>        
     </view-entity>
+
+    <view-entity entity-name="ProductPriceListQuery"
+        package-name="org.ofbiz.query"
+        title="ProductPriceListQuery View Entity">
+        <member-entity entity-alias="P0" entity-name="ProductPriceList"/>        
+        <member-entity entity-alias="P1" entity-name="ProductPriceList"/>        
+        <member-entity entity-alias="P2" entity-name="ProductPriceList"/>   
+        <member-entity entity-alias="S0" entity-name="ProductPriceRuleStoreList"/>  
+        <member-entity entity-alias="S1" entity-name="ProductPriceRuleStoreList"/> 
+        <member-entity entity-alias="S2" entity-name="ProductPriceRuleStoreList"/> 
+        <member-entity entity-alias="I0" entity-name="PosStoreInfo" />
+        <member-entity entity-alias="I1" entity-name="PosStoreInfo" />
+        <member-entity entity-alias="I2" entity-name="PosStoreInfo" />
+        <member-entity entity-alias="S" entity-name="ProductSalesPolicy"/>   
+        <member-entity entity-alias="D" entity-name="Product"/>
+        <member-entity entity-alias="A0" entity-name="ProductFeatureAppl"/>            
+        <member-entity entity-alias="A1" entity-name="ProductFeatureAppl"/>   
+        <member-entity entity-alias="F0" entity-name="ProductFeature"/>    
+        <member-entity entity-alias="F1" entity-name="ProductFeature"/>    
+        <alias entity-alias="S0" name="storeId"/>
+        <alias entity-alias="F1" name="brands" field="description"/>
+        <alias entity-alias="F1" name="brandsType" field="productFeatureTypeId"/>	
+        <alias entity-alias="F0" name="models" field="description"/>
+        <alias entity-alias="F0" name="modelsType" field="productFeatureTypeId"/>        
+        <alias entity-alias="P0" name="productId"/>
+        <alias entity-alias="D" name="productName"/>
+        <alias entity-alias="P0" name="productSalesPolicyId"/>        
+        <alias entity-alias="S" name="policyName"/>         
+ 		<alias entity-alias="P0" name="standardPrice" field="price"/>
+ 		<alias entity-alias="P1" name="minPrice" field="price"/>
+ 		<alias entity-alias="P2" name="costPrice" field="price"/> 		
+        <view-link entity-alias="P0" rel-entity-alias="P1">
+          <key-map field-name="productId"/>
+          <key-map field-name="productSalesPolicyId"/>	
+          <entity-condition>
+			<condition-list combine="and">
+			<condition-expr entity-alias="P0" field-name="productPriceTypeId"
+				operator="equals" value="GUIDE_PRICE" />		
+            <condition-expr entity-alias="P1" field-name="productPriceTypeId"
+				operator="equals" value="SALES_PRICE" />
+			</condition-list>	
+		 </entity-condition>    	 
+        </view-link>
+        <view-link entity-alias="P0" rel-entity-alias="P2">
+          <key-map field-name="productId"/>
+          <key-map field-name="productSalesPolicyId"/>
+          <entity-condition>
+			<condition-list combine="and">
+			<condition-expr entity-alias="P0" field-name="productPriceTypeId"
+				operator="equals" value="GUIDE_PRICE" />		
+            <condition-expr entity-alias="P2" field-name="productPriceTypeId"
+				operator="equals" value="CKECK_PRICE" />
+			</condition-list>
+		 </entity-condition>    
+        </view-link>
+        
+        <view-link entity-alias="P0" rel-entity-alias="S0">
+          <key-map field-name="productPriceRuleId"/>
+          <entity-condition>
+          <condition-expr entity-alias="S0" field-name="enable"
+				operator="equals" value="Y" />
+		 </entity-condition>  
+        </view-link>
+        
+        <view-link entity-alias="S0" rel-entity-alias="I0">
+			<key-map field-name="storeId" />
+		</view-link>
+        
+        <view-link entity-alias="P1" rel-entity-alias="S1">
+          <key-map field-name="productPriceRuleId"/>
+          <entity-condition>
+          <condition-expr entity-alias="S1" field-name="enable"
+				operator="equals" value="Y" />
+		 </entity-condition>  
+        </view-link>
+        
+        <view-link entity-alias="S1" rel-entity-alias="I1">
+			<key-map field-name="storeId" />
+		</view-link>
+        
+        <view-link entity-alias="P2" rel-entity-alias="S2">
+          <key-map field-name="productPriceRuleId"/>
+          <entity-condition>
+          <condition-expr entity-alias="S2" field-name="enable"
+				operator="equals" value="Y" />
+		 </entity-condition>  
+        </view-link>
+        
+        <view-link entity-alias="S2" rel-entity-alias="I2">
+			<key-map field-name="storeId" />
+		</view-link>
+      
+        <view-link entity-alias="P0" rel-entity-alias="S">
+          <key-map field-name="productSalesPolicyId"/>
+        </view-link>
+        <view-link entity-alias="P0" rel-entity-alias="D">
+          <key-map field-name="productId"/>
+        </view-link>
+        <view-link entity-alias="P0" rel-entity-alias="A0">
+          <key-map field-name="productId"/>
+        </view-link>
+        
+        <view-link entity-alias="A0" rel-entity-alias="F0">
+          <key-map field-name="productFeatureId"/>
+          <entity-condition>
+          <condition-expr entity-alias="F0" field-name="productFeatureTypeId"
+				operator="equals" value="MODELS" />
+		 </entity-condition>    
+        </view-link>
+        
+        <view-link entity-alias="P0" rel-entity-alias="A1">
+          <key-map field-name="productId"/>
+        </view-link>
+        
+        <view-link entity-alias="A1" rel-entity-alias="F1">
+          <key-map field-name="productFeatureId"/>
+          <entity-condition>
+          <condition-expr entity-alias="F1" field-name="productFeatureTypeId"
+				operator="equals" value="BRANDS" />
+		 </entity-condition>    
+          
+        </view-link>
+		<entity-condition>
+			<condition-list combine="and">
+			<condition-expr entity-alias="P0" field-name="productPriceTypeId"
+				operator="equals" value="GUIDE_PRICE" />		
+			</condition-list>	
+		</entity-condition>        
+    </view-entity>
+
 
 
     <view-entity entity-name="ChangedPriceListNotRead"

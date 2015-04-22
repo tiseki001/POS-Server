@@ -1676,6 +1676,9 @@
 		<relation type="one" fk-name="PROD_FEAT_UOM" rel-entity-name="Uom">
 			<key-map field-name="uomId" />
 		</relation>
+		<index name="IND_FEAT_TYPE_ID" unique="false">   
+    		<index-field name="productFeatureTypeId" />   
+		</index> 
 	</entity>
 	<view-entity entity-name="ProductFeatureAndAppl" never-cache="true"
 		package-name="org.ofbiz.product.feature" title="ProductFeature And ProductFeatureAppl View Entity">
